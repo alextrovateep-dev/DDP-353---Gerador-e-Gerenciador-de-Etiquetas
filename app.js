@@ -142,13 +142,22 @@
   if (els.pvRefresh) els.pvRefresh.addEventListener('click', (e) => { e.preventDefault(); renderImagePreviewDesign(); });
   ;[els.pvWidth, els.pvHeight, els.pvDpmm].forEach(el => el?.addEventListener('change', () => { const layout = getActiveLayout(); if (!layout) { renderImagePreviewDesign(); return; } layout.preview = layout.preview || {}; layout.preview.widthIn = parseFloat(els.pvWidth.value || "6"); layout.preview.heightIn = parseFloat(els.pvHeight.value || "4"); layout.preview.dpmm = parseInt(els.pvDpmm.value || "8", 10); const idx = state.layouts.findIndex(l => l.id === layout.id); if (idx !== -1) { state.layouts[idx] = layout; saveJson(STORAGE_KEYS.layouts, state.layouts); } renderImagePreviewDesign(); }));
 
+  function normalizeZplForPreview(zpl) {
+    if (!zpl) return zpl;
+    // Garantir codificação UTF-8 no preview para acentos: adiciona ^CI28 se não houver ^CI definido
+    if (!/\^CI(27|28)/.test(zpl)) {
+      zpl = zpl.replace("^XA", "^XA\n^CI28");
+    }
+    return zpl;
+  }
+
   async function renderImagePreviewDesign() {
     const layout = getActiveLayout(); const zpl = (els.zplInput?.value || state.draftZpl || '').trim(); if (!zpl) { els.pvContainer.innerHTML = `<span class=\"hint\">Cole o ZPL para visualizar.</span>`; return; }
     const widthIn = layout?.preview?.widthIn ?? parseFloat(els.pvWidth.value || "6"); const heightIn = layout?.preview?.heightIn ?? parseFloat(els.pvHeight.value || "4"); const dpmm = layout?.preview?.dpmm ?? parseInt(els.pvDpmm.value || "8", 10);
     els.pvWidth.value = widthIn; els.pvHeight.value = heightIn; els.pvDpmm.value = String(dpmm);
     const url = `https://api.labelary.com/v1/printers/${dpmm}dpmm/labels/${widthIn}x${heightIn}/0/`;
     els.pvContainer.innerHTML = `<span class=\"hint\">Renderizando preview...</span>`;
-    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: zpl }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); els.pvContainer.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; els.pvContainer.appendChild(img); } catch (_) { els.pvContainer.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
+    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: normalizeZplForPreview(zpl) }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); els.pvContainer.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; els.pvContainer.appendChild(img); } catch (_) { els.pvContainer.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
   }
 
   // PRINT VIEW
@@ -195,7 +204,7 @@
     const widthIn = layout?.preview?.widthIn ?? 6; const heightIn = layout?.preview?.heightIn ?? 4; const dpmm = layout?.preview?.dpmm ?? 8;
     const url = `https://api.labelary.com/v1/printers/${dpmm}dpmm/labels/${widthIn}x${heightIn}/0/`;
     container.innerHTML = `<span class=\"hint\">Renderizando preview...</span>`;
-    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: zpl }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); container.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; container.appendChild(img); } catch (_) { container.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
+    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: normalizeZplForPreview(zpl) }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); container.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; container.appendChild(img); } catch (_) { container.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
   }
 
   // Library/Machines code omitted for brevity (kept from previous section)

@@ -81,6 +81,12 @@
 
     <section id="view-print" class="view">
       <h2>Imprimir Etiqueta (preenchimento manual)</h2>
+      <p class="hint" style="margin:8px 0 12px 0;">
+        Este formulário é <strong>gerado automaticamente</strong> a partir dos <strong>placeholders</strong> existentes no ZPL do layout selecionado
+        (ex.: {OP}, {Quantidade}, {Maquina}, {Operador}, {Turno}). Ao clicar em <em>Carregar</em>, o sistema lê o ZPL da etiqueta e cria um campo
+        para cada placeholder encontrado. Preencha os valores desejados, informe a quantidade de cópias e use <em>Preview</em> para visualizar antes de
+        clicar em <em>Imprimir</em> (simulação).
+      </p>
       <div class="row">
         <select id="pr-select-layout"></select>
         <div class="btn-with-caption"><button id="pr-load" class="secondary">Carregar</button><span class="btn-caption">Gerar formulário</span></div>

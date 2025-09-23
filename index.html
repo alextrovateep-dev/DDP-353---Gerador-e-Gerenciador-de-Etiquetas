@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeepEtiquetas - Demo Lúdica</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">🧩 TeepEtiquetas</div>
+    <nav class="nav">
+      <button data-view="import" class="nav-btn is-active">Gerar/Gerenciar Etiquetas</button>
+      <button data-view="print">Imprimir</button>
+      <button data-view="library">Biblioteca</button>
+      <button data-view="machines">Máquinas</button>
+      <button data-view="ddp">DDP 353</button>
+    </nav>
+  </aside>
+
+  <header class="app-header">
+    <div class="top-info"></div>
+  </header>
+
+  <main id="views">
+    <!-- Modal Biblioteca Rápida -->
+    <div id="lib-modal" class="modal-backdrop">
+      <div class="modal">
+        <header>
+          <h3>Selecionar etiqueta da Biblioteca</h3>
+          <button class="close-btn" id="lib-close">Fechar</button>
+        </header>
+        <input id="lib-search-input" placeholder="Buscar por nome..." />
+        <ul id="lib-list" class="list"></ul>
+        <h4 style="margin-top:12px;">Preview</h4>
+        <div id="lib-preview" class="output" style="min-height:140px; display:flex; align-items:center; justify-content:center;"></div>
+      </div>
+    </div>
+
+    <section id="view-import" class="view is-active">
+      <h2>Gerar/Gerenciar Etiquetas</h2>
+
+      <div class="row">
+        <div class="btn-with-caption">
+          <button id="btn-import-from-lib" class="secondary">Importar etiqueta da Biblioteca</button>
+          <span class="btn-caption">Carrega um layout pronto</span>
+        </div>
+        <input id="layout-name" placeholder="Nome do layout" />
+      </div>
+
+      <textarea id="zpl-input" placeholder="Cole aqui o ZPL do Zebra Designer..."></textarea>
+
+      <div class="row">
+        <div class="btn-with-caption"><button id="btn-detect">Detectar Campos Disponíveis</button><span class="btn-caption">Lista placeholders do Teep</span></div>
+        <div class="btn-with-caption"><button id="btn-clear" class="secondary">Limpar</button><span class="btn-caption">Zera o editor</span></div>
+        <div class="btn-with-caption"><button id="btn-preview" class="secondary">Preview</button><span class="btn-caption">Visualizar etiqueta</span></div>
+        <div class="btn-with-caption"><button id="btn-save-layout">Salvar layout</button><span class="btn-caption">Grava na Biblioteca</span></div>
+      </div>
+
+      <h3 style="margin-top:16px">Campos disponíveis (Teep)</h3>
+      <pre id="detect-output" class="output"></pre>
+
+      <h3 style="margin-top:16px">Preview Visual (renderizado)</h3>
+      <details class="advanced" style="margin:8px 0;">
+        <summary style="cursor:pointer; color:#6b7280;">Avançado: tamanho e resolução do rótulo</summary>
+        <div class="row" style="margin-top:8px;">
+          <input id="pv-width" type="number" placeholder="Largura (in)" value="6" style="max-width:140px;" />
+          <input id="pv-height" type="number" placeholder="Altura (in)" value="4" style="max-width:140px;" />
+          <select id="pv-dpmm" style="max-width:180px;">
+            <option value="8">8 dpmm (203 dpi)</option>
+            <option value="12">12 dpmm (300 dpi)</option>
+            <option value="24">24 dpmm (600 dpi)</option>
+          </select>
+          <div class="btn-with-caption"><button id="pv-refresh" class="secondary">Atualizar Preview</button><span class="btn-caption">Re-renderizar</span></div>
+        </div>
+      </details>
+      <div id="pv-container" class="output" style="margin-top:8px; display:flex; align-items:center; justify-content:center; min-height:160px;">
+        <span class="hint">O preview visual usa o serviço Labelary. Se estiver offline, esta área pode não renderizar.</span>
+      </div>
+    </section>
+
+    <section id="view-print" class="view">
+      <h2>Imprimir Etiqueta (preenchimento manual)</h2>
+      <div class="row">
+        <select id="pr-select-layout"></select>
+        <div class="btn-with-caption"><button id="pr-load" class="secondary">Carregar</button><span class="btn-caption">Gerar formulário</span></div>
+        <div class="btn-with-caption"><button id="pr-import-from-lib" class="secondary">Importar da Biblioteca</button><span class="btn-caption">Selecionar layout</span></div>
+      </div>
+      <div id="pr-form" class="form" style="margin-top:8px;"></div>
+      <div class="row" style="margin-top:8px;">
+        <input id="pr-copies" type="number" value="1" min="1" style="max-width:160px;" placeholder="Quantidade (cópias)" />
+        <div class="btn-with-caption"><button id="pr-preview" class="secondary">Preview</button><span class="btn-caption">Ver etiqueta</span></div>
+        <div class="btn-with-caption"><button id="pr-print">Imprimir</button><span class="btn-caption">Simular impressão</span></div>
+      </div>
+      <div id="pr-preview-container" class="output" style="margin-top:8px; min-height:160px; display:flex; align-items:center; justify-content:center;">
+        <span class="hint">Carregue um layout e preencha os dados para visualizar.</span>
+      </div>
+      <h3 style="margin-top:16px">Log</h3>
+      <pre id="pr-log" class="output"></pre>
+    </section>
+
+    <section id="view-library" class="view">
+      <h2>Biblioteca de Layouts</h2>
+      <div class="row">
+        <input id="search" placeholder="Buscar por nome..." />
+        <div class="btn-with-caption"><button id="btn-new-version" class="secondary">Nova versão</button><span class="btn-caption">Duplica e incrementa</span></div>
+      </div>
+      <ul id="layout-list" class="list"></ul>
+    </section>
+
+    <section id="view-machines" class="view">
+      <h2>Carregar/Associar Etiquetas a Máquinas</h2>
+      <div class="row">
+        <select id="ml-select-layout"></select>
+        <div class="btn-with-caption"><button id="ml-open-library" class="secondary">Abrir Biblioteca</button><span class="btn-caption">Alterar layout</span></div>
+        <div class="btn-with-caption"><button id="ml-preview" class="secondary">Preview</button><span class="btn-caption">Confirmar visual</span></div>
+      </div>
+      <div class="row">
+        <input id="ml-search" placeholder="Buscar máquina por nome ou código" />
+        <select id="ml-group">
+          <option value="">Todos os grupos</option>
+        </select>
+        <div class="btn-with-caption"><button id="ml-fetch" class="secondary">Buscar Máquinas</button><span class="btn-caption">Listar do Teep</span></div>
+      </div>
+      <div class="row">
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="ml-select-all" /> Selecionar todas</label>
+        <div class="btn-with-caption"><button id="ml-associate">Enviar etiqueta às selecionadas</button><span class="btn-caption">Distribuir para terminais</span></div>
+        <span id="ml-associated-count" class="meta" style="margin-left:auto;"></span>
+      </div>
+      <ul id="ml-results" class="list" style="margin-top:8px;"></ul>
+    </section>
+
+    <section id="view-ddp" class="view">
+      <h2>DDP 353 - Geração e Gerenciamento de Etiquetas Para Facchini</h2>
+      <div id="ddp-content" class="output" style="min-height:200px; white-space:pre-wrap;"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>Demo lúdica para alinhamento – sem dependências de backend</span>
+  </footer>
+
+  <script src="src/app.js"></script>
+</body>
+</html>

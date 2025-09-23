@@ -1,4 +1,4 @@
-# TeepEtiquetas – Demo Lúdica
+# TeepEtiquetas – Explicação
 
 Este é um protótipo simples (HTML/CSS/JS puro) para demonstrar o conceito do TeepEtiquetas: importação de ZPL, detecção de campos, mapeamento para fontes de dados, preview, biblioteca com versionamento (localStorage), associação de layouts a máquinas e impressão simulada.
 
@@ -30,3 +30,4 @@ Este é um protótipo simples (HTML/CSS/JS puro) para demonstrar o conceito do T
 - Não há backend nesta etapa; a impressão é apenas registrada no log.
 - A detecção de campos procura padrões `{Campo}` no ZPL.
 - Este demo é apenas para alinhamento visual/funcional; o projeto real deverá integrar com o Teep e impressoras Zebra.
+

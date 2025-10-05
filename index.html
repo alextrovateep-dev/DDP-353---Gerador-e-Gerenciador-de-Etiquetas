@@ -255,67 +255,64 @@
 
     <section id="view-approval" class="view">
       <h2>✅ Aprovação Técnica do DDP 353</h2>
-      <p class="hint">
-        Preencha os dados abaixo para aprovar tecnicamente o DDP 353 - Sistema de Etiquetas e liberar para orçamento.
-      </p>
+      
+      <!-- Header Informativo -->
+      <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 16px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <div style="font-weight: 600; color: #0c4a6e; margin-bottom: 8px;">📋 DDP 353 - Sistema de Etiquetas</div>
+        <div style="color: #0369a1; font-size: 14px;">Formulário de aprovação técnica do processo para liberar geração de orçamento pelo departamento comercial</div>
+      </div>
       
       <!-- Formulário de Aprovação Técnica -->
       <div class="card" style="max-width: 600px; margin: 20px auto;">
-        <h3 style="color: #374151; margin: 0 0 20px 0; text-align: center;">📋 Formulário de Aprovação Técnica</h3>
-        
-        <form id="approval-form" class="form">
-          <div class="form-group">
-            <label for="approval-nome">Nome *</label>
-            <input type="text" id="approval-nome" name="nome" required>
+        <form id="ddp-approval-form" class="form" action="https://formspree.io/f/mblybqqb" method="POST">
+          <!-- Configurações básicas do Formspree -->
+          <input type="hidden" name="subject" value="APROVACAO TECNICA DDP 353 - FACCHINI">
+          <input type="hidden" name="_captcha" value="false">
+          
+          <label>
+            <span>Nome *</span>
+            <input type="text" name="nome" required placeholder="Digite seu nome">
+          </label>
+          
+          <label>
+            <span>Sobrenome *</span>
+            <input type="text" name="sobrenome" required placeholder="Digite seu sobrenome">
+          </label>
+          
+          <label>
+            <span>Telefone de Contato *</span>
+            <input type="tel" name="telefone" required placeholder="(xx) xxxxx-xxxx">
+          </label>
+          
+          <label>
+            <span>Email de Contato *</span>
+            <input type="email" name="email" required placeholder="seu.email@empresa.com" 
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                   title="Digite um email válido (exemplo: nome@empresa.com)">
+          </label>
+          
+          <label>
+            <span>Setor *</span>
+            <input type="text" name="setor" required placeholder="ex.: Produção, Qualidade, TI">
+          </label>
+          
+          <label>
+            <span>Cargo *</span>
+            <input type="text" name="cargo" required placeholder="ex.: Gerente, Supervisor, Analista">
+          </label>
+          
+          <div id="ddp-approval-error" style="color:#dc2626; font-size:13px; display:none; margin-bottom:16px;">
+            Erro ao enviar aprovação. Tente novamente.
           </div>
           
-          <div class="form-group">
-            <label for="approval-sobrenome">Sobrenome *</label>
-            <input type="text" id="approval-sobrenome" name="sobrenome" required>
+          <div id="ddp-approval-success" style="color:#16a34a; font-size:13px; display:none; margin-bottom:16px;">
+            Aprovação técnica enviada com sucesso! O departamento comercial será notificado para prosseguir com o orçamento.
           </div>
           
-          <div class="form-group">
-            <label for="approval-telefone">Telefone de Contato *</label>
-            <input type="tel" id="approval-telefone" name="telefone" required placeholder="(11) 99999-9999">
-          </div>
-          
-          <div class="form-group">
-            <label for="approval-email">Email de Contato *</label>
-            <input type="email" id="approval-email" name="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="approval-setor">Setor *</label>
-            <input type="text" id="approval-setor" name="setor" required placeholder="Ex: TI, Produção, Qualidade">
-          </div>
-          
-          <div class="form-group">
-            <label for="approval-cargo">Cargo *</label>
-            <input type="text" id="approval-cargo" name="cargo" required placeholder="Ex: Gerente, Coordenador, Analista">
-          </div>
-          
-          <!-- Campos ocultos para Formspree -->
-          <input type="hidden" name="subject" value="✅ APROVAÇÃO TÉCNICA DDP 353 - FACCHINI - Liberação para Orçamento">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_format" value="plain">
-          <input type="hidden" name="_replyto" value="">
-          <input type="hidden" name="_cc" value="alex@teep.com.br">
-          <input type="hidden" name="_next" value="https://teep.com.br">
-          
-          <!-- Mensagens personalizadas em português -->
-          <input type="hidden" name="mensagem_cabecalho" value="🎯 NOVA APROVAÇÃO TÉCNICA RECEBIDA - FACCHINI">
-          <input type="hidden" name="mensagem_aprovacao" value="✅ APROVAÇÃO TÉCNICA DO DDP 353 CONCEDIDA">
-          <input type="hidden" name="mensagem_detalhes" value="📋 PROCESSO: Sistema de Etiquetas - Sistema TeepMES">
-          <input type="hidden" name="mensagem_proximo_passo" value="🚀 PRÓXIMO PASSO: Departamento Comercial pode prosseguir com geração de orçamento">
-          <input type="hidden" name="mensagem_rodape" value="📞 Entre em contato com o aprovador para mais detalhes sobre o processo.">
-          
-          <!-- Campos essenciais -->
-          <input type="hidden" name="empresa" value="Facchini">
-          <input type="hidden" name="data_aprovacao" value="">
-          
-          <div class="form-actions">
-            <button type="submit" class="btn btn-success" style="background: #16a34a; border-color: #16a34a; width: 100%; padding: 12px; font-size: 16px;">
-              ✅ Aprovar Tecnicamente e Enviar
+          <div class="actions">
+            <button type="submit" class="btn btn-success" id="ddp-approval-submit">
+              <span id="submit-text">Aprovar Tecnicamente e Liberar para Orçamento</span>
+              <span id="submit-loading" style="display:none;">Enviando...</span>
             </button>
           </div>
         </form>
@@ -346,74 +343,6 @@
     </div>
   </dialog>
 
-  <!-- Modal de Aprovação Técnica DDP -->
-  <dialog id="dialog-ddp-approval" class="dialog">
-    <div class="card">
-      <div class="dialog-header">
-        <h3>Aprovação Técnica DDP 353 - Facchini</h3>
-        <button class="btn btn-ghost" id="ddp-approval-close">Fechar</button>
-      </div>
-      <form id="ddp-approval-form" class="form" action="https://formspree.io/f/mblybqqb" method="POST">
-        <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
-          <div style="font-weight: 600; color: #0c4a6e; margin-bottom: 8px;">DDP 353 - Sistema de Etiquetas</div>
-          <div style="color: #0369a1; font-size: 14px;">Formulário de aprovação técnica do processo para liberar geração de orçamento pelo departamento comercial</div>
-        </div>
-        
-        <!-- Campos ocultos para Formspree -->
-        <input type="hidden" name="_subject" value="Aprovacao Tecnica DDP 353 - Sistema de Etiquetas - Facchini">
-        <input type="hidden" name="_replyto" value="">
-        <input type="hidden" name="empresa" value="Facchini">
-        <input type="hidden" name="ddp_numero" value="353">
-        <input type="hidden" name="processo" value="Sistema de Etiquetas">
-        
-        <label>
-          <span>Nome *</span>
-          <input type="text" name="nome" required placeholder="Digite seu nome">
-        </label>
-        
-        <label>
-          <span>Sobrenome *</span>
-          <input type="text" name="sobrenome" required placeholder="Digite seu sobrenome">
-        </label>
-        
-        <label>
-          <span>Telefone de Contato *</span>
-          <input type="tel" name="telefone" required placeholder="(xx) xxxxx-xxxx">
-        </label>
-        
-        <label>
-          <span>Email de Contato *</span>
-          <input type="email" name="email" required placeholder="seu.email@empresa.com">
-        </label>
-        
-        <label>
-          <span>Setor *</span>
-          <input type="text" name="setor" required placeholder="ex.: Produção, Qualidade, TI">
-        </label>
-        
-        <label>
-          <span>Cargo *</span>
-          <input type="text" name="cargo" required placeholder="ex.: Gerente, Supervisor, Analista">
-        </label>
-        
-        <div id="ddp-approval-error" style="color:#dc2626; font-size:13px; display:none; margin-bottom:16px;">
-          Erro ao enviar aprovação. Tente novamente.
-        </div>
-        
-        <div id="ddp-approval-success" style="color:#16a34a; font-size:13px; display:none; margin-bottom:16px;">
-          Aprovação técnica enviada com sucesso! O departamento comercial será notificado para prosseguir com o orçamento.
-        </div>
-        
-        <div class="actions">
-          <button type="button" class="btn btn-ghost" id="ddp-approval-cancel">Cancelar</button>
-          <button type="submit" class="btn btn-success" id="ddp-approval-submit">
-            <span id="submit-text">Aprovar Tecnicamente e Liberar para Orçamento</span>
-            <span id="submit-loading" style="display:none;">Enviando...</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </dialog>
 
   <script src="app.js"></script>
 </body>

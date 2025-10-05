@@ -168,7 +168,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .op-code, .op-produto, .op-descricao { 
-  flex: 1; 
+  flex: 0 0 auto; 
 }
 
 .op-print-btn {
@@ -337,31 +337,40 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 /* Navegação */
 .nav {
   flex: 1;
-  padding: 0;
+  padding: 16px;
 }
 
 .nav-btn {
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 0;
   margin: 0 0 4px 0;
-  background: transparent;
+  background: white;
   color: #374151;
-  border: none;
+  border: 1px solid #e5e7eb;
   text-align: left;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-radius: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.nav-btn::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
 }
 
 .nav-btn:hover {
-  background: #f3f4f6;
+  background: #f8fafc;
   color: #1f2937;
+  border-color: #d1d5db;
 }
 
 .nav-btn.is-active {
   background: #3b82f6;
   color: white;
+  border-color: #3b82f6;
 }
 
 /* Botões de Ação */
@@ -373,38 +382,44 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .btn-approval {
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 0;
   margin: 0 0 8px 0;
   background: #16a34a;
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
+  border: 1px solid #16a34a;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 .btn-approval:hover {
   background: #15803d;
+  border-color: #15803d;
 }
 
 .btn-reset {
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 0;
   margin: 0;
   background: #dc2626;
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 .btn-reset:hover {
   background: #b91c1c;
+  border-color: #b91c1c;
 }
 
 /* Mensagem de Propriedade Intelectual */
@@ -416,18 +431,21 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .property-notice {
-  background: #f9fafb;
+  background: white;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  padding: 12px;
-  font-size: 11px;
+  padding: 12px 0;
+  font-size: 12px;
   line-height: 1.4;
   color: #6b7280;
-  text-align: center;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .property-notice p {
   margin: 0 0 4px 0;
+  padding: 0 16px;
 }
 
 .property-notice p:last-child {
@@ -687,21 +705,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   }
 }
 
-/* Modal de Aprovação DDP */
-#dialog-ddp-approval .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-#dialog-ddp-approval .card-header h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: #1f2937;
-}
+/* Modal de Aprovação DDP - REMOVIDO (não existe mais) */
 
 .btn-ghost {
   background: transparent;
@@ -720,79 +724,9 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   color: #374151;
 }
 
-#dialog-ddp-approval .card-content {
-  padding: 20px 24px;
-}
+/* Estilos do modal órfão removidos */
 
-#dialog-ddp-approval .form-group {
-  margin-bottom: 16px;
-}
-
-#dialog-ddp-approval .form-group label {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-}
-
-#dialog-ddp-approval .form-group input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.2s ease;
-  box-sizing: border-box;
-}
-
-#dialog-ddp-approval .form-group input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-#dialog-ddp-approval .form-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  padding: 20px 24px;
-  background: #f9fafb;
-  border-top: 1px solid #e5e7eb;
-}
-
-#dialog-ddp-approval .form-actions .btn {
-  padding: 10px 20px;
-  font-weight: 600;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-}
-
-#dialog-ddp-approval .form-actions .btn-secondary {
-  background: #6b7280;
-  color: white;
-}
-
-#dialog-ddp-approval .form-actions .btn-secondary:hover {
-  background: #4b5563;
-}
-
-#dialog-ddp-approval .form-actions .btn-success {
-  background: #16a34a;
-  color: white;
-}
-
-#dialog-ddp-approval .form-actions .btn-success:hover {
-  background: #15803d;
-}
-
-#dialog-ddp-approval .form-actions .btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+/* Estilos do modal órfão removidos */
 
 /* Header do modal simplificado */
 .dialog-header {
@@ -853,7 +787,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   border-color: #16a34a;
 }
 
-/* Layout melhorado do formulário */
+/* Layout do formulário */
 #ddp-approval-form {
   background: #ffffff;
 }
@@ -865,15 +799,15 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 #ddp-approval-form label {
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 #ddp-approval-form label span {
   display: block;
   font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 8px;
-  font-size: 14px;
+  color: #374151;
+  margin-bottom: 6px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -882,15 +816,14 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 #ddp-approval-form input[type="email"],
 #ddp-approval-form input[type="tel"] {
   width: 100%;
-  padding: 14px 16px;
+  padding: 12px 16px;
   border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 6px;
+  font-size: 14px;
   color: #111827;
   background: #ffffff;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease;
   box-sizing: border-box;
-  font-family: inherit;
 }
 
 #ddp-approval-form input[type="text"]:focus,
@@ -898,33 +831,31 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 #ddp-approval-form input[type="tel"]:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 #ddp-approval-form input::placeholder {
   color: #9ca3af;
   font-weight: 400;
-  font-size: 14px;
 }
 
 /* Estilo do header do formulário */
 #ddp-approval-form .form > div:first-child {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 24px;
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
 }
 
 #ddp-approval-form .form > div:first-child > div:first-child {
-  font-weight: 700;
-  color: #1e40af;
+  font-weight: 600;
+  color: #0c4a6e;
   margin-bottom: 8px;
   font-size: 16px;
 }
 
 #ddp-approval-form .form > div:first-child > div:last-child {
-  color: #3730a3;
+  color: #0369a1;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -955,13 +886,4 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   background: #94a3b8;
 }
 
-/* Modal específico para aprovação */
-#dialog-ddp-approval {
-  max-width: 480px;
-  width: 90vw;
-}
-
-#dialog-ddp-approval .card {
-  border-radius: 16px;
-  overflow: hidden;
-}
+/* Modal órfão removido */

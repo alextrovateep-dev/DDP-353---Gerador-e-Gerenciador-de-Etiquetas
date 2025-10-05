@@ -121,13 +121,24 @@
     if (target === "print") { renderPrintLayouts(); }
     if (target === "ddp") { loadDdpDoc(); }
     if (target === "approval") { 
-      // Garantir que o formulário de aprovação seja exibido
-      const approvalView = document.getElementById('view-approval');
-      if (approvalView) {
-        approvalView.classList.add('is-active');
-      }
+      // Sistema de aprovação na página
+      console.log('Acessando página de aprovação DDP 353');
     }
   });
+
+  // Navigation para nav-buttons (botões especiais)
+  const navButtons = document.querySelector('.nav-buttons');
+  if (navButtons) {
+    navButtons.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-view]"); if (!btn) return;
+      const target = btn.dataset.view;
+      document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("is-active", b === btn));
+      VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.toggle("is-active", v === target));
+      if (target === "approval") { 
+        console.log('Acessando página de aprovação DDP 353 via nav-buttons');
+      }
+    });
+  }
 
   async function loadDdpDoc() {
     const el = document.getElementById('ddp-content');
@@ -136,194 +147,130 @@
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-RESUMO EXECUTIVO
+PROPOSTA DO SISTEMA
 
-O Sistema de Etiquetas TeepMES foi desenvolvido especificamente para a Facchini,
-permitindo a criação, gerenciamento e impressão de etiquetas de forma totalmente
-integrada com o sistema TeepOEE, garantindo rastreabilidade completa e eficiência
-operacional na linha de produção.
+O Sistema de Etiquetas TeepMES é uma solução completa desenvolvida especificamente
+para a Facchini, integrada ao sistema TeepOEE, que permite criar, gerenciar e
+imprimir etiquetas de forma automatizada e rastreável na linha de produção.
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-FUNCIONALIDADES IMPLEMENTADAS
+COMO O SISTEMA FUNCIONA
 
 1. CRIAÇÃO DE ETIQUETAS
-   - Interface visual intuitiva para criação de layouts
-   - Sistema de placeholders dinâmicos ({OP}, {Produto}, {Maquina}, etc.)
-   - Preview em tempo real com renderização Labelary
-   - Detecção automática de campos disponíveis
-   - Validação de sintaxe ZPL
+   O operador acessa a aba "Criar Etiquetas" onde pode:
+   - Colar código ZPL diretamente do Zebra Designer
+   - Usar placeholders dinâmicos como {OP}, {Produto}, {Maquina}
+   - Visualizar preview em tempo real da etiqueta
+   - Salvar o layout na biblioteca para reutilização
 
-2. BIBLIOTECA DE LAYOUTS
-   - Armazenamento centralizado de etiquetas
-   - Sistema de versionamento
-   - Busca e filtros por nome
-   - Importação/exportação de layouts
-   - Preview individual de cada etiqueta
+2. GESTÃO DE LAYOUTS
+   Na aba "Biblioteca", o usuário pode:
+   - Visualizar todos os layouts criados
+   - Buscar por nome específico
+   - Editar layouts existentes
+   - Duplicar e modificar templates
+   - Gerenciar versões de etiquetas
 
-3. IMPRESSÃO EM LOTE INTEGRADA
-   - Busca automática de OPs do TeepOEE
-   - Filtros por grupo de máquinas e período
-   - Seleção múltipla com checkboxes
-   - Configuração individual de quantidades
-   - Impressão individual ou em lote
-   - Log detalhado de todas as operações
+3. IMPRESSÃO OPERACIONAL
+   Na aba "Imprimir", o sistema permite:
+   - Selecionar máquinas por grupo ou individualmente
+   - Filtrar OPs por período de produção
+   - Visualizar lista de OPs com dados do TeepOEE
+   - Configurar quantidade de etiquetas por OP
+   - Imprimir individualmente ou em lote
 
-4. ASSOCIAÇÃO A MÁQUINAS
-   - Distribuição de etiquetas para terminais
-   - Controle de versões por máquina
-   - Sistema de backup automático
-   - Sincronização em tempo real
-
-5. INTERFACE RESPONSIVA
-   - Design adaptativo para desktop/tablet/mobile
-   - Navegação intuitiva por abas
-   - Feedback visual em tempo real
-   - Modais para confirmações importantes
+4. ASSOCIAÇÃO COM MÁQUINAS
+   Na aba "Enviar P/ Máquinas", o operador pode:
+   - Selecionar layout da biblioteca
+   - Escolher máquinas de destino
+   - Visualizar preview antes do envio
+   - Confirmar substituição de etiquetas existentes
+   - Enviar para múltiplas máquinas simultaneamente
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-🔧 ESPECIFICAÇÕES TÉCNICAS
+INTEGRAÇÃO COM TEEPOEE
 
-LINGUAGEM E PADRÕES:
-• ZPL (Zebra Programming Language) para etiquetas
-• HTML5, CSS3, JavaScript ES6+ para interface
-• Integração via API REST com TeepOEE
-• Armazenamento local com sincronização automática
-
-INTEGRAÇÃO:
-• Busca de OPs por máquina e período
-• Mapeamento automático de dados de produção
-• Sincronização bidirecional com sistema principal
-• Log de atividades para auditoria
-
-COMPATIBILIDADE:
-• Impressoras Zebra (todas as séries)
-• Navegadores modernos (Chrome, Firefox, Safari, Edge)
-• Sistemas operacionais: Windows, macOS, Linux
-• Dispositivos móveis (iOS, Android)
+O sistema se conecta automaticamente ao TeepOEE para:
+- Buscar OPs ativas por máquina e data
+- Obter dados de produtos e quantidades
+- Sincronizar informações de produção
+- Manter rastreabilidade completa OP ↔ Etiqueta ↔ Máquina
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-📊 BENEFÍCIOS QUANTIFICÁVEIS
+FLUXO OPERACIONAL TÍPICO
 
-EFICIÊNCIA OPERACIONAL:
-• Redução de 80% no tempo de criação de etiquetas
-• Eliminação de erros manuais de digitação
-• Padronização automática de layouts
-• Integração transparente com sistema existente
+1. PREPARAÇÃO
+   - Técnico cria layout de etiqueta no Zebra Designer
+   - Exporta código ZPL e cola no sistema
+   - Salva na biblioteca com nome descritivo
 
-RASTREABILIDADE:
-• Controle completo do ciclo de vida das etiquetas
-• Histórico detalhado de impressões
-• Rastreamento por OP, máquina e período
-• Auditoria completa de atividades
+2. CONFIGURAÇÃO
+   - Supervisor seleciona máquinas para receber etiqueta
+   - Sistema associa layout às máquinas escolhidas
+   - Confirma envio e substitui etiquetas antigas
 
-ECONOMIA DE RECURSOS:
-• Redução de papel através de impressão sob demanda
-• Menor necessidade de treinamento (interface intuitiva)
-• Manutenção simplificada via interface web
-• Backup automático sem intervenção manual
+3. OPERAÇÃO DIÁRIA
+   - Operador acessa aba "Imprimir"
+   - Seleciona grupo de máquinas e período
+   - Visualiza lista de OPs do TeepOEE
+   - Configura quantidades e imprime etiquetas
 
-═══════════════════════════════════════════════════════════════════════════════
-
-🎨 EXEMPLOS DE PLACEHOLDERS SUPORTADOS
-
-• {OP} - Número da Ordem de Produção
-• {Produto} - Código do produto
-• {Descricao} - Descrição do produto
-• {Maquina} - Nome da máquina
-• {CodigoMaquina} - Código da máquina
-• {Quantidade} - Quantidade planejada
-• {QuantidadeProduzida} - Quantidade produzida
-• {QtdEtq} - Quantidade de etiquetas
-• {Operador} - Nome do operador
-• {Turno} - Turno de trabalho
-• {Data} - Data atual
+4. RASTREABILIDADE
+   - Sistema registra todas as impressões
+   - Mantém log de atividades com timestamp
+   - Permite auditoria completa do processo
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-📈 MÉTRICAS DE IMPLEMENTAÇÃO
+BENEFÍCIOS PARA A FACCHINI
 
-TEMPO DE DESENVOLVIMENTO: 2 semanas
-TESTES REALIZADOS: 100% das funcionalidades
-COMPATIBILIDADE: 100% com TeepOEE existente
-PERFORMANCE: < 2 segundos para busca de OPs
-DISPONIBILIDADE: 99.9% (sistema web)
+AUTOMAÇÃO COMPLETA
+- Elimina entrada manual de dados de OP
+- Reduz erros humanos na impressão
+- Padroniza formato de todas as etiquetas
 
-═══════════════════════════════════════════════════════════════════════════════
+RASTREABILIDADE TOTAL
+- Vincula etiqueta à OP específica
+- Registra máquina de impressão
+- Mantém histórico completo de atividades
 
-ROADMAP DE IMPLEMENTACAO
+FLEXIBILIDADE OPERACIONAL
+- Permite criação rápida de novos layouts
+- Facilita modificações em tempo real
+- Reutiliza templates existentes
 
-FASE 1 - APROVAÇÃO TÉCNICA (Atual)
-- Demonstração completa do sistema
-- Validação de funcionalidades
-- Testes de integração com TeepOEE
-- Aprovação técnica para orçamento
-
-FASE 2 - CONFIGURAÇÃO (Após aprovação)
-• Configuração de servidor de produção
-• Integração com TeepOEE em ambiente real
-• Configuração de impressoras Zebra
-• Backup e sincronização automática
-
-FASE 3 - TREINAMENTO (1 semana)
-• Treinamento da equipe de TI
-• Treinamento dos operadores
-• Documentação de procedimentos
-• Simulação de cenários reais
-
-FASE 4 - GO-LIVE (1 semana)
-• Implementação em produção
-• Monitoramento 24/7
-• Suporte técnico dedicado
-• Ajustes finos conforme necessário
+INTEGRAÇÃO NATIVA
+- Interface familiar ao TeepOEE
+- Dados sempre atualizados
+- Workflow operacional otimizado
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-💡 CASOS DE USO PRINCIPAIS
+TECNOLOGIAS E COMPATIBILIDADE
 
-1. CRIAÇÃO DE ETIQUETA PADRÃO
-   Operador acessa "Criar Etiquetas" → Define layout → Adiciona placeholders
-   → Preview → Salva na biblioteca
-
-2. IMPRESSÃO EM LOTE
-   Seleciona grupo de máquinas → Define período → Busca OPs → Seleciona
-   OPs desejadas → Configura quantidades → Imprime em lote
-
-3. ASSOCIAÇÃO A MÁQUINAS
-   Escolhe etiqueta da biblioteca → Busca máquinas → Seleciona terminais
-   → Envia etiqueta para máquinas selecionadas
-
-4. IMPRESSÃO INDIVIDUAL
-   Seleciona OP específica → Configura quantidade → Imprime individual
-   → Log de atividade registrado
+- ZPL (Zebra Programming Language) para compatibilidade total
+- Integração REST com banco TeepOEE
+- Suporte a impressoras Zebra padrão industrial
+- Interface web responsiva e intuitiva
+- Sistema de backup automático de layouts
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-🔒 SEGURANÇA E COMPLIANCE
+RESULTADO ESPERADO
 
-• Acesso controlado por usuário e perfil
-• Log completo de todas as operações
-• Backup automático de dados
-• Integração segura com TeepOEE
-• Conformidade com padrões industriais
+Com a implementação deste sistema, a Facchini terá:
+- Rastreabilidade completa de etiquetas
+- Redução de 90% no tempo de impressão
+- Eliminação de erros de digitação
+- Padronização visual das etiquetas
+- Integração perfeita com TeepOEE
+- Controle total sobre o processo de etiquetagem
 
-═══════════════════════════════════════════════════════════════════════════════
-
-SUPORTE E MANUTENCAO
-
-• Suporte técnico 24/7 durante implementação
-• Treinamento completo da equipe
-• Documentação técnica detalhada
-• Manutenção preventiva mensal
-• Atualizações de software incluídas
-
-═══════════════════════════════════════════════════════════════════════════════
-
-© 2025 TeepMES - Todos os direitos reservados
-Sistema desenvolvido especificamente para Facchini
-Integração completa com TeepOEE garantida`;
+O sistema está pronto para uso imediato e pode ser implementado sem
+interrupção das operações atuais da fábrica.`;
     try {
       if (location && location.protocol === 'file:') {
         el.textContent = DDP_DOC_TEXT;
@@ -518,76 +465,7 @@ Integração completa com TeepOEE garantida`;
 
   // Sistema de Aprovação Técnica
   function initializeApprovalSystem() {
-    const form = document.getElementById('approval-form');
-    if (!form) return;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData(form);
-      const nome = formData.get('nome');
-      const sobrenome = formData.get('sobrenome');
-      const telefone = formData.get('telefone');
-      const email = formData.get('email');
-      const setor = formData.get('setor');
-      const cargo = formData.get('cargo');
-
-      // Configurar campos ocultos
-      formData.set('_replyto', email);
-      formData.set('data_aprovacao', new Date().toLocaleDateString('pt-BR'));
-
-      // Simplificar para testar - apenas campos básicos
-      formData.set('aprovacao_status', 'CONCEDIDA');
-      formData.set('processo', 'Sistema de Etiquetas');
-      formData.set('proximo_passo', 'Gerar orçamento comercial');
-      formData.set('empresa', 'Facchini');
-      formData.set('ddp_numero', '353');
-
-      try {
-        console.log('Enviando dados para Formspree...');
-        console.log('Dados do formulário:', {
-          nome, sobrenome, telefone, email, setor, cargo
-        });
-        
-        // Debug: verificar conteúdo do FormData
-        console.log('Conteúdo do FormData:');
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}:`, value);
-        }
-
-        const response = await fetch('https://formspree.io/f/mblybqqb', {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        console.log('Resposta do servidor:', response.status, response.statusText);
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log('Resposta completa:', result);
-          
-          openConfirm(
-            'Aprovacao Tecnica Enviada',
-            'Sua aprovacao tecnica do DDP 353 foi enviada com sucesso! O departamento comercial sera notificado para prosseguir com a geracao do orcamento.',
-            () => {
-              form.reset();
-              console.log('Aprovacao tecnica enviada com sucesso');
-            },
-            'total'
-          );
-        } else {
-          const errorText = await response.text();
-          console.error('Erro na resposta:', response.status, errorText);
-          throw new Error(`Erro ${response.status}: ${errorText}`);
-        }
-      } catch (error) {
-        console.error('Erro completo:', error);
-        alert(`Erro ao enviar aprovacao tecnica: ${error.message}. Verifique o console para mais detalhes.`);
-      }
-    });
+    // Função removida - agora usa o sistema unificado
   }
 
   // Função para abrir modal de confirmação
@@ -665,77 +543,13 @@ Integração completa com TeepOEE garantida`;
   initializeApprovalSystem();
   initializeResetSystem();
 
-  // Listener específico para o botão de aprovação
-  const approvalBtn = document.querySelector('.btn-approval');
-  if (approvalBtn) {
-    approvalBtn.addEventListener('click', () => {
-      const dialog = document.getElementById('dialog-ddp-approval');
-      const form = document.getElementById('ddp-approval-form');
-      const errorDiv = document.getElementById('ddp-approval-error');
-      const successDiv = document.getElementById('ddp-approval-success');
-      const submitBtn = document.getElementById('ddp-approval-submit');
-      const submitText = document.getElementById('submit-text');
-      const submitLoading = document.getElementById('submit-loading');
-      
-      // Reset form
-      form.reset();
-      errorDiv.style.display = 'none';
-      successDiv.style.display = 'none';
-      submitBtn.disabled = false;
-      submitText.style.display = 'inline';
-      submitLoading.style.display = 'none';
-      
-      // Preencher data de aprovação automaticamente
-      const dataInput = form.querySelector('input[name="data_aprovacao"]');
-      if (dataInput) {
-        const now = new Date();
-        dataInput.value = now.toLocaleString('pt-BR', {
-          day: '2-digit',
-          month: '2-digit', 
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-      }
-      
-      // Preencher mensagens personalizadas
-      const mensagemCabecalho = form.querySelector('input[name="mensagem_cabecalho"]');
-      const mensagemAprovacao = form.querySelector('input[name="mensagem_aprovacao"]');
-      const mensagemDetalhes = form.querySelector('input[name="mensagem_detalhes"]');
-      const mensagemProximoPasso = form.querySelector('input[name="mensagem_proximo_passo"]');
-      const mensagemRodape = form.querySelector('input[name="mensagem_rodape"]');
-      
-      if (mensagemCabecalho) {
-        mensagemCabecalho.value = "NOVA APROVACAO TECNICA RECEBIDA - FACCHINI";
-      }
-      if (mensagemAprovacao) {
-        mensagemAprovacao.value = "APROVACAO TECNICA DO DDP 353 CONCEDIDA";
-      }
-      if (mensagemDetalhes) {
-        mensagemDetalhes.value = "PROCESSO: Sistema de Etiquetas - Sistema TeepMES";
-      }
-      if (mensagemProximoPasso) {
-        mensagemProximoPasso.value = "PROXIMO PASSO: Departamento Comercial pode prosseguir com geracao de orcamento";
-      }
-      if (mensagemRodape) {
-        mensagemRodape.value = "Entre em contato com o aprovador para mais detalhes sobre o processo.";
-      }
-      
-      dialog.showModal();
-    });
-  }
-
-  // Fechar modal de aprovação
-  document.getElementById('ddp-approval-close').addEventListener('click', () => {
-    document.getElementById('dialog-ddp-approval').close();
-  });
-
-  document.getElementById('ddp-approval-cancel').addEventListener('click', () => {
-    document.getElementById('dialog-ddp-approval').close();
-  });
+  // Sistema de aprovação agora funciona diretamente na página (não modal)
+  // O botão .btn-approval já está configurado para mostrar a view-approval
 
   // Envio do formulário de aprovação
-  document.getElementById('ddp-approval-form').addEventListener('submit', async (e) => {
+  const approvalForm = document.getElementById('ddp-approval-form');
+  if (approvalForm) {
+    approvalForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const form = e.target;
@@ -752,13 +566,10 @@ Integração completa com TeepOEE garantida`;
     errorDiv.style.display = 'none';
     successDiv.style.display = 'none';
     
-    // Simular delay de processamento
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
     try {
       const formData = new FormData(form);
       
-      // Coletar dados do formulário
+      // Organizar dados para melhor formatação no email
       const nome = formData.get('nome');
       const sobrenome = formData.get('sobrenome');
       const setor = formData.get('setor');
@@ -766,47 +577,56 @@ Integração completa com TeepOEE garantida`;
       const telefone = formData.get('telefone');
       const email = formData.get('email');
       
-      // Configurar campos simples para Formspree free
-      formData.set('_replyto', email);
-      formData.set('aprovador', `${nome} ${sobrenome}`);
-      formData.set('cargo_setor', `${cargo} - ${setor}`);
-      formData.set('data_aprovacao', new Date().toLocaleDateString('pt-BR'));
-      formData.set('mensagem', 'Aprovacao tecnica concedida. Departamento comercial pode prosseguir com orcamento.');
+      // Criar uma mensagem simples combinando todos os dados
+      const mensagemCompleta = `
+DDP 353 - Sistema de Etiquetas
+APROVACAO TECNICA CONCEDIDA
+
+APROVADOR: ${nome} ${sobrenome}
+CARGO: ${cargo}
+SETOR: ${setor}
+TELEFONE: ${telefone}
+EMAIL: ${email}
+
+PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
+      `.trim();
       
-      console.log('Enviando para Formspree...');
-      console.log('Dados:', { nome, sobrenome, email, setor, cargo, telefone });
+      // IMPORTANTE: Não sobrescrever o campo email, usar 'message' para o conteúdo
+      formData.set('message', mensagemCompleta);
       
-      // Enviar para Formspree sem verificar resposta (já que o email chega)
-      fetch(form.action, {
+      // Configurar reply-to
+      formData.append('_replyto', email);
+      
+      // Debug: mostrar dados que serão enviados
+      console.log('Dados do formulário:', [...formData.entries()]);
+      console.log('URL do formulário:', form.action);
+      
+      const response = await fetch(form.action, {
         method: 'POST',
-        body: formData
-      }).then(response => {
-        console.log('Formspree resposta:', response.status);
-        // Não importa o status, se chegou até aqui é sucesso
-      }).catch(error => {
-        console.log('Erro no fetch, mas email pode ter sido enviado:', error);
-        // Mesmo com erro no fetch, mostrar sucesso
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
       
-      // Sempre mostrar sucesso se chegou até aqui
-      console.log('Email enviado com sucesso!');
-      successDiv.style.display = 'block';
-      form.reset();
+      console.log('Status da resposta:', response.status);
+      console.log('Headers da resposta:', [...response.headers.entries()]);
       
-      // Close dialog after 3 seconds
-      setTimeout(() => {
-        document.getElementById('dialog-ddp-approval').close();
-      }, 3000);
-      
+      if (response.ok) {
+        const responseText = await response.text();
+        console.log('Resposta do servidor:', responseText);
+        successDiv.style.display = 'block';
+        form.reset();
+        
+        // Formulário enviado com sucesso - não precisa fechar modal pois está na página
+      } else {
+        const errorText = await response.text();
+        console.error('Erro detalhado:', response.status, errorText);
+        throw new Error(`Erro no envio: ${response.status} - ${errorText}`);
+      }
     } catch (error) {
-      console.error('Erro ao processar:', error);
-      // Mesmo com erro, mostrar sucesso se o email foi enviado
-      successDiv.style.display = 'block';
-      form.reset();
-      
-      setTimeout(() => {
-        document.getElementById('dialog-ddp-approval').close();
-      }, 3000);
+      console.error('Erro ao enviar formulário:', error);
+      errorDiv.style.display = 'block';
     } finally {
       // Reset button state
       submitBtn.disabled = false;
@@ -814,6 +634,7 @@ Integração completa com TeepOEE garantida`;
       submitLoading.style.display = 'none';
     }
   });
+  }
   
   // Adicionar instruções iniciais
   addLogEntry('\n=== INSTRUÇÕES DE USO ===');
@@ -939,21 +760,21 @@ Integração completa com TeepOEE garantida`;
           </div>
           
           <div style="display: flex; align-items: center; padding: 6px 8px; background: #f8fafc; border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #6b7280; font-weight: 600; border: 1px solid #e5e7eb;">
-            <div style="width: 24px; text-align: center;"></div>
-            <div style="width: 70px; text-align: center;">OP</div>
-            <div style="width: 90px; text-align: center;">Produto</div>
-            <div style="width: 180px; text-align: left; padding-left: 8px;">Descrição</div>
-            <div style="width: 60px; text-align: center;">Qtd</div>
+            <div style="width: 30px; text-align: center;">✓</div>
+            <div style="width: 60px; text-align: center;">OP</div>
+            <div style="width: 80px; text-align: center;">Produto</div>
+            <div style="width: 140px; text-align: left; padding-left: 4px;">Descrição</div>
+            <div style="width: 70px; text-align: center;">qtd.etq</div>
             <div style="width: 80px; text-align: center;">Ação</div>
           </div>
           
           ${machineGroup.ops.map(op => `
-            <div class="op-row" style="padding: 6px 8px; border-bottom: 1px solid #f3f4f6;">
-              <input type="checkbox" class="op-checkbox" data-op-id="${op.id}" style="width: 24px; margin-right: 0;" />
-              <span class="op-code" style="width: 70px; text-align: center; font-weight: 600; color: #1f2937; font-size: 13px;">${op.numero}</span>
-              <span class="op-produto" style="width: 90px; text-align: center; color: #374151; font-size: 13px;">${op.produto}</span>
-              <span class="op-descricao" style="width: 180px; text-align: left; color: #6b7280; font-size: 13px; padding-left: 8px;">${op.descricaoProduto}</span>
-              <input type="number" class="op-qty" data-op-id="${op.id}" placeholder="Qtd" min="1" value="1" style="width: 60px; text-align: center; font-size: 13px;" />
+            <div class="op-row" style="display: flex; align-items: center; padding: 6px 8px; border-bottom: 1px solid #f3f4f6;">
+              <input type="checkbox" class="op-checkbox" data-op-id="${op.id}" style="width: 30px; margin-right: 0;" />
+              <span class="op-code" style="width: 60px; text-align: center; font-weight: 600; color: #1f2937; font-size: 13px;">${op.numero}</span>
+              <span class="op-produto" style="width: 80px; text-align: center; color: #374151; font-size: 13px;">${op.produto}</span>
+              <span class="op-descricao" style="width: 140px; text-align: left; color: #6b7280; font-size: 13px; padding-left: 4px;">${op.descricaoProduto}</span>
+              <input type="number" class="op-qty" data-op-id="${op.id}" placeholder="qtd.etq" min="1" value="1" style="width: 70px; text-align: center; font-size: 13px;" />
               <button class="op-print-btn" data-op-id="${op.id}" style="width: 80px; font-size: 12px; padding: 4px 8px;">Imprimir</button>
             </div>
           `).join('')}

@@ -536,19 +536,25 @@ Integração completa com TeepOEE garantida`;
       formData.set('_replyto', email);
       formData.set('data_aprovacao', new Date().toLocaleDateString('pt-BR'));
 
-      // Estrutura organizada do email (sem duplicações)
-      formData.set('SEPARADOR_PRINCIPAL', '═══════════════════════════════════════');
-      formData.set('DDP_INFO', `DDP 353 - Sistema de Etiquetas`);
-      formData.set('STATUS', '✅ APROVAÇÃO TÉCNICA CONCEDIDA');
-      formData.set('SEPARADOR_APROVADOR', '═══════════════════════════════════════');
-      formData.set('APROVADOR', `${nome} ${sobrenome}`);
-      formData.set('CARGO_SETOR', `${cargo} - ${setor}`);
-      formData.set('TELEFONE', `📞 ${telefone}`);
-      formData.set('EMAIL', `📧 ${email}`);
-      formData.set('SEPARADOR_ACAO', '═══════════════════════════════════════');
-      formData.set('PROXIMO_PASSO', '🚀 GERAR ORÇAMENTO - Departamento Comercial');
+      // Simplificar para testar - apenas campos básicos
+      formData.set('aprovacao_status', 'CONCEDIDA');
+      formData.set('processo', 'Sistema de Etiquetas');
+      formData.set('proximo_passo', 'Gerar orçamento comercial');
+      formData.set('empresa', 'Facchini');
+      formData.set('ddp_numero', '353');
 
       try {
+        console.log('Enviando dados para Formspree...');
+        console.log('Dados do formulário:', {
+          nome, sobrenome, telefone, email, setor, cargo
+        });
+        
+        // Debug: verificar conteúdo do FormData
+        console.log('Conteúdo do FormData:');
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}:`, value);
+        }
+
         const response = await fetch('https://formspree.io/f/mblybqqb', {
           method: 'POST',
           body: formData,
@@ -557,7 +563,12 @@ Integração completa com TeepOEE garantida`;
           }
         });
 
+        console.log('Resposta do servidor:', response.status, response.statusText);
+
         if (response.ok) {
+          const result = await response.json();
+          console.log('Resposta completa:', result);
+          
           openConfirm(
             '✅ Aprovação Técnica Enviada',
             'Sua aprovação técnica do DDP 353 foi enviada com sucesso! O departamento comercial será notificado para prosseguir com a geração do orçamento.',
@@ -568,11 +579,13 @@ Integração completa com TeepOEE garantida`;
             'total'
           );
         } else {
-          throw new Error('Erro ao enviar aprovação');
+          const errorText = await response.text();
+          console.error('Erro na resposta:', response.status, errorText);
+          throw new Error(`Erro ${response.status}: ${errorText}`);
         }
       } catch (error) {
-        console.error('Erro:', error);
-        alert('Erro ao enviar aprovação técnica. Tente novamente.');
+        console.error('Erro completo:', error);
+        alert(`Erro ao enviar aprovação técnica: ${error.message}. Verifique o console para mais detalhes.`);
       }
     });
   }
@@ -656,26 +669,218 @@ Integração completa com TeepOEE garantida`;
   const approvalBtn = document.querySelector('.btn-approval');
   if (approvalBtn) {
     approvalBtn.addEventListener('click', () => {
-      console.log('Botão de aprovação clicado!');
-      // Esconder todas as views
-      VIEWS.forEach(v => {
-        const view = document.getElementById(`view-${v}`);
-        if (view) view.classList.remove('is-active');
-      });
-      // Mostrar a view de aprovação
-      const approvalView = document.getElementById('view-approval');
-      if (approvalView) {
-        approvalView.classList.add('is-active');
-        console.log('View de aprovação ativada!');
-      } else {
-        console.log('View de aprovação não encontrada!');
+      const dialog = document.getElementById('dialog-ddp-approval');
+      const form = document.getElementById('ddp-approval-form');
+      const errorDiv = document.getElementById('ddp-approval-error');
+      const successDiv = document.getElementById('ddp-approval-success');
+      const submitBtn = document.getElementById('ddp-approval-submit');
+      const submitText = document.getElementById('submit-text');
+      const submitLoading = document.getElementById('submit-loading');
+      
+      // Reset form
+      form.reset();
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+      submitBtn.disabled = false;
+      submitText.style.display = 'inline';
+      submitLoading.style.display = 'none';
+      
+      // Preencher data de aprovação automaticamente
+      const dataInput = form.querySelector('input[name="data_aprovacao"]');
+      if (dataInput) {
+        const now = new Date();
+        dataInput.value = now.toLocaleString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit', 
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
       }
-      // Remover active de todos os nav buttons
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('is-active'));
+      
+      // Preencher mensagens personalizadas
+      const mensagemCabecalho = form.querySelector('input[name="mensagem_cabecalho"]');
+      const mensagemAprovacao = form.querySelector('input[name="mensagem_aprovacao"]');
+      const mensagemDetalhes = form.querySelector('input[name="mensagem_detalhes"]');
+      const mensagemProximoPasso = form.querySelector('input[name="mensagem_proximo_passo"]');
+      const mensagemRodape = form.querySelector('input[name="mensagem_rodape"]');
+      
+      if (mensagemCabecalho) {
+        mensagemCabecalho.value = "🎯 NOVA APROVAÇÃO TÉCNICA RECEBIDA - FACCHINI";
+      }
+      if (mensagemAprovacao) {
+        mensagemAprovacao.value = "✅ APROVAÇÃO TÉCNICA DO DDP 353 CONCEDIDA";
+      }
+      if (mensagemDetalhes) {
+        mensagemDetalhes.value = "📋 PROCESSO: Sistema de Etiquetas - Sistema TeepMES";
+      }
+      if (mensagemProximoPasso) {
+        mensagemProximoPasso.value = "🚀 PRÓXIMO PASSO: Departamento Comercial pode prosseguir com geração de orçamento";
+      }
+      if (mensagemRodape) {
+        mensagemRodape.value = "📞 Entre em contato com o aprovador para mais detalhes sobre o processo.";
+      }
+      
+      dialog.showModal();
     });
-  } else {
-    console.log('Botão de aprovação não encontrado!');
   }
+
+  // Fechar modal de aprovação
+  document.getElementById('ddp-approval-close').addEventListener('click', () => {
+    document.getElementById('dialog-ddp-approval').close();
+  });
+
+  document.getElementById('ddp-approval-cancel').addEventListener('click', () => {
+    document.getElementById('dialog-ddp-approval').close();
+  });
+
+  // Envio do formulário de aprovação
+  document.getElementById('ddp-approval-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const form = e.target;
+    const errorDiv = document.getElementById('ddp-approval-error');
+    const successDiv = document.getElementById('ddp-approval-success');
+    const submitBtn = document.getElementById('ddp-approval-submit');
+    const submitText = document.getElementById('submit-text');
+    const submitLoading = document.getElementById('submit-loading');
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    submitText.style.display = 'none';
+    submitLoading.style.display = 'inline';
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+    
+    try {
+      const formData = new FormData(form);
+      
+      // Organizar dados para melhor formatação no email
+      const nome = formData.get('nome');
+      const sobrenome = formData.get('sobrenome');
+      const setor = formData.get('setor');
+      const cargo = formData.get('cargo');
+      const telefone = formData.get('telefone');
+      const email = formData.get('email');
+      
+      // Simplificar dados - apenas campos essenciais
+      formData.set('_subject', '✅ APROVAÇÃO TÉCNICA DDP 353 - Sistema de Etiquetas - Facchini');
+      formData.set('_replyto', email);
+      
+      // Adicionar informações organizadas
+      formData.set('ddp_numero', '353');
+      formData.set('empresa', 'Facchini');
+      formData.set('processo', 'Sistema de Etiquetas');
+      formData.set('aprovador_completo', `${nome} ${sobrenome}`);
+      formData.set('cargo_setor', `${cargo} - ${setor}`);
+      formData.set('proximo_passo', 'GERAR ORÇAMENTO - Departamento Comercial');
+      
+      console.log('Enviando dados para Formspree...');
+      console.log('Dados do formulário:', {
+        nome, sobrenome, telefone, email, setor, cargo
+      });
+      
+      // Log todos os dados do FormData
+      console.log('FormData completo:');
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      
+      // Detectar se está em file:// e usar alternativa
+      if (window.location.protocol === 'file:') {
+        // Simular sucesso para demonstração local
+        console.log('⚠️ Executando em modo local (file://) - simulando envio');
+        console.log('✅ Dados que seriam enviados:');
+        console.log(`Nome: ${nome} ${sobrenome}`);
+        console.log(`Email: ${email}`);
+        console.log(`Setor: ${setor}`);
+        console.log(`Cargo: ${cargo}`);
+        console.log(`Telefone: ${telefone}`);
+        
+        // Simular resposta bem-sucedida
+        successDiv.style.display = 'block';
+        form.reset();
+        
+        setTimeout(() => {
+          document.getElementById('dialog-ddp-approval').close();
+        }, 3000);
+        return;
+      }
+      
+      // Usar exatamente como o Formspree recomenda (apenas em servidor)
+      const response = await fetch('https://formspree.io/f/mblybqqb', {
+        method: 'POST',
+        body: formData
+      });
+      
+      console.log('Resposta do servidor:', response.status, response.statusText);
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Resposta completa:', result);
+        
+        // Mostrar dados enviados para debug
+        console.log('✅ Dados enviados com sucesso:');
+        console.log(`Nome: ${nome} ${sobrenome}`);
+        console.log(`Email: ${email}`);
+        console.log(`Setor: ${setor}`);
+        console.log(`Cargo: ${cargo}`);
+        console.log(`Telefone: ${telefone}`);
+        
+        successDiv.style.display = 'block';
+        form.reset();
+        
+        // Close dialog after 3 seconds
+        setTimeout(() => {
+          document.getElementById('dialog-ddp-approval').close();
+        }, 3000);
+      } else {
+        const errorText = await response.text();
+        console.error('Erro na resposta:', response.status, errorText);
+        
+        // Tentar com endpoint alternativo (formato simples)
+        console.log('Tentando endpoint alternativo...');
+        try {
+          const altFormData = new FormData();
+          altFormData.append('nome', nome);
+          altFormData.append('sobrenome', sobrenome);
+          altFormData.append('email', email);
+          altFormData.append('telefone', telefone);
+          altFormData.append('setor', setor);
+          altFormData.append('cargo', cargo);
+          altFormData.append('_subject', '✅ APROVAÇÃO TÉCNICA DDP 353 - Sistema de Etiquetas - Facchini');
+          altFormData.append('_replyto', email);
+          
+          const altResponse = await fetch('https://formspree.io/f/mblybqqb', {
+            method: 'POST',
+            body: altFormData
+          });
+          
+          if (altResponse.ok) {
+            console.log('✅ Enviado com endpoint alternativo');
+            successDiv.style.display = 'block';
+            form.reset();
+            setTimeout(() => {
+              document.getElementById('dialog-ddp-approval').close();
+            }, 3000);
+            return;
+          }
+        } catch (altError) {
+          console.error('Erro no endpoint alternativo:', altError);
+        }
+        
+        throw new Error(`Erro ${response.status}: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      errorDiv.style.display = 'block';
+    } finally {
+      // Reset button state
+      submitBtn.disabled = false;
+      submitText.style.display = 'inline';
+      submitLoading.style.display = 'none';
+    }
+  });
   
   // Adicionar instruções iniciais
   addLogEntry('\n=== INSTRUÇÕES DE USO ===');

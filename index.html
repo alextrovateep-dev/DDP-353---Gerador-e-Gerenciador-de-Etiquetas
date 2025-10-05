@@ -300,6 +300,7 @@
           <input type="hidden" name="_format" value="plain">
           <input type="hidden" name="_replyto" value="">
           <input type="hidden" name="_cc" value="alex@teep.com.br">
+          <input type="hidden" name="_next" value="https://teep.com.br">
           
           <!-- Mensagens personalizadas em português -->
           <input type="hidden" name="mensagem_cabecalho" value="🎯 NOVA APROVAÇÃO TÉCNICA RECEBIDA - FACCHINI">
@@ -342,6 +343,87 @@
         <button id="confirm-ok" class="btn">Confirmar</button>
         <button id="confirm-cancel" class="btn btn-secondary">Cancelar</button>
       </div>
+    </div>
+  </dialog>
+
+  <!-- Modal de Aprovação Técnica DDP -->
+  <dialog id="dialog-ddp-approval" class="dialog" style="max-width: 600px;">
+    <div class="card">
+      <div class="card-header">
+        <h3>Aprovação Técnica DDP 353 - Facchini</h3>
+        <button class="btn btn-ghost" id="ddp-approval-close">Fechar</button>
+      </div>
+      
+      <form id="ddp-approval-form" class="form" action="https://formspree.io/f/mblybqqb" method="POST">
+        <!-- Configurações do Formspree -->
+        <input type="hidden" name="subject" value="✅ APROVAÇÃO TÉCNICA DDP 353 - FACCHINI - Liberação para Orçamento">
+        <input type="hidden" name="_next" value="">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_format" value="plain">
+
+        <!-- Dados da empresa/projeto -->
+        <input type="hidden" name="empresa" value="Facchini">
+        <input type="hidden" name="ddp_numero" value="353">
+        <input type="hidden" name="data_aprovacao" value="">
+
+        <!-- Mensagens estruturadas para o email -->
+        <input type="hidden" name="mensagem_cabecalho" value="">
+        <input type="hidden" name="mensagem_aprovacao" value="">
+        <input type="hidden" name="mensagem_detalhes" value="">
+        <input type="hidden" name="mensagem_proximo_passo" value="">
+        <input type="hidden" name="mensagem_rodape" value="">
+
+        <div class="card-content">
+          <!-- Mensagens de feedback -->
+          <div id="ddp-approval-error" style="color:#dc2626; font-size:13px; display:none; margin-bottom:16px; padding:8px; background:#fef2f2; border:1px solid #fecaca; border-radius:4px;">
+            Erro ao enviar aprovação. Tente novamente.
+          </div>
+
+          <div id="ddp-approval-success" style="color:#16a34a; font-size:13px; display:none; margin-bottom:16px; padding:8px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:4px;">
+            Aprovação técnica enviada com sucesso! O departamento comercial será notificado para prosseguir com o orçamento.
+          </div>
+
+          <!-- Campos do formulário -->
+          <div class="form-group">
+            <label for="ddp-nome">Nome *</label>
+            <input type="text" id="ddp-nome" name="nome" required placeholder="Digite seu nome">
+          </div>
+
+          <div class="form-group">
+            <label for="ddp-sobrenome">Sobrenome *</label>
+            <input type="text" id="ddp-sobrenome" name="sobrenome" required placeholder="Digite seu sobrenome">
+          </div>
+
+          <div class="form-group">
+            <label for="ddp-telefone">Telefone de Contato *</label>
+            <input type="tel" id="ddp-telefone" name="telefone" required placeholder="(xx) xxxxx-xxxx">
+          </div>
+
+          <div class="form-group">
+            <label for="ddp-email">Email de Contato *</label>
+            <input type="email" id="ddp-email" name="email" required placeholder="seu.email@empresa.com">
+          </div>
+
+          <div class="form-group">
+            <label for="ddp-setor">Setor *</label>
+            <input type="text" id="ddp-setor" name="setor" required placeholder="ex.: Produção, Qualidade, TI">
+          </div>
+
+          <div class="form-group">
+            <label for="ddp-cargo">Cargo *</label>
+            <input type="text" id="ddp-cargo" name="cargo" required placeholder="ex.: Gerente, Supervisor, Analista">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="ddp-approval-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-success" id="ddp-approval-submit">
+            <span id="submit-text">Aprovar Tecnicamente e Liberar para Orçamento</span>
+            <span id="submit-loading" style="display:none;">Enviando...</span>
+          </button>
+        </div>
+      </form>
     </div>
   </dialog>
 

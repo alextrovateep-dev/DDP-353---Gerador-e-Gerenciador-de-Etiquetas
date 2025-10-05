@@ -793,3 +793,175 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* Header do modal simplificado */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.dialog-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Botões simplificados */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 16px 20px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.actions .btn {
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.actions .btn-ghost {
+  background: #ffffff;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.actions .btn-ghost:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.actions .btn-success {
+  background: #22c55e;
+  color: white;
+  border-color: #22c55e;
+}
+
+.actions .btn-success:hover {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+/* Layout melhorado do formulário */
+#ddp-approval-form {
+  background: #ffffff;
+}
+
+#ddp-approval-form .form {
+  padding: 0;
+  background: transparent;
+}
+
+#ddp-approval-form label {
+  display: block;
+  margin-bottom: 20px;
+}
+
+#ddp-approval-form label span {
+  display: block;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#ddp-approval-form input[type="text"],
+#ddp-approval-form input[type="email"],
+#ddp-approval-form input[type="tel"] {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #111827;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+#ddp-approval-form input[type="text"]:focus,
+#ddp-approval-form input[type="email"]:focus,
+#ddp-approval-form input[type="tel"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#ddp-approval-form input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* Estilo do header do formulário */
+#ddp-approval-form .form > div:first-child {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+#ddp-approval-form .form > div:first-child > div:first-child {
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+#ddp-approval-form .form > div:first-child > div:last-child {
+  color: #3730a3;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Espaçamento do conteúdo do formulário */
+#ddp-approval-form .form {
+  padding: 24px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+/* Melhorar a aparência do scroll */
+#ddp-approval-form .form::-webkit-scrollbar {
+  width: 6px;
+}
+
+#ddp-approval-form .form::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+#ddp-approval-form .form::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+#ddp-approval-form .form::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Modal específico para aprovação */
+#dialog-ddp-approval {
+  max-width: 480px;
+  width: 90vw;
+}
+
+#dialog-ddp-approval .card {
+  border-radius: 16px;
+  overflow: hidden;
+}

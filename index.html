@@ -8,18 +8,46 @@
 </head>
 <body>
   <aside class="sidebar">
-    <div class="brand">🧩 TeepEtiquetas</div>
+    <div class="brand">
+      <div class="logo-container">
+        <img src="https://teep.com.br/wp-content/uploads/2023/11/cropped-cropped-teep-logo-menor-300x87.png" 
+             alt="TeepMES Logo" 
+             class="logo-img">
+      </div>
+      <div class="brand-text">
+        <div class="brand-title">TeepMES</div>
+        <div class="brand-subtitle">Facchini • Sistema de Etiquetas</div>
+      </div>
+    </div>
     <nav class="nav">
-      <button data-view="import" class="nav-btn is-active">Gerar/Gerenciar Etiquetas</button>
+      <button data-view="import" class="nav-btn is-active">Criar Etiquetas</button>
       <button data-view="print">Imprimir</button>
+      <button data-view="machines">Enviar P/ Máquinas</button>
       <button data-view="library">Biblioteca</button>
-      <button data-view="machines">Máquinas</button>
       <button data-view="ddp">DDP 353</button>
     </nav>
+    
+    <div class="nav-buttons">
+      <button data-view="approval" class="btn-approval">Aprovação Técnica DDP 353</button>
+      <button id="btn-reset" class="btn-reset">Resetar Demonstração</button>
+    </div>
+    
+    <!-- Mensagem de Propriedade Intelectual -->
+    <div class="property-notice-fixed">
+      <div class="property-notice">
+        <p><strong>© TeepMES</strong></p>
+        <p>Esta interface é de propriedade da Teep. O intuito é orientar as partes sobre a necessidade de desenvolvimento da Facchini junto ao sistema TeepMES.</p>
+        <span class="warning">⚠️ Cópia ou compartilhamento com pessoas ou empresas não conectadas ao projeto está PROIBIDO.</span>
+      </div>
+    </div>
   </aside>
 
   <header class="app-header">
     <div class="top-info"></div>
+    <!-- Mensagem de Propriedade Intelectual para Mobile -->
+    <div class="property-notice-mobile">
+      <p><strong>© TeepMES</strong> - Esta interface é de propriedade da Teep. <strong>⚠️ Cópia ou compartilhamento PROIBIDO.</strong></p>
+    </div>
   </header>
 
   <main id="views">
@@ -34,6 +62,29 @@
         <ul id="lib-list" class="list"></ul>
         <h4 style="margin-top:12px;">Preview</h4>
         <div id="lib-preview" class="output" style="min-height:140px; display:flex; align-items:center; justify-content:center;"></div>
+      </div>
+    </div>
+
+    <!-- Modal de Seleção de Máquinas -->
+    <div id="machine-selector-modal" class="modal-backdrop" style="display: none;">
+      <div class="modal" style="width: 600px; max-width: 90vw;">
+        <header>
+          <h3>Selecionar Máquinas</h3>
+          <button class="close-btn" id="machine-selector-close">Fechar</button>
+        </header>
+        <p class="hint" style="margin: 8px 0;">Marque as máquinas que deseja incluir na busca de OPs.</p>
+        <div class="row" style="margin-bottom: 12px;">
+          <button id="machine-select-all" class="btn btn-small">Selecionar Todas</button>
+          <button id="machine-deselect-all" class="btn btn-small">Desmarcar Todas</button>
+          <span id="machine-count" style="margin-left: 16px; font-weight: bold; color: #0066cc;">0 máquinas selecionadas</span>
+        </div>
+        <div id="machine-selector-list" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; padding: 8px;">
+          <!-- Lista de máquinas será preenchida dinamicamente -->
+        </div>
+        <div class="modal-actions" style="margin-top: 16px;">
+          <button id="machine-selector-cancel" class="btn">Cancelar</button>
+          <button id="machine-selector-confirm" class="btn btn-primary">Confirmar Seleção</button>
+        </div>
       </div>
     </div>
 
@@ -93,20 +144,62 @@
         para cada placeholder encontrado. Preencha os valores desejados, informe a quantidade de cópias e use <em>Preview</em> para visualizar antes de
         clicar em <em>Imprimir</em> (simulação).
       </p>
-      <div class="row">
-        <select id="pr-select-layout"></select>
-        <div class="btn-with-caption"><button id="pr-load" class="secondary">Carregar</button><span class="btn-caption">Gerar formulário</span></div>
-        <div class="btn-with-caption"><button id="pr-import-from-lib" class="secondary">Importar da Biblioteca</button><span class="btn-caption">Selecionar layout</span></div>
+
+      <!-- Filtros para busca de OPs -->
+      <div class="filters-section" style="margin:12px 0; padding:12px; background:#f8f9fa; border-radius:6px; border: 1px solid #e5e7eb;">
+        <h3 style="margin: 0 0 6px 0; font-size: 16px; color: #374151;">🔍 Buscar OPs para Impressão em Lote</h3>
+        <p class="hint" style="margin:0 0 12px 0; font-size: 13px; color: #6b7280;">
+          Selecione máquinas/grupos e período para buscar OPs do TeepOEE e imprimir etiquetas em lote.
+        </p>
+        
+        <!-- Primeira linha: Filtros principais -->
+        <div class="row" style="margin-bottom: 8px;">
+          <select id="pr-machine-group" style="min-width: 180px;">
+            <option value="">Selecionar grupo de máquinas</option>
+            <option value="grupo1">Grupo 1 - Injeção</option>
+            <option value="grupo2">Grupo 2 - Usinagem</option>
+            <option value="grupo3">Grupo 3 - Montagem</option>
+          </select>
+          <button id="pr-select-machines" class="secondary">Selecionar Máquinas</button>
+          <input id="pr-date-start" type="date" placeholder="Data Inicial" style="min-width: 140px;" />
+          <input id="pr-date-end" type="date" placeholder="Data Final" style="min-width: 140px;" />
+          <button id="pr-search-ops" class="secondary">Buscar OPs</button>
+        </div>
       </div>
-      <div id="pr-form" class="form" style="margin-top:8px;"></div>
-      <div class="row" style="margin-top:8px;">
-        <input id="pr-copies" type="number" value="1" min="1" style="max-width:160px;" placeholder="Quantidade (cópias)" />
-        <div class="btn-with-caption"><button id="pr-preview" class="secondary">Preview</button><span class="btn-caption">Ver etiqueta</span></div>
-        <div class="btn-with-caption"><button id="pr-print">Imprimir</button><span class="btn-caption">Simular impressão</span></div>
+
+      <!-- Seleção de etiqueta e quantidade -->
+      <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+        <h3 style="margin: 0 0 8px 0; font-size: 14px; color: #374151;">🏷️ Seleção de Etiqueta e Quantidade</h3>
+        <div class="row">
+          <select id="pr-select-layout" style="min-width: 200px;">
+            <option value="">Selecione uma etiqueta...</option>
+          </select>
+          <button id="pr-load" class="secondary">Carregar</button>
+          <button id="pr-import-from-lib" class="secondary">Importar da Biblioteca</button>
+          <div style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
+            <label for="pr-qty-etq" style="font-size: 13px; color: #374151; font-weight: 500;">qtd.etq:</label>
+            <input id="pr-qty-etq" type="number" value="1" min="1" max="999" style="width: 60px; padding: 4px 6px; border: 1px solid #d1d5db; border-radius: 3px; text-align: center;" placeholder="Qtd" />
+          </div>
+        </div>
       </div>
-      <div id="pr-preview-container" class="output" style="margin-top:8px; min-height:160px; display:flex; align-items:center; justify-content:center;">
-        <span class="hint">Carregue um layout e preencha os dados para visualizar.</span>
+
+      <!-- Resultados das OPs agrupadas por máquina -->
+      <div id="ops-results" style="display: none; margin:16px 0;"></div>
+
+      <!-- Formulário manual (modo individual) -->
+      <div id="manual-form-section" class="manual-form-section">
+        <h3>✏️ Preenchimento Manual Individual</h3>
+        <div id="pr-form" class="form" style="margin-top:8px;"></div>
+        <div class="row" style="margin-top:8px;">
+          <input id="pr-copies" type="number" value="1" min="1" style="max-width:160px;" placeholder="Quantidade (cópias)" />
+          <div class="btn-with-caption"><button id="pr-preview" class="secondary">Preview</button><span class="btn-caption">Ver etiqueta</span></div>
+          <div class="btn-with-caption"><button id="pr-print">Imprimir</button><span class="btn-caption">Simular impressão</span></div>
+        </div>
+        <div id="pr-preview-container" class="output" style="margin-top:8px; min-height:160px; display:flex; align-items:center; justify-content:center;">
+          <span class="hint">Carregue um layout e preencha os dados para visualizar.</span>
+        </div>
       </div>
+
       <h3 style="margin-top:16px">Log</h3>
       <pre id="pr-log" class="output"></pre>
     </section>
@@ -159,11 +252,98 @@
       <h2>DDP 353 - Geração e Gerenciamento de Etiquetas Para Facchini</h2>
       <div id="ddp-content" class="output" style="min-height:200px; white-space:pre-wrap;"></div>
     </section>
+
+    <section id="view-approval" class="view">
+      <h2>✅ Aprovação Técnica do DDP 353</h2>
+      <p class="hint">
+        Preencha os dados abaixo para aprovar tecnicamente o DDP 353 - Sistema de Etiquetas e liberar para orçamento.
+      </p>
+      
+      <!-- Formulário de Aprovação Técnica -->
+      <div class="card" style="max-width: 600px; margin: 20px auto;">
+        <h3 style="color: #374151; margin: 0 0 20px 0; text-align: center;">📋 Formulário de Aprovação Técnica</h3>
+        
+        <form id="approval-form" class="form">
+          <div class="form-group">
+            <label for="approval-nome">Nome *</label>
+            <input type="text" id="approval-nome" name="nome" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="approval-sobrenome">Sobrenome *</label>
+            <input type="text" id="approval-sobrenome" name="sobrenome" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="approval-telefone">Telefone de Contato *</label>
+            <input type="tel" id="approval-telefone" name="telefone" required placeholder="(11) 99999-9999">
+          </div>
+          
+          <div class="form-group">
+            <label for="approval-email">Email de Contato *</label>
+            <input type="email" id="approval-email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="approval-setor">Setor *</label>
+            <input type="text" id="approval-setor" name="setor" required placeholder="Ex: TI, Produção, Qualidade">
+          </div>
+          
+          <div class="form-group">
+            <label for="approval-cargo">Cargo *</label>
+            <input type="text" id="approval-cargo" name="cargo" required placeholder="Ex: Gerente, Coordenador, Analista">
+          </div>
+          
+          <!-- Campos ocultos para Formspree -->
+          <input type="hidden" name="subject" value="✅ APROVAÇÃO TÉCNICA DDP 353 - FACCHINI - Liberação para Orçamento">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_format" value="plain">
+          <input type="hidden" name="_replyto" value="">
+          <input type="hidden" name="_cc" value="alex@teep.com.br">
+          
+          <!-- Mensagens personalizadas em português -->
+          <input type="hidden" name="mensagem_cabecalho" value="🎯 NOVA APROVAÇÃO TÉCNICA RECEBIDA - FACCHINI">
+          <input type="hidden" name="mensagem_aprovacao" value="✅ APROVAÇÃO TÉCNICA DO DDP 353 CONCEDIDA">
+          <input type="hidden" name="mensagem_detalhes" value="📋 PROCESSO: Sistema de Etiquetas - Sistema TeepMES">
+          <input type="hidden" name="mensagem_proximo_passo" value="🚀 PRÓXIMO PASSO: Departamento Comercial pode prosseguir com geração de orçamento">
+          <input type="hidden" name="mensagem_rodape" value="📞 Entre em contato com o aprovador para mais detalhes sobre o processo.">
+          
+          <!-- Campos essenciais -->
+          <input type="hidden" name="empresa" value="Facchini">
+          <input type="hidden" name="data_aprovacao" value="">
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success" style="background: #16a34a; border-color: #16a34a; width: 100%; padding: 12px; font-size: 16px;">
+              ✅ Aprovar Tecnicamente e Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="app-footer">
     <span>Demo lúdica para alinhamento – sem dependências de backend</span>
   </footer>
+
+  <!-- Modal de Confirmação -->
+  <dialog id="dialog-confirm" class="dialog">
+    <div class="card">
+      <div class="card-header">
+        <h3 id="confirm-title">
+          <span class="icon">✓</span>
+          Confirmar Ação
+        </h3>
+      </div>
+      <div class="card-content">
+        <p id="confirm-message">Tem certeza que deseja continuar?</p>
+      </div>
+      <div class="form-actions">
+        <button id="confirm-ok" class="btn">Confirmar</button>
+        <button id="confirm-cancel" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </div>
+  </dialog>
 
   <script src="app.js"></script>
 </body>

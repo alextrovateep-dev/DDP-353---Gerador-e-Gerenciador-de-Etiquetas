@@ -30,36 +30,51 @@
 
   // Exemplo de OPs do TeepOEE - 3 OPs por máquina
   const EXAMPLE_OPS = [
-    // Grupo 1 - Injeção
-    { id: 'OP001', numero: 'OP001', produto: 'ABC-123', descricaoProduto: 'Peça A - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 100, dataInicio: '2025-09-28', status: 'Em produção' },
-    { id: 'OP002', numero: 'OP002', produto: 'ABC-124', descricaoProduto: 'Peça B - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 50, dataInicio: '2025-09-29', status: 'Em produção' },
-    { id: 'OP003', numero: 'OP003', produto: 'ABC-125', descricaoProduto: 'Peça C - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 75, dataInicio: '2025-09-30', status: 'Em produção' },
+    // Grupo 1 - Injeção (apenas operações de injeção)
+    { id: 'OP001', numero: 'OP001', produto: 'ABC-123', descricaoProduto: 'Peça A - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 100, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Injeção' },
+    { id: 'OP002', numero: 'OP002', produto: 'ABC-124', descricaoProduto: 'Peça B - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 50, dataInicio: '2025-10-07', status: 'Em produção', operacao: '20 - Moldagem' },
+    { id: 'OP003', numero: 'OP003', produto: 'ABC-125', descricaoProduto: 'Peça C - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 75, dataInicio: '2025-10-08', status: 'Em produção', operacao: '30 - Resfriamento' },
     
-    { id: 'OP004', numero: 'OP004', produto: 'ABC-126', descricaoProduto: 'Peça D - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 120, dataInicio: '2025-10-01', status: 'Em produção' },
-    { id: 'OP005', numero: 'OP005', produto: 'ABC-127', descricaoProduto: 'Peça E - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 80, dataInicio: '2025-10-02', status: 'Em produção' },
-    { id: 'OP006', numero: 'OP006', produto: 'ABC-128', descricaoProduto: 'Peça F - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 90, dataInicio: '2025-10-03', status: 'Em produção' },
+    { id: 'OP004', numero: 'OP004', produto: 'ABC-126', descricaoProduto: 'Peça D - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 120, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Injeção' },
+    { id: 'OP005', numero: 'OP005', produto: 'ABC-127', descricaoProduto: 'Peça E - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 80, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Moldagem' },
+    { id: 'OP006', numero: 'OP006', produto: 'ABC-128', descricaoProduto: 'Peça F - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 90, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Resfriamento' },
 
-    // Grupo 2 - Usinagem
-    { id: 'OP007', numero: 'OP007', produto: 'XYZ-001', descricaoProduto: 'Componente X - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 200, dataInicio: '2025-09-28', status: 'Em produção' },
-    { id: 'OP008', numero: 'OP008', produto: 'XYZ-002', descricaoProduto: 'Componente Y - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 150, dataInicio: '2025-09-29', status: 'Em produção' },
-    { id: 'OP009', numero: 'OP009', produto: 'XYZ-003', descricaoProduto: 'Componente Z - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 180, dataInicio: '2025-09-30', status: 'Em produção' },
+    // Grupo 2 - Usinagem (apenas operações de usinagem)
+    { id: 'OP007', numero: 'OP007', produto: 'XYZ-001', descricaoProduto: 'Componente X - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 200, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Torneamento' },
+    { id: 'OP008', numero: 'OP008', produto: 'XYZ-002', descricaoProduto: 'Componente Y - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 150, dataInicio: '2025-10-07', status: 'Em produção', operacao: '20 - Furação' },
+    { id: 'OP009', numero: 'OP009', produto: 'XYZ-003', descricaoProduto: 'Componente Z - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 180, dataInicio: '2025-10-08', status: 'Em produção', operacao: '30 - Rosqueamento' },
 
-    { id: 'OP010', numero: 'OP010', produto: 'XYZ-004', descricaoProduto: 'Eixo A - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 120, dataInicio: '2025-10-01', status: 'Em produção' },
-    { id: 'OP011', numero: 'OP011', produto: 'XYZ-005', descricaoProduto: 'Eixo B - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 100, dataInicio: '2025-10-02', status: 'Em produção' },
-    { id: 'OP012', numero: 'OP012', produto: 'XYZ-006', descricaoProduto: 'Eixo C - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 110, dataInicio: '2025-10-03', status: 'Em produção' },
+    { id: 'OP010', numero: 'OP010', produto: 'XYZ-004', descricaoProduto: 'Eixo A - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 120, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Torneamento' },
+    { id: 'OP011', numero: 'OP011', produto: 'XYZ-005', descricaoProduto: 'Eixo B - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 100, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Furação' },
+    { id: 'OP012', numero: 'OP012', produto: 'XYZ-006', descricaoProduto: 'Eixo C - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 110, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Rosqueamento' },
 
-    { id: 'OP013', numero: 'OP013', produto: 'XYZ-007', descricaoProduto: 'Peça Fresa A', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 80, dataInicio: '2025-09-28', status: 'Em produção' },
-    { id: 'OP014', numero: 'OP014', produto: 'XYZ-008', descricaoProduto: 'Peça Fresa B', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 60, dataInicio: '2025-09-29', status: 'Em produção' },
-    { id: 'OP015', numero: 'OP015', produto: 'XYZ-009', descricaoProduto: 'Peça Fresa C', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 70, dataInicio: '2025-09-30', status: 'Em produção' },
+    { id: 'OP013', numero: 'OP013', produto: 'XYZ-007', descricaoProduto: 'Peça Fresa A', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 80, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Fresagem' },
+    { id: 'OP014', numero: 'OP014', produto: 'XYZ-008', descricaoProduto: 'Peça Fresa B', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 60, dataInicio: '2025-10-07', status: 'Em produção', operacao: '20 - Ranhuramento' },
+    { id: 'OP015', numero: 'OP015', produto: 'XYZ-009', descricaoProduto: 'Peça Fresa C', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 70, dataInicio: '2025-10-08', status: 'Em produção', operacao: '30 - Desbaste' },
 
-    // Grupo 3 - Montagem
-    { id: 'OP016', numero: 'OP016', produto: 'MNT-001', descricaoProduto: 'Montagem Final A', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 25, dataInicio: '2025-10-01', status: 'Em produção' },
-    { id: 'OP017', numero: 'OP017', produto: 'MNT-002', descricaoProduto: 'Montagem Final B', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 30, dataInicio: '2025-10-02', status: 'Em produção' },
-    { id: 'OP018', numero: 'OP018', produto: 'MNT-003', descricaoProduto: 'Montagem Final C', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 35, dataInicio: '2025-10-03', status: 'Em produção' },
+    // Grupo 3 - Montagem (apenas operações de montagem)
+    { id: 'OP016', numero: 'OP016', produto: 'MNT-001', descricaoProduto: 'Montagem Final A', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 25, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Montagem' },
+    { id: 'OP017', numero: 'OP017', produto: 'MNT-002', descricaoProduto: 'Montagem Final B', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 30, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Fixação' },
+    { id: 'OP018', numero: 'OP018', produto: 'MNT-003', descricaoProduto: 'Montagem Final C', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 35, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Inspeção' },
 
-    { id: 'OP019', numero: 'OP019', produto: 'MNT-004', descricaoProduto: 'Montagem Secundária A', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 40, dataInicio: '2025-10-01', status: 'Em produção' },
-    { id: 'OP020', numero: 'OP020', produto: 'MNT-005', descricaoProduto: 'Montagem Secundária B', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 45, dataInicio: '2025-10-02', status: 'Em produção' },
-    { id: 'OP021', numero: 'OP021', produto: 'MNT-006', descricaoProduto: 'Montagem Secundária C', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 50, dataInicio: '2025-10-03', status: 'Em produção' },
+    { id: 'OP019', numero: 'OP019', produto: 'MNT-004', descricaoProduto: 'Montagem Secundária A', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 40, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Submontagem' },
+    { id: 'OP020', numero: 'OP020', produto: 'MNT-005', descricaoProduto: 'Montagem Secundária B', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 45, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Fixação' },
+    { id: 'OP021', numero: 'OP021', produto: 'MNT-006', descricaoProduto: 'Montagem Secundária C', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 50, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Lacração' },
+
+    // Exemplos de agrupamento CNC (conforme documentação Facchini)
+    // Agrupamento CNC 2222
+    { id: 'OP022', numero: 'OP1001', produto: 'PECA-001', descricaoProduto: 'Peça Principal', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-01', grupo: 'grupo4', qtdPlanejada: 15, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '2222', qtdPorChapa: 5, chapasReservadas: 3 },
+    { id: 'OP023', numero: 'OP1002', produto: 'PECA-002', descricaoProduto: 'Componente A', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-01', grupo: 'grupo4', qtdPlanejada: 30, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '2222', qtdPorChapa: 10, chapasReservadas: 3 },
+    { id: 'OP024', numero: 'OP1003', produto: 'PECA-003', descricaoProduto: 'Componente B', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-01', grupo: 'grupo4', qtdPlanejada: 60, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '2222', qtdPorChapa: 20, chapasReservadas: 3 },
+
+    // Agrupamento CNC 3333
+    { id: 'OP025', numero: 'OP1001', produto: 'PECA-001', descricaoProduto: 'Peça Principal', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-02', grupo: 'grupo4', qtdPlanejada: 85, dataInicio: '2025-10-07', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '3333', qtdPorChapa: 17, chapasReservadas: 5 },
+    { id: 'OP026', numero: 'OP1002', produto: 'PECA-002', descricaoProduto: 'Componente A', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-02', grupo: 'grupo4', qtdPlanejada: 120, dataInicio: '2025-10-07', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '3333', qtdPorChapa: 24, chapasReservadas: 5 },
+    { id: 'OP027', numero: 'OP1003', produto: 'PECA-003', descricaoProduto: 'Componente B', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-02', grupo: 'grupo4', qtdPlanejada: 140, dataInicio: '2025-10-07', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '3333', qtdPorChapa: 28, chapasReservadas: 5 },
+
+    // Agrupamento CNC 4444
+    { id: 'OP028', numero: 'OP2001', produto: 'PECA-004', descricaoProduto: 'Chapa Especial', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-03', grupo: 'grupo4', qtdPlanejada: 45, dataInicio: '2025-10-08', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '4444', qtdPorChapa: 15, chapasReservadas: 3 },
+    { id: 'OP029', numero: 'OP2002', produto: 'PECA-005', descricaoProduto: 'Suporte Lateral', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-03', grupo: 'grupo4', qtdPlanejada: 75, dataInicio: '2025-10-08', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '4444', qtdPorChapa: 25, chapasReservadas: 3 },
   ];
 
   const els = {
@@ -89,8 +104,13 @@
   let state = {
     draftZpl: localStorage.getItem(STORAGE_KEYS.draftZpl) || "",
     layouts: loadJson(STORAGE_KEYS.layouts, []),
-    machines: loadJson(STORAGE_KEYS.machines, ["Injetora 01", "Injetora 02", "Torno 01", "Torno 02", "Fresa 01", "Estação 01", "Estação 02"]),
-    machineGroups: loadJson(STORAGE_KEYS.machineGroups, { "Grupo 1": ["Injetora 01", "Injetora 02"], "Grupo 2": ["Torno 01", "Torno 02", "Fresa 01"], "Grupo 3": ["Estação 01", "Estação 02"] }),
+    machines: loadJson(STORAGE_KEYS.machines, ["Injetora 01", "Injetora 02", "Torno 01", "Torno 02", "Fresa 01", "Estação 01", "Estação 02", "Máquina de Corte", "Máquina de Dobra", "Máquina de Usinagem", "Máquina de Pintura", "Máquina de Solda"]),
+    machineGroups: loadJson(STORAGE_KEYS.machineGroups, { 
+      "Grupo 1 - Injeção": ["Injetora 01", "Injetora 02"], 
+      "Grupo 2 - Usinagem": ["Torno 01", "Torno 02", "Fresa 01"], 
+      "Grupo 3 - Montagem": ["Estação 01", "Estação 02"],
+      "Grupo 4 - Processo Sequencial": ["Máquina de Corte", "Máquina de Dobra", "Máquina de Usinagem", "Máquina de Pintura", "Máquina de Solda"]
+    }),
     associations: loadJson(STORAGE_KEYS.associations, {}),
     selectedMachines: [], // Máquinas selecionadas para busca de OPs
   };
@@ -111,7 +131,8 @@
   els.zplInput && (els.zplInput.value = state.draftZpl);
 
   // Navigation
-  els.nav.addEventListener("click", (e) => {
+  if (els.nav) {
+    els.nav.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-view]"); if (!btn) return;
     const target = btn.dataset.view;
     document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("is-active", b === btn));
@@ -122,9 +143,9 @@
     if (target === "ddp") { loadDdpDoc(); }
     if (target === "approval") { 
       // Sistema de aprovação na página
-      console.log('Acessando página de aprovação DDP 353');
     }
-  });
+    });
+  }
 
   // Navigation para nav-buttons (botões especiais)
   const navButtons = document.querySelector('.nav-buttons');
@@ -135,7 +156,7 @@
       document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("is-active", b === btn));
       VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.toggle("is-active", v === target));
       if (target === "approval") { 
-        console.log('Acessando página de aprovação DDP 353 via nav-buttons');
+        // Página de aprovação DDP 353
       }
     });
   }
@@ -411,35 +432,117 @@ interrupção das operações atuais da fábrica.`;
   // Filtro de grupo de máquinas
   els.prMachineGroup?.addEventListener("change", (e) => {
     const grupo = e.target.value;
-    if (grupo) {
+    const filterType = document.querySelector('input[name="filter-type"]:checked')?.value;
+    
+    if (filterType === 'group' && grupo) {
       // Mapear grupo para máquinas (simulação)
       const grupoMapping = {
-        'grupo1': ['Injetora 01', 'Injetora 02'],
-        'grupo2': ['Torno 01', 'Torno 02', 'Fresa 01'],
-        'grupo3': ['Estação 01', 'Estação 02']
+        'Grupo 1 - Injeção': ['Injetora 01', 'Injetora 02'],
+        'Grupo 2 - Usinagem': ['Torno 01', 'Torno 02', 'Fresa 01'],
+        'Grupo 3 - Montagem': ['Estação 01', 'Estação 02'],
+        'Grupo 4 - Processo Sequencial': ['Máquina de Corte', 'Máquina de Dobra', 'Máquina de Usinagem', 'Máquina de Pintura', 'Máquina de Solda']
       };
       
       const maquinasDoGrupo = grupoMapping[grupo] || [];
       state.selectedMachines = maquinasDoGrupo;
       
       addLogEntry(`Grupo "${grupo}" selecionado. Máquinas: ${maquinasDoGrupo.join(', ')}`);
-    } else {
+    } else if (filterType === 'group') {
       state.selectedMachines = [];
       addLogEntry('Filtro de grupo removido');
+    }
+  });
+
+  // Controle dos radio buttons
+  document.querySelectorAll('input[name="filter-type"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const filterType = e.target.value;
+      
+      if (filterType === 'group') {
+        // Ativar filtro por grupo
+        els.prMachineGroup.disabled = false;
+        document.getElementById('pr-cnc-grouping').disabled = true;
+        addLogEntry('Modo: Filtro por Grupo de Máquinas');
+        
+        // Se há um grupo selecionado, aplicar
+        if (els.prMachineGroup.value) {
+          els.prMachineGroup.dispatchEvent(new Event('change'));
+        }
+      } else if (filterType === 'machines') {
+        // Ativar filtro por máquinas específicas
+        els.prMachineGroup.disabled = true;
+        els.prMachineGroup.value = '';
+        document.getElementById('pr-cnc-grouping').disabled = true;
+        addLogEntry('Modo: Filtro por Máquinas Específicas');
+        addLogEntry('Use "Selecionar Máquinas Individuais" para escolher');
+      } else if (filterType === 'grouping') {
+        // Ativar filtro por agrupamento CNC
+        els.prMachineGroup.disabled = true;
+        els.prMachineGroup.value = '';
+        document.getElementById('pr-cnc-grouping').disabled = false;
+        addLogEntry('Modo: Filtro por Agrupamento CNC');
+        addLogEntry('Digite o código CNC para buscar OPs do mesmo plano de corte');
+      }
+    });
+  });
+
+  // Filtro por código CNC
+  document.getElementById('pr-cnc-grouping')?.addEventListener('input', (e) => {
+    const codigoCNC = e.target.value.trim();
+    const selectedDisplay = document.getElementById('selected-cnc-display');
+    const codeDisplay = document.getElementById('cnc-code-display');
+    
+    if (codigoCNC) {
+      // Buscar OPs com o mesmo código CNC
+      const opsComCNC = EXAMPLE_OPS.filter(op => op.codigoCNC === codigoCNC);
+      const maquinasCNC = [...new Set(opsComCNC.map(op => op.maquina))];
+      
+      state.selectedMachines = maquinasCNC;
+      
+      // Mostrar badge do plano selecionado
+      if (selectedDisplay && codeDisplay) {
+        codeDisplay.textContent = codigoCNC;
+        selectedDisplay.style.display = 'inline-block';
+      }
+      
+      addLogEntry(`🔍 Agrupamento CNC "${codigoCNC}" selecionado.`);
+      addLogEntry(`📊 OPs encontradas: ${opsComCNC.length}`);
+      addLogEntry(`🏭 Máquinas envolvidas: ${maquinasCNC.join(', ')}`);
+      
+      // Mostrar detalhes do agrupamento
+      if (opsComCNC.length > 0) {
+        addLogEntry(`📋 Plano de Corte CNC "${codigoCNC}" - Detalhes:`);
+        addLogEntry(`🏭 Máquina: ${maquinasCNC.join(', ')}`);
+        addLogEntry(`📊 OPs que serão cortadas neste plano:`);
+        opsComCNC.forEach(op => {
+          addLogEntry(`  - ${op.numero} (${op.produto}): ${op.qtdPorChapa} peças/chapa, ${op.chapasReservadas} chapas reservadas`);
+        });
+        const totalChapas = Math.max(...opsComCNC.map(op => op.chapasReservadas));
+        addLogEntry(`📦 Total de chapas no plano: ${totalChapas}`);
+      } else {
+        addLogEntry(`⚠️ Nenhuma OP encontrada para o código CNC "${codigoCNC}"`);
+        addLogEntry(`💡 Códigos disponíveis: 2222, 3333, 4444`);
+      }
+    } else {
+      state.selectedMachines = [];
+      
+      // Esconder badge do plano selecionado
+      if (selectedDisplay) {
+        selectedDisplay.style.display = 'none';
+      }
+      
+      addLogEntry('🗑️ Filtro de agrupamento CNC removido');
     }
   });
 
   // Definir datas padrão para facilitar teste
   function initializePrintPage() {
     if (els.prDateStart && els.prDateEnd) {
-      const hoje = new Date();
-      const umaSemanaAtras = new Date(hoje);
-      umaSemanaAtras.setDate(hoje.getDate() - 7);
+      // Definir datas que correspondam às OPs mockadas (06/10/2025 a 13/10/2025)
+      els.prDateStart.value = '06/10/2025';
+      els.prDateEnd.value = '13/10/2025';
       
-      els.prDateStart.value = umaSemanaAtras.toISOString().split('T')[0];
-      els.prDateEnd.value = hoje.toISOString().split('T')[0];
-      
-      addLogEntry('Datas padrao definidas: ultima semana');
+      // Datas padrão definidas silenciosamente
     }
   }
 
@@ -454,8 +557,7 @@ interrupção das operações atuais da fábrica.`;
       localStorage.removeItem(STORAGE_KEYS.machineGroups);
       state.machines = ["Injetora 01", "Injetora 02", "Torno 01", "Torno 02", "Fresa 01", "Estação 01", "Estação 02"];
       state.machineGroups = { "Grupo 1": ["Injetora 01", "Injetora 02"], "Grupo 2": ["Torno 01", "Torno 02", "Fresa 01"], "Grupo 3": ["Estação 01", "Estação 02"] };
-      addLogEntry('Dados antigos limpos. Maquinas atualizadas.');
-      addLogEntry('Datas das OPs corrigidas para setembro/outubro 2025');
+      // Dados antigos limpos silenciosamente
     }
   }
 
@@ -636,34 +738,53 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
   });
   }
   
-  // Adicionar instruções iniciais
-  addLogEntry('\n=== INSTRUÇÕES DE USO ===');
-  addLogEntry('1. Selecione um grupo de máquinas (ex: "Grupo 1 - Injeção")');
-  addLogEntry('2. Ou clique em "Selecionar Máquinas" para escolher individualmente');
-  addLogEntry('3. Ajuste as datas se necessário');
-  addLogEntry('4. Clique em "Buscar OPs" para encontrar operações');
-  addLogEntry('5. Selecione as OPs desejadas e defina quantidades');
-  addLogEntry('6. Use "Imprimir" individual ou "Imprimir Todas"');
-  addLogEntry('================================\n');
+  // Instruções removidas para limpar a demonstração
 
   function substituteZpl(zpl, values) {
     let out = zpl; for (const [k, v] of Object.entries(values)) { const re = new RegExp(`\\{${escapeRegExp(k)}\\}`, 'g'); out = out.replace(re, v || ''); } return out;
   }
   function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
 
+  // Função para converter DD/MM/YYYY para YYYY-MM-DD
+  function convertDateToISO(dateString) {
+    if (!dateString) return null;
+    // Se já está no formato YYYY-MM-DD, retorna como está
+    if (dateString.includes('-') && dateString.length === 10) {
+      return dateString;
+    }
+    // Converte DD/MM/YYYY para YYYY-MM-DD
+    const parts = dateString.split('/');
+    if (parts.length === 3) {
+      const day = parts[0].padStart(2, '0');
+      const month = parts[1].padStart(2, '0');
+      const year = parts[2];
+      return `${year}-${month}-${day}`;
+    }
+    return dateString;
+  }
+
   // Funções para busca de OPs
   function searchOps() {
     const dataInicio = els.prDateStart?.value;
     const dataFim = els.prDateEnd?.value;
     const selectedMachines = state.selectedMachines;
+    const filterType = document.querySelector('input[name="filter-type"]:checked')?.value;
 
     addLogEntry(`\n=== INICIANDO BUSCA DE OPs ===`);
+    addLogEntry(`Tipo de filtro: ${filterType === 'group' ? 'Grupo de Máquinas' : 'Máquinas Específicas'}`);
     addLogEntry(`Máquinas selecionadas: ${selectedMachines.length > 0 ? selectedMachines.join(', ') : 'Nenhuma'}`);
     addLogEntry(`Período: ${dataInicio || 'Sem início'} até ${dataFim || 'Sem fim'}`);
 
     if (selectedMachines.length === 0) {
-      addLogEntry('❌ Erro: Selecione pelo menos uma máquina antes de buscar OPs');
-      addLogEntry('Dica: Use "Selecionar Maquinas" ou escolha um grupo');
+      if (filterType === 'group') {
+        addLogEntry('❌ Erro: Selecione um grupo de máquinas antes de buscar OPs');
+      } else if (filterType === 'machines') {
+        addLogEntry('❌ Erro: Selecione pelo menos uma máquina específica antes de buscar OPs');
+        addLogEntry('Dica: Use "Selecionar Máquinas Individuais"');
+      } else if (filterType === 'grouping') {
+        addLogEntry('❌ Erro: Digite um código CNC antes de buscar OPs');
+        addLogEntry('Dica: Exemplos: 2222, 3333, 4444');
+      }
       return;
     }
 
@@ -683,14 +804,20 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
         addLogEntry(`  ❌ ${op.numero} descartada - máquina "${op.maquina}" não está selecionada`);
       }
       
-      // Filtrar por período
-      if (dataInicio && op.dataInicio < dataInicio) {
-        match = false;
-        addLogEntry(`  ❌ ${op.numero} descartada - data ${op.dataInicio} anterior ao período`);
+      // Filtrar por período (converter DD/MM/YYYY para YYYY-MM-DD para comparação)
+      if (dataInicio) {
+        const dataInicioISO = convertDateToISO(dataInicio);
+        if (op.dataInicio < dataInicioISO) {
+          match = false;
+          addLogEntry(`  ❌ ${op.numero} descartada - data ${op.dataInicio} anterior ao período (${dataInicio})`);
+        }
       }
-      if (dataFim && op.dataInicio > dataFim) {
-        match = false;
-        addLogEntry(`  - ${op.numero} descartada - data ${op.dataInicio} posterior ao periodo`);
+      if (dataFim) {
+        const dataFimISO = convertDateToISO(dataFim);
+        if (op.dataInicio > dataFimISO) {
+          match = false;
+          addLogEntry(`  ❌ ${op.numero} descartada - data ${op.dataInicio} posterior ao período (${dataFim})`);
+        }
       }
       
       if (match) {
@@ -740,20 +867,47 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
 
     const totalOps = data.reduce((sum, group) => sum + group.ops.length, 0);
 
+    // Verificar se há agrupamento CNC ativo
+    const cncInput = document.getElementById('pr-cnc-grouping');
+    const activeCNC = cncInput ? cncInput.value.trim() : '';
+    const isCNCFilter = document.querySelector('input[name="filter-type"]:checked')?.value === 'grouping';
+
     const html = `
       <div style="background: #f0f8ff; border: 1px solid #3b82f6; border-radius: 4px; padding: 8px 12px; margin-bottom: 8px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="margin: 0; color: #1e40af; font-size: 16px;">OPs Encontradas</h3>
+          <div>
+            <h3 style="margin: 0; color: #1e40af; font-size: 16px;">OPs Encontradas</h3>
+            ${isCNCFilter && activeCNC ? `
+              <div style="margin-top: 4px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: 600; display: inline-block; border: 1px solid #bbf7d0;">
+                📋 Plano de Corte CNC: ${activeCNC} - ${data.filter(group => group.ops.some(op => op.codigoCNC === activeCNC)).map(group => group.maquina).join(', ')}
+              </div>
+            ` : ''}
+          </div>
           <span style="color: #1e40af; font-weight: 600; font-size: 14px;">
             ${totalOps} OPs em ${data.length} máquina${data.length > 1 ? 's' : ''}
           </span>
         </div>
       </div>
       
-      ${data.map(machineGroup => `
-        <div class="machine-block">
+      ${data.map(machineGroup => {
+        // Verificar se há agrupamento CNC
+        const hasCNC = machineGroup.ops.some(op => op.codigoCNC);
+        const cncCodes = hasCNC ? [...new Set(machineGroup.ops.filter(op => op.codigoCNC).map(op => op.codigoCNC))] : [];
+        
+        return `
+        <div class="machine-block" style="${hasCNC && activeCNC && cncCodes.includes(activeCNC) ? 'border-left: 4px solid #16a34a; background: #f0fdf4;' : ''}">
           <div style="display: flex; align-items: center; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #e5e7eb;">
-            <h4 style="margin: 0; color: #374151; flex: 1; font-size: 14px;">${machineGroup.maquina}</h4>
+            <div style="flex: 1;">
+              <h4 style="margin: 0; color: #374151; font-size: 14px;">${machineGroup.maquina}</h4>
+              ${hasCNC && activeCNC && cncCodes.includes(activeCNC) ? `
+                <div style="margin-top: 2px;">
+                  <span style="font-size: 11px; color: #6b7280;">Plano de Corte CNC:</span>
+                  <span style="font-size: 11px; padding: 1px 4px; border-radius: 2px; margin-left: 4px; font-weight: 600; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;">
+                    ${activeCNC}
+                  </span>
+                </div>
+              ` : ''}
+            </div>
             <span style="background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600;">
               ${machineGroup.codigoMaquina}
             </span>
@@ -763,7 +917,9 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
             <div style="width: 30px; text-align: center;">✓</div>
             <div style="width: 60px; text-align: center;">OP</div>
             <div style="width: 80px; text-align: center;">Produto</div>
-            <div style="width: 140px; text-align: left; padding-left: 4px;">Descrição</div>
+            <div style="width: 100px; text-align: left; padding-left: 4px;">Descrição</div>
+            <div style="width: 100px; text-align: center;">Operação</div>
+            <div style="width: 70px; text-align: center;">Qtd. Prev.</div>
             <div style="width: 70px; text-align: center;">qtd.etq</div>
             <div style="width: 80px; text-align: center;">Ação</div>
           </div>
@@ -773,13 +929,16 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
               <input type="checkbox" class="op-checkbox" data-op-id="${op.id}" style="width: 30px; margin-right: 0;" />
               <span class="op-code" style="width: 60px; text-align: center; font-weight: 600; color: #1f2937; font-size: 13px;">${op.numero}</span>
               <span class="op-produto" style="width: 80px; text-align: center; color: #374151; font-size: 13px;">${op.produto}</span>
-              <span class="op-descricao" style="width: 140px; text-align: left; color: #6b7280; font-size: 13px; padding-left: 4px;">${op.descricaoProduto}</span>
+              <span class="op-descricao" style="width: 100px; text-align: left; color: #6b7280; font-size: 13px; padding-left: 4px;">${op.descricaoProduto}</span>
+              <span class="op-operacao" style="width: 100px; text-align: center; color: #059669; font-size: 13px; font-weight: 500;">${op.operacao}</span>
+              <span class="op-qtd-prevista" style="width: 70px; text-align: center; color: #374151; font-size: 13px; font-weight: 500;">${op.qtdPlanejada || '-'}</span>
               <input type="number" class="op-qty" data-op-id="${op.id}" placeholder="qtd.etq" min="1" value="1" style="width: 70px; text-align: center; font-size: 13px;" />
               <button class="op-print-btn" data-op-id="${op.id}" style="width: 80px; font-size: 12px; padding: 4px 8px;">Imprimir</button>
             </div>
           `).join('')}
         </div>
-      `).join('')}
+      `;
+    }).join('')}
       
       <div style="background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 8px 12px; margin-top: 8px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -803,11 +962,11 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
 
 
   function addLogEntry(message) {
-    if (!els.prLog) return;
-    
-    const timestamp = new Date().toLocaleTimeString('pt-BR');
-    els.prLog.textContent += `[${timestamp}] ${message}\n`;
-    els.prLog.scrollTop = els.prLog.scrollHeight;
+    // Log removido para limpar a demonstração
+    // Apenas mensagens críticas de erro são mantidas
+    if (message.includes('Erro:') || message.includes('❌')) {
+      console.log(message);
+    }
   }
 
   // Funções do modal de seleção de máquinas
@@ -857,6 +1016,16 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
     const checkboxes = els.machineSelectorList?.querySelectorAll('.machine-checkbox:checked');
     state.selectedMachines = Array.from(checkboxes || []).map(cb => cb.dataset.machine);
     
+    // Atualizar display das máquinas selecionadas
+    const display = document.getElementById('selected-machines-display');
+    if (display) {
+      if (state.selectedMachines.length > 0) {
+        display.textContent = `${state.selectedMachines.length} máquina(s) selecionada(s): ${state.selectedMachines.join(', ')}`;
+      } else {
+        display.textContent = 'Nenhuma máquina selecionada';
+      }
+    }
+    
     addLogEntry(`${state.selectedMachines.length} máquinas selecionadas: ${state.selectedMachines.join(', ')}`);
     closeMachineSelectorModal();
   }
@@ -890,6 +1059,10 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
       QtdEtq: qtdEtq,
       Maquina: op.maquina,
       CodigoMaquina: op.codigoMaquina,
+      Operacao: op.operacao,
+      CodigoCNC: op.codigoCNC || '',
+      QtdPorChapa: op.qtdPorChapa || '',
+      ChapasReservadas: op.chapasReservadas || '',
       Operador: 'Sistema',
       Turno: '1º',
       Data: new Date().toLocaleDateString('pt-BR')
@@ -952,6 +1125,10 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
         QtdEtq: qtdEtq,
         Maquina: op.maquina,
         CodigoMaquina: op.codigoMaquina,
+        Operacao: op.operacao,
+        CodigoCNC: op.codigoCNC || '',
+        QtdPorChapa: op.qtdPorChapa || '',
+        ChapasReservadas: op.chapasReservadas || '',
         Operador: 'Sistema',
         Turno: '1º',
         Data: new Date().toLocaleDateString('pt-BR')

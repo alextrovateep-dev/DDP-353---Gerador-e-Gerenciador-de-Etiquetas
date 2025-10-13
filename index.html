@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TeepEtiquetas - Demo Lúdica</title>
+  <title>TeepEtiquetas - Sistema de Etiquetas</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -146,39 +146,125 @@
       </p>
 
       <!-- Filtros para busca de OPs -->
-      <div class="filters-section" style="margin:12px 0; padding:12px; background:#f8f9fa; border-radius:6px; border: 1px solid #e5e7eb;">
-        <h3 style="margin: 0 0 6px 0; font-size: 16px; color: #374151;">🔍 Buscar OPs para Impressão em Lote</h3>
-        <p class="hint" style="margin:0 0 12px 0; font-size: 13px; color: #6b7280;">
-          Selecione máquinas/grupos e período para buscar OPs do TeepOEE e imprimir etiquetas em lote.
-        </p>
-        
-        <!-- Primeira linha: Filtros principais -->
-        <div class="row" style="margin-bottom: 8px;">
-          <select id="pr-machine-group" style="min-width: 180px;">
-            <option value="">Selecionar grupo de máquinas</option>
-            <option value="grupo1">Grupo 1 - Injeção</option>
-            <option value="grupo2">Grupo 2 - Usinagem</option>
-            <option value="grupo3">Grupo 3 - Montagem</option>
-          </select>
-          <button id="pr-select-machines" class="secondary">Selecionar Máquinas</button>
-          <input id="pr-date-start" type="date" placeholder="Data Inicial" style="min-width: 140px;" />
-          <input id="pr-date-end" type="date" placeholder="Data Final" style="min-width: 140px;" />
-          <button id="pr-search-ops" class="secondary">Buscar OPs</button>
+        <div class="filters-section" style="margin: 20px 0; padding: 24px; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+            <div style="margin-bottom: 24px; text-align: center;">
+              <div style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 12px 24px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);">
+                <span style="font-size: 16px; font-weight: 600;">Buscar OPs para Impressão em Lote</span>
+              </div>
+              <p class="hint" style="margin: 0; font-size: 15px; color: #64748b; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+                Escolha uma das opções abaixo para filtrar as OPs por máquinas ou grupos, e defina o período de busca.
+              </p>
+            </div>
+            
+            <!-- Opções de Filtro -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+              
+              <!-- Opção 1: Filtro por Grupo -->
+              <div style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%); opacity: 0; transition: opacity 0.3s ease;" class="selected-indicator"></div>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                  <div style="position: relative; margin-right: 16px;">
+                    <input type="radio" id="filter-group" name="filter-type" value="group" checked style="width: 20px; height: 20px; accent-color: #3b82f6; margin: 0;">
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                    <label for="filter-group" style="font-weight: 600; color: #1e293b; margin: 0; font-size: 16px; cursor: pointer;">Filtrar por Grupo de Máquinas</label>
+                  </div>
+                </div>
+                <div style="margin-left: 52px;">
+                  <select id="pr-machine-group" style="width: 100%; max-width: 320px; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #ffffff; transition: all 0.2s ease;">
+                    <option value="">Selecione um grupo...</option>
+                    <option value="Grupo 1 - Injeção">Grupo 1 - Injeção</option>
+                    <option value="Grupo 2 - Usinagem">Grupo 2 - Usinagem</option>
+                    <option value="Grupo 3 - Montagem">Grupo 3 - Montagem</option>
+                    <option value="Grupo 4 - Processo Sequencial">Grupo 4 - Processo Sequencial</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Opção 2: Filtro por Máquinas Específicas -->
+              <div style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%); opacity: 0; transition: opacity 0.3s ease;" class="selected-indicator"></div>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                  <div style="position: relative; margin-right: 16px;">
+                    <input type="radio" id="filter-machines" name="filter-type" value="machines" style="width: 20px; height: 20px; accent-color: #3b82f6; margin: 0;">
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                    <label for="filter-machines" style="font-weight: 600; color: #1e293b; margin: 0; font-size: 16px; cursor: pointer;">Filtrar por Máquinas Específicas</label>
+                  </div>
+                </div>
+                <div style="margin-left: 52px;">
+                  <button id="pr-select-machines" class="secondary" style="padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; background: #ffffff; border: 2px solid #d1d5db; color: #374151; transition: all 0.2s ease;">
+                    Selecionar Máquinas Individuais
+                  </button>
+                  <span id="selected-machines-display" style="margin-left: 16px; color: #059669; font-size: 14px; font-weight: 600; background: #f0fdf4; padding: 4px 8px; border-radius: 6px; border: 1px solid #bbf7d0;"></span>
+                </div>
+              </div>
+
+              <!-- Opção 3: Filtro por Agrupamento CNC -->
+              <div style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%); opacity: 0; transition: opacity 0.3s ease;" class="selected-indicator"></div>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                  <div style="position: relative; margin-right: 16px;">
+                    <input type="radio" id="filter-grouping" name="filter-type" value="grouping" style="width: 20px; height: 20px; accent-color: #3b82f6; margin: 0;">
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                    <label for="filter-grouping" style="font-weight: 600; color: #1e293b; margin: 0; font-size: 16px; cursor: pointer;">Filtrar por Agrupamento CNC</label>
+                  </div>
+                </div>
+                <div style="margin-left: 52px;">
+                  <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px; flex-wrap: wrap;">
+                    <input id="pr-cnc-grouping" type="text" placeholder="Digite o código CNC (ex: 2222)" style="min-width: 280px; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #ffffff; transition: all 0.2s ease;" />
+                    <div id="selected-cnc-display" style="display: none; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid #bbf7d0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                      Plano CNC: <span id="cnc-code-display"></span>
+                    </div>
+                  </div>
+                  <div>
+                    <span id="grouping-info" style="color: #64748b; font-size: 13px; font-style: italic;">
+                      Busca OPs do mesmo plano de corte
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Período e Busca -->
+            <div style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+              <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                <h4 style="font-weight: 600; color: #1e293b; margin: 0; font-size: 16px;">Período de Busca</h4>
+              </div>
+              <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 180px;">
+                  <label style="display: block; font-size: 12px; color: #64748b; margin-bottom: 4px; font-weight: 500;">Data Inicial</label>
+                  <input id="pr-date-start" type="date" placeholder="Data Inicial" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #ffffff; transition: all 0.2s ease;" />
+                </div>
+                <div style="display: flex; align-items: end; margin-bottom: 20px;">
+                  <span style="color: #64748b; font-weight: 500; font-size: 14px;">até</span>
+                </div>
+                <div style="flex: 1; min-width: 180px;">
+                  <label style="display: block; font-size: 12px; color: #64748b; margin-bottom: 4px; font-weight: 500;">Data Final</label>
+                  <input id="pr-date-end" type="date" placeholder="Data Final" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #ffffff; transition: all 0.2s ease;" />
+                </div>
+                <div style="margin-left: auto;">
+                  <button id="pr-search-ops" class="btn" style="padding: 14px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; border: none; box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3); transition: all 0.2s ease;">
+                    Buscar OPs
+                  </button>
+                </div>
+              </div>
+            </div>
         </div>
-      </div>
 
       <!-- Seleção de etiqueta e quantidade -->
-      <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
-        <h3 style="margin: 0 0 8px 0; font-size: 14px; color: #374151;">🏷️ Seleção de Etiqueta e Quantidade</h3>
-        <div class="row">
-          <select id="pr-select-layout" style="min-width: 200px;">
+      <div style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #1e293b; font-weight: 600;">Seleção de Etiqueta e Quantidade</h3>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <select id="pr-select-layout" style="min-width: 240px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
             <option value="">Selecione uma etiqueta...</option>
           </select>
-          <button id="pr-load" class="secondary">Carregar</button>
-          <button id="pr-import-from-lib" class="secondary">Importar da Biblioteca</button>
+          <button id="pr-load" class="secondary" style="padding: 8px 16px; border-radius: 6px; font-size: 14px;">Carregar</button>
+          <button id="pr-import-from-lib" class="secondary" style="padding: 8px 16px; border-radius: 6px; font-size: 14px;">Importar da Biblioteca</button>
           <div style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
-            <label for="pr-qty-etq" style="font-size: 13px; color: #374151; font-weight: 500;">qtd.etq:</label>
-            <input id="pr-qty-etq" type="number" value="1" min="1" max="999" style="width: 60px; padding: 4px 6px; border: 1px solid #d1d5db; border-radius: 3px; text-align: center;" placeholder="Qtd" />
+            <label for="pr-qty-etq" style="font-size: 14px; color: #1e293b; font-weight: 600;">qtd.etq:</label>
+            <input id="pr-qty-etq" type="number" value="1" min="1" max="999" style="width: 80px; padding: 8px; text-align: center; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;" placeholder="Qtd" />
           </div>
         </div>
       </div>
@@ -200,8 +286,7 @@
         </div>
       </div>
 
-      <h3 style="margin-top:16px">Log</h3>
-      <pre id="pr-log" class="output"></pre>
+      <!-- Log removido para limpar a demonstração -->
     </section>
 
     <section id="view-library" class="view">
@@ -254,11 +339,11 @@
     </section>
 
     <section id="view-approval" class="view">
-      <h2>✅ Aprovação Técnica do DDP 353</h2>
+      <h2>Aprovação Técnica do DDP 353</h2>
       
       <!-- Header Informativo -->
       <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 16px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-        <div style="font-weight: 600; color: #0c4a6e; margin-bottom: 8px;">📋 DDP 353 - Sistema de Etiquetas</div>
+        <div style="font-weight: 600; color: #0c4a6e; margin-bottom: 8px;">DDP 353 - Sistema de Etiquetas</div>
         <div style="color: #0369a1; font-size: 14px;">Formulário de aprovação técnica do processo para liberar geração de orçamento pelo departamento comercial</div>
       </div>
       

@@ -167,7 +167,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   border-bottom: none; 
 }
 
-.op-code, .op-produto, .op-descricao { 
+.op-code, .op-produto, .op-descricao, .op-operacao { 
   flex: 0 0 auto; 
 }
 
@@ -702,6 +702,75 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   .logo-container {
     width: 28px;
     height: 28px;
+  }
+}
+
+/* Melhorias para Filtros */
+.filters-section input[type="radio"]:checked + label {
+  color: #3b82f6 !important;
+}
+
+.filters-section input[type="radio"]:checked {
+  accent-color: #3b82f6;
+}
+
+/* Efeito do card selecionado */
+.filters-section input[type="radio"]:checked ~ .selected-indicator {
+  opacity: 1 !important;
+}
+
+.filters-section input[type="radio"]:checked {
+  transform: scale(1.1);
+}
+
+/* Hover nos cards */
+.filters-section > div > div:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.filters-section .secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filters-section input[type="text"]:focus,
+.filters-section input[type="date"]:focus,
+.filters-section select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: scale(1.02);
+}
+
+.filters-section .btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Animação suave para transições */
+.filters-section * {
+  transition: all 0.2s ease;
+}
+
+/* Responsividade para filtros em grid */
+@media (max-width: 1200px) {
+  .filters-section > div > div {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  
+  .filters-section > div > div > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .filters-section > div > div {
+    grid-template-columns: 1fr !important;
   }
 }
 

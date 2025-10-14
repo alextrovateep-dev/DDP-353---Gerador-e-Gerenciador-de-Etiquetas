@@ -21,61 +21,11 @@
     OP: 'OP123456',
     Quantidade: '10',
     QtdProduzida: '10',
-    QtdEtq: '1',
     Produto: 'ABC-123',
     Maquina: 'Prensa 01',
     Operador: 'João Silva',
     Turno: '1º',
   };
-
-  // Exemplo de OPs do TeepOEE - 3 OPs por máquina
-  const EXAMPLE_OPS = [
-    // Grupo 1 - Injeção (apenas operações de injeção)
-    { id: 'OP001', numero: 'OP001', produto: 'ABC-123', descricaoProduto: 'Peça A - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 100, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Injeção' },
-    { id: 'OP002', numero: 'OP002', produto: 'ABC-124', descricaoProduto: 'Peça B - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 50, dataInicio: '2025-10-07', status: 'Em produção', operacao: '20 - Moldagem' },
-    { id: 'OP003', numero: 'OP003', produto: 'ABC-125', descricaoProduto: 'Peça C - Injeção', maquina: 'Injetora 01', codigoMaquina: 'INJ-01', grupo: 'grupo1', qtdPlanejada: 75, dataInicio: '2025-10-08', status: 'Em produção', operacao: '30 - Resfriamento' },
-    
-    { id: 'OP004', numero: 'OP004', produto: 'ABC-126', descricaoProduto: 'Peça D - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 120, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Injeção' },
-    { id: 'OP005', numero: 'OP005', produto: 'ABC-127', descricaoProduto: 'Peça E - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 80, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Moldagem' },
-    { id: 'OP006', numero: 'OP006', produto: 'ABC-128', descricaoProduto: 'Peça F - Injeção', maquina: 'Injetora 02', codigoMaquina: 'INJ-02', grupo: 'grupo1', qtdPlanejada: 90, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Resfriamento' },
-
-    // Grupo 2 - Usinagem (apenas operações de usinagem)
-    { id: 'OP007', numero: 'OP007', produto: 'XYZ-001', descricaoProduto: 'Componente X - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 200, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Torneamento' },
-    { id: 'OP008', numero: 'OP008', produto: 'XYZ-002', descricaoProduto: 'Componente Y - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 150, dataInicio: '2025-10-07', status: 'Em produção', operacao: '20 - Furação' },
-    { id: 'OP009', numero: 'OP009', produto: 'XYZ-003', descricaoProduto: 'Componente Z - Torno', maquina: 'Torno 01', codigoMaquina: 'TOR-01', grupo: 'grupo2', qtdPlanejada: 180, dataInicio: '2025-10-08', status: 'Em produção', operacao: '30 - Rosqueamento' },
-
-    { id: 'OP010', numero: 'OP010', produto: 'XYZ-004', descricaoProduto: 'Eixo A - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 120, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Torneamento' },
-    { id: 'OP011', numero: 'OP011', produto: 'XYZ-005', descricaoProduto: 'Eixo B - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 100, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Furação' },
-    { id: 'OP012', numero: 'OP012', produto: 'XYZ-006', descricaoProduto: 'Eixo C - Torno', maquina: 'Torno 02', codigoMaquina: 'TOR-02', grupo: 'grupo2', qtdPlanejada: 110, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Rosqueamento' },
-
-    { id: 'OP013', numero: 'OP013', produto: 'XYZ-007', descricaoProduto: 'Peça Fresa A', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 80, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Fresagem' },
-    { id: 'OP014', numero: 'OP014', produto: 'XYZ-008', descricaoProduto: 'Peça Fresa B', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 60, dataInicio: '2025-10-07', status: 'Em produção', operacao: '20 - Ranhuramento' },
-    { id: 'OP015', numero: 'OP015', produto: 'XYZ-009', descricaoProduto: 'Peça Fresa C', maquina: 'Fresa 01', codigoMaquina: 'FRE-01', grupo: 'grupo2', qtdPlanejada: 70, dataInicio: '2025-10-08', status: 'Em produção', operacao: '30 - Desbaste' },
-
-    // Grupo 3 - Montagem (apenas operações de montagem)
-    { id: 'OP016', numero: 'OP016', produto: 'MNT-001', descricaoProduto: 'Montagem Final A', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 25, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Montagem' },
-    { id: 'OP017', numero: 'OP017', produto: 'MNT-002', descricaoProduto: 'Montagem Final B', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 30, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Fixação' },
-    { id: 'OP018', numero: 'OP018', produto: 'MNT-003', descricaoProduto: 'Montagem Final C', maquina: 'Estação 01', codigoMaquina: 'EST-01', grupo: 'grupo3', qtdPlanejada: 35, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Inspeção' },
-
-    { id: 'OP019', numero: 'OP019', produto: 'MNT-004', descricaoProduto: 'Montagem Secundária A', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 40, dataInicio: '2025-10-09', status: 'Em produção', operacao: '10 - Submontagem' },
-    { id: 'OP020', numero: 'OP020', produto: 'MNT-005', descricaoProduto: 'Montagem Secundária B', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 45, dataInicio: '2025-10-10', status: 'Em produção', operacao: '20 - Fixação' },
-    { id: 'OP021', numero: 'OP021', produto: 'MNT-006', descricaoProduto: 'Montagem Secundária C', maquina: 'Estação 02', codigoMaquina: 'EST-02', grupo: 'grupo3', qtdPlanejada: 50, dataInicio: '2025-10-11', status: 'Em produção', operacao: '30 - Lacração' },
-
-    // Exemplos de agrupamento CNC (conforme documentação Facchini)
-    // Agrupamento CNC 2222
-    { id: 'OP022', numero: 'OP1001', produto: 'PECA-001', descricaoProduto: 'Peça Principal', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-01', grupo: 'grupo4', qtdPlanejada: 15, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '2222', qtdPorChapa: 5, chapasReservadas: 3 },
-    { id: 'OP023', numero: 'OP1002', produto: 'PECA-002', descricaoProduto: 'Componente A', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-01', grupo: 'grupo4', qtdPlanejada: 30, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '2222', qtdPorChapa: 10, chapasReservadas: 3 },
-    { id: 'OP024', numero: 'OP1003', produto: 'PECA-003', descricaoProduto: 'Componente B', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-01', grupo: 'grupo4', qtdPlanejada: 60, dataInicio: '2025-10-06', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '2222', qtdPorChapa: 20, chapasReservadas: 3 },
-
-    // Agrupamento CNC 3333
-    { id: 'OP025', numero: 'OP1001', produto: 'PECA-001', descricaoProduto: 'Peça Principal', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-02', grupo: 'grupo4', qtdPlanejada: 85, dataInicio: '2025-10-07', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '3333', qtdPorChapa: 17, chapasReservadas: 5 },
-    { id: 'OP026', numero: 'OP1002', produto: 'PECA-002', descricaoProduto: 'Componente A', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-02', grupo: 'grupo4', qtdPlanejada: 120, dataInicio: '2025-10-07', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '3333', qtdPorChapa: 24, chapasReservadas: 5 },
-    { id: 'OP027', numero: 'OP1003', produto: 'PECA-003', descricaoProduto: 'Componente B', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-02', grupo: 'grupo4', qtdPlanejada: 140, dataInicio: '2025-10-07', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '3333', qtdPorChapa: 28, chapasReservadas: 5 },
-
-    // Agrupamento CNC 4444
-    { id: 'OP028', numero: 'OP2001', produto: 'PECA-004', descricaoProduto: 'Chapa Especial', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-03', grupo: 'grupo4', qtdPlanejada: 45, dataInicio: '2025-10-08', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '4444', qtdPorChapa: 15, chapasReservadas: 3 },
-    { id: 'OP029', numero: 'OP2002', produto: 'PECA-005', descricaoProduto: 'Suporte Lateral', maquina: 'Máquina de Corte', codigoMaquina: 'CORT-03', grupo: 'grupo4', qtdPlanejada: 75, dataInicio: '2025-10-08', status: 'Em produção', operacao: '10 - Corte', codigoCNC: '4444', qtdPorChapa: 25, chapasReservadas: 3 },
-  ];
 
   const els = {
     nav: document.querySelector(".nav"), views: document.getElementById("views"),
@@ -85,15 +35,20 @@
 
     // print view
     prSelectLayout: document.getElementById("pr-select-layout"), prLoad: document.getElementById("pr-load"), prForm: document.getElementById("pr-form"), prCopies: document.getElementById("pr-copies"), prPreview: document.getElementById("pr-preview"), prPrint: document.getElementById("pr-print"), prPreviewContainer: document.getElementById("pr-preview-container"), prLog: document.getElementById("pr-log"),
-    // print batch functionality
-    prMachineGroup: document.getElementById("pr-machine-group"), prSelectMachines: document.getElementById("pr-select-machines"), prDateStart: document.getElementById("pr-date-start"), prDateEnd: document.getElementById("pr-date-end"), prSearchOps: document.getElementById("pr-search-ops"), prImportFromLib: document.getElementById("pr-import-from-lib"), prQtyEtq: document.getElementById("pr-qty-etq"), prOpsResults: document.getElementById("ops-results"),
-    // machine selector modal
-    machineSelectorModal: document.getElementById("machine-selector-modal"), machineSelectorClose: document.getElementById("machine-selector-close"), machineSelectorList: document.getElementById("machine-selector-list"), machineSelectAll: document.getElementById("machine-select-all"), machineDeselectAll: document.getElementById("machine-deselect-all"), machineCount: document.getElementById("machine-count"), machineSelectorCancel: document.getElementById("machine-selector-cancel"), machineSelectorConfirm: document.getElementById("machine-selector-confirm"),
+    // print batch inputs
+    prDateStart: document.getElementById("pr-date-start"), prDateEnd: document.getElementById("pr-date-end"), prSearchOps: document.getElementById("pr-search-ops"), prQtyEtq: document.getElementById("pr-qty-etq"), prOpsResults: document.getElementById("ops-results"), prCncGrouping: document.getElementById("pr-cnc-grouping"),
+    // print view extra selectors
+    prSelectGroupsBtn: document.getElementById("pr-select-groups"), selectedGroupsDisplay: document.getElementById("selected-groups-display"), selectedGroupsText: document.getElementById("selected-groups-text"),
+    prSelectMachinesBtn: document.getElementById("pr-select-machines"), selectedMachinesDisplay: document.getElementById("selected-machines-display"),
 
     // library/machines
     search: document.getElementById("search"), newVersionBtn: document.getElementById("btn-new-version"), layoutList: document.getElementById("layout-list"),
     machineList: document.getElementById("machine-list"), machineName: document.getElementById("machine-name"), machineGroup: document.getElementById("machine-group"), addMachineBtn: document.getElementById("btn-add-machine"), selectLayout: document.getElementById("select-layout"), selectMachine: document.getElementById("select-machine"), associateBtn: document.getElementById("btn-associate"), printBtn: document.getElementById("btn-print"), printLog: document.getElementById("print-log"),
     mlSelectLayout: document.getElementById("ml-select-layout"), mlOpenLibrary: document.getElementById("ml-open-library"), mlPreview: document.getElementById("ml-preview"), mlSearch: document.getElementById("ml-search"), mlGroup: document.getElementById("ml-group"), mlFetch: document.getElementById("ml-fetch"), mlResults: document.getElementById("ml-results"), mlSelectAll: document.getElementById("ml-select-all"), mlAssociate: document.getElementById("ml-associate"), mlAssociatedCount: document.getElementById("ml-associated-count"),
+
+    // modais - grupos e máquinas
+    groupModal: document.getElementById("group-selector-modal"), groupList: document.getElementById("group-selector-list"), groupSelectAll: document.getElementById("group-select-all"), groupDeselectAll: document.getElementById("group-deselect-all"), groupCount: document.getElementById("group-count"), groupConfirm: document.getElementById("group-selector-confirm"), groupCancel: document.getElementById("group-selector-cancel"), groupClose: document.getElementById("group-selector-close"),
+    machineModal: document.getElementById("machine-selector-modal"), machineListModal: document.getElementById("machine-selector-list"), machineSelectAllBtn: document.getElementById("machine-select-all"), machineDeselectAllBtn: document.getElementById("machine-deselect-all"), machineCountLabel: document.getElementById("machine-count"), machineConfirmBtn: document.getElementById("machine-selector-confirm"), machineCancelBtn: document.getElementById("machine-selector-cancel"), machineCloseBtn: document.getElementById("machine-selector-close"),
   };
 
   const STORAGE_KEYS = { draftZpl: "teep.demo.draftZpl", layouts: "teep.demo.layouts", machines: "teep.demo.machines", machineGroups: "teep.demo.machineGroups", associations: "teep.demo.assoc", activeLayoutId: "teep.demo.activeLayoutId" };
@@ -104,16 +59,14 @@
   let state = {
     draftZpl: localStorage.getItem(STORAGE_KEYS.draftZpl) || "",
     layouts: loadJson(STORAGE_KEYS.layouts, []),
-    machines: loadJson(STORAGE_KEYS.machines, ["Injetora 01", "Injetora 02", "Torno 01", "Torno 02", "Fresa 01", "Estação 01", "Estação 02", "Máquina de Corte", "Máquina de Dobra", "Máquina de Usinagem", "Máquina de Pintura", "Máquina de Solda"]),
-    machineGroups: loadJson(STORAGE_KEYS.machineGroups, { 
-      "Grupo 1 - Injeção": ["Injetora 01", "Injetora 02"], 
-      "Grupo 2 - Usinagem": ["Torno 01", "Torno 02", "Fresa 01"], 
-      "Grupo 3 - Montagem": ["Estação 01", "Estação 02"],
-      "Grupo 4 - Processo Sequencial": ["Máquina de Corte", "Máquina de Dobra", "Máquina de Usinagem", "Máquina de Pintura", "Máquina de Solda"]
-    }),
+    machines: loadJson(STORAGE_KEYS.machines, ["Prensa 01", "Solda 02", "Pintura 03"]),
+    machineGroups: loadJson(STORAGE_KEYS.machineGroups, { "Linha A": ["Prensa 01"], "Linha B": ["Solda 02"], "Pintura": ["Pintura 03"] }),
     associations: loadJson(STORAGE_KEYS.associations, {}),
-    selectedMachines: [], // Máquinas selecionadas para busca de OPs
+    selectedMachinesForPrint: [],
   };
+
+  // Seleção temporária de máquinas para a busca de OPs (via modal)
+  let selectedMachinesForSearch = [];
 
   // Seed 2 example layouts if library is empty
   if (!state.layouts || state.layouts.length === 0) {
@@ -131,8 +84,7 @@
   els.zplInput && (els.zplInput.value = state.draftZpl);
 
   // Navigation
-  if (els.nav) {
-    els.nav.addEventListener("click", (e) => {
+  els.nav.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-view]"); if (!btn) return;
     const target = btn.dataset.view;
     document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("is-active", b === btn));
@@ -142,156 +94,39 @@
     if (target === "print") { renderPrintLayouts(); }
     if (target === "ddp") { loadDdpDoc(); }
     if (target === "approval") { 
-      // Sistema de aprovação na página
-    }
-    });
-  }
-
-  // Navigation para nav-buttons (botões especiais)
-  const navButtons = document.querySelector('.nav-buttons');
-  if (navButtons) {
-    navButtons.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-view]"); if (!btn) return;
-      const target = btn.dataset.view;
-      document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("is-active", b === btn));
-      VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.toggle("is-active", v === target));
-      if (target === "approval") { 
-        // Página de aprovação DDP 353
+      // Garantir que o formulário de aprovação seja exibido
+      const approvalView = document.getElementById('view-approval');
+      if (approvalView) {
+        approvalView.classList.add('is-active');
       }
-    });
-  }
+    }
+  });
+
+  // Navigation para botões fora do .nav (como btn-approval)
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-view]"); 
+    if (!btn || btn.closest(".nav")) return; // Se já está no .nav, deixa o handler acima cuidar
+    
+    const target = btn.dataset.view;
+    document.querySelectorAll("button[data-view]").forEach(b => b.classList.toggle("is-active", b === btn));
+    VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.toggle("is-active", v === target));
+    if (target === "library") renderLibrary();
+    if (target === "machines") { renderMachines(); renderSelects(); renderMachineFilters(); }
+    if (target === "print") { renderPrintLayouts(); }
+    if (target === "ddp") { loadDdpDoc(); }
+    if (target === "approval") { 
+      // Garantir que o formulário de aprovação seja exibido
+      const approvalView = document.getElementById('view-approval');
+      if (approvalView) {
+        approvalView.classList.add('is-active');
+      }
+    }
+  });
 
   async function loadDdpDoc() {
     const el = document.getElementById('ddp-content');
     if (!el) return;
-    const DDP_DOC_TEXT = `DDP 353 - SISTEMA DE ETIQUETAS INTEGRADO TEEPMES/FACCHINI
-
-═══════════════════════════════════════════════════════════════════════════════
-
-PROPOSTA DO SISTEMA
-
-O Sistema de Etiquetas TeepMES é uma solução completa desenvolvida especificamente
-para a Facchini, integrada ao sistema TeepOEE, que permite criar, gerenciar e
-imprimir etiquetas de forma automatizada e rastreável na linha de produção.
-
-═══════════════════════════════════════════════════════════════════════════════
-
-COMO O SISTEMA FUNCIONA
-
-1. CRIAÇÃO DE ETIQUETAS
-   O operador acessa a aba "Criar Etiquetas" onde pode:
-   - Colar código ZPL diretamente do Zebra Designer
-   - Usar placeholders dinâmicos como {OP}, {Produto}, {Maquina}
-   - Visualizar preview em tempo real da etiqueta
-   - Salvar o layout na biblioteca para reutilização
-
-2. GESTÃO DE LAYOUTS
-   Na aba "Biblioteca", o usuário pode:
-   - Visualizar todos os layouts criados
-   - Buscar por nome específico
-   - Editar layouts existentes
-   - Duplicar e modificar templates
-   - Gerenciar versões de etiquetas
-
-3. IMPRESSÃO OPERACIONAL
-   Na aba "Imprimir", o sistema permite:
-   - Selecionar máquinas por grupo ou individualmente
-   - Filtrar OPs por período de produção
-   - Visualizar lista de OPs com dados do TeepOEE
-   - Configurar quantidade de etiquetas por OP
-   - Imprimir individualmente ou em lote
-
-4. ASSOCIAÇÃO COM MÁQUINAS
-   Na aba "Enviar P/ Máquinas", o operador pode:
-   - Selecionar layout da biblioteca
-   - Escolher máquinas de destino
-   - Visualizar preview antes do envio
-   - Confirmar substituição de etiquetas existentes
-   - Enviar para múltiplas máquinas simultaneamente
-
-═══════════════════════════════════════════════════════════════════════════════
-
-INTEGRAÇÃO COM TEEPOEE
-
-O sistema se conecta automaticamente ao TeepOEE para:
-- Buscar OPs ativas por máquina e data
-- Obter dados de produtos e quantidades
-- Sincronizar informações de produção
-- Manter rastreabilidade completa OP ↔ Etiqueta ↔ Máquina
-
-═══════════════════════════════════════════════════════════════════════════════
-
-FLUXO OPERACIONAL TÍPICO
-
-1. PREPARAÇÃO
-   - Técnico cria layout de etiqueta no Zebra Designer
-   - Exporta código ZPL e cola no sistema
-   - Salva na biblioteca com nome descritivo
-
-2. CONFIGURAÇÃO
-   - Supervisor seleciona máquinas para receber etiqueta
-   - Sistema associa layout às máquinas escolhidas
-   - Confirma envio e substitui etiquetas antigas
-
-3. OPERAÇÃO DIÁRIA
-   - Operador acessa aba "Imprimir"
-   - Seleciona grupo de máquinas e período
-   - Visualiza lista de OPs do TeepOEE
-   - Configura quantidades e imprime etiquetas
-
-4. RASTREABILIDADE
-   - Sistema registra todas as impressões
-   - Mantém log de atividades com timestamp
-   - Permite auditoria completa do processo
-
-═══════════════════════════════════════════════════════════════════════════════
-
-BENEFÍCIOS PARA A FACCHINI
-
-AUTOMAÇÃO COMPLETA
-- Elimina entrada manual de dados de OP
-- Reduz erros humanos na impressão
-- Padroniza formato de todas as etiquetas
-
-RASTREABILIDADE TOTAL
-- Vincula etiqueta à OP específica
-- Registra máquina de impressão
-- Mantém histórico completo de atividades
-
-FLEXIBILIDADE OPERACIONAL
-- Permite criação rápida de novos layouts
-- Facilita modificações em tempo real
-- Reutiliza templates existentes
-
-INTEGRAÇÃO NATIVA
-- Interface familiar ao TeepOEE
-- Dados sempre atualizados
-- Workflow operacional otimizado
-
-═══════════════════════════════════════════════════════════════════════════════
-
-TECNOLOGIAS E COMPATIBILIDADE
-
-- ZPL (Zebra Programming Language) para compatibilidade total
-- Integração REST com banco TeepOEE
-- Suporte a impressoras Zebra padrão industrial
-- Interface web responsiva e intuitiva
-- Sistema de backup automático de layouts
-
-═══════════════════════════════════════════════════════════════════════════════
-
-RESULTADO ESPERADO
-
-Com a implementação deste sistema, a Facchini terá:
-- Rastreabilidade completa de etiquetas
-- Redução de 90% no tempo de impressão
-- Eliminação de erros de digitação
-- Padronização visual das etiquetas
-- Integração perfeita com TeepOEE
-- Controle total sobre o processo de etiquetagem
-
-O sistema está pronto para uso imediato e pode ser implementado sem
-interrupção das operações atuais da fábrica.`;
+    const DDP_DOC_TEXT = `# DDP 353 – Geração e Gerenciamento de Etiquetas para Facchini\n\nEste documento descreve a visão funcional do produto TeepEtiquetas, seu escopo, fluxos principais, regras de negócio e integrações. Ele não trata da implementação técnica/código.\n\n## Objetivo\nViabilizar a criação, gerenciamento, distribuição e impressão de etiquetas Zebra no ambiente Facchini, integradas ao ecossistema Teep (terminais/TeepOEE), atendendo tanto casos automáticos (por máquina/processo) quanto casos manuais (dashboard/servidor).\n\n## Personas\n- Operador de máquina\n- Líder/Supervisor\n- Analista/Engenharia de processos\n- TI/MES\n\n## Escopo Funcional\n1) Biblioteca de Etiquetas (versionamento, preview)\n2) Geração/Gerenciamento (colar ZPL, detectar placeholders, salvar)\n3) Associação a Máquinas (buscar por grupo/nome, envio, confirmação)\n4) Impressão Manual (formulário dinâmico pelos placeholders, cópias)\n\n## Regras de Negócio (resumo)\n- ID único e nome amigável por etiqueta; versões incrementais\n- Placeholders {Campo} preenchidos via Teep ou manualmente\n- Substituição em máquina exige confirmação\n- Sincronização para diretórios/terminais; políticas de atualização\n- Auditoria recomendada\n\n## Integrações\n- TeepOEE (máquinas/grupos, eventos)\n- Impressoras Zebra (ZPL)\n\n## Fluxos\n1) Criar/validar layout\n2) Distribuir para máquinas\n3) Imprimir manualmente\n\n## Dados (conceitual)\n- Etiqueta { id, nome, versao, zpl, preview, history, criadoEm }\n- Associação { maquina -> etiquetaId }\n- Máquina (TeepOEE)\n- Log de impressão/ação\n\n## Requisitos Não-Funcionais\nUsabilidade, confiabilidade, segurança, performance e observabilidade.\n\n## Roadmap\nMVP: biblioteca, criação/preview, associação simples, impressão manual.\nFase 2: integrações TeepOEE e envio para terminais, auditoria.\nFase 3: impressão automática por eventos, rollback, dashboards.\n\n## Critérios de Aceite (exemplos)\n- Criar/salvar layout com placeholders\n- Visualizar preview\n- Associar layout a conjunto de máquinas com confirmação\n- Imprimir manual com preenchimento\n`;
     try {
       if (location && location.protocol === 'file:') {
         el.textContent = DDP_DOC_TEXT;
@@ -348,22 +183,13 @@ interrupção das operações atuais da fábrica.`;
   if (els.pvRefresh) els.pvRefresh.addEventListener('click', (e) => { e.preventDefault(); renderImagePreviewDesign(); });
   ;[els.pvWidth, els.pvHeight, els.pvDpmm].forEach(el => el?.addEventListener('change', () => { const layout = getActiveLayout(); if (!layout) { renderImagePreviewDesign(); return; } layout.preview = layout.preview || {}; layout.preview.widthIn = parseFloat(els.pvWidth.value || "6"); layout.preview.heightIn = parseFloat(els.pvHeight.value || "4"); layout.preview.dpmm = parseInt(els.pvDpmm.value || "8", 10); const idx = state.layouts.findIndex(l => l.id === layout.id); if (idx !== -1) { state.layouts[idx] = layout; saveJson(STORAGE_KEYS.layouts, state.layouts); } renderImagePreviewDesign(); }));
 
-  function normalizeZplForPreview(zpl) {
-    if (!zpl) return zpl;
-    // Garantir codificação UTF-8 no preview para acentos: adiciona ^CI28 se não houver ^CI definido
-    if (!/\^CI(27|28)/.test(zpl)) {
-      zpl = zpl.replace("^XA", "^XA\n^CI28");
-    }
-    return zpl;
-  }
-
   async function renderImagePreviewDesign() {
     const layout = getActiveLayout(); const zpl = (els.zplInput?.value || state.draftZpl || '').trim(); if (!zpl) { els.pvContainer.innerHTML = `<span class=\"hint\">Cole o ZPL para visualizar.</span>`; return; }
     const widthIn = layout?.preview?.widthIn ?? parseFloat(els.pvWidth.value || "6"); const heightIn = layout?.preview?.heightIn ?? parseFloat(els.pvHeight.value || "4"); const dpmm = layout?.preview?.dpmm ?? parseInt(els.pvDpmm.value || "8", 10);
     els.pvWidth.value = widthIn; els.pvHeight.value = heightIn; els.pvDpmm.value = String(dpmm);
     const url = `https://api.labelary.com/v1/printers/${dpmm}dpmm/labels/${widthIn}x${heightIn}/0/`;
     els.pvContainer.innerHTML = `<span class=\"hint\">Renderizando preview...</span>`;
-    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: normalizeZplForPreview(zpl) }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); els.pvContainer.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; els.pvContainer.appendChild(img); } catch (_) { els.pvContainer.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
+    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: zpl }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); els.pvContainer.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; els.pvContainer.appendChild(img); } catch (_) { els.pvContainer.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
   }
 
   // PRINT VIEW
@@ -371,6 +197,9 @@ interrupção das operações atuais da fábrica.`;
     els.prSelectLayout.innerHTML = state.layouts.map(l => `<option value="${l.id}">${l.name} (v${l.version})</option>`).join("");
     // Auto-generate form on layout change
     els.prSelectLayout.onchange = () => buildPrintForm();
+    // Inicializar seletores (grupos e máquinas)
+    initGroupSelection();
+    initMachineSelection();
   }
 
   function buildPrintForm() {
@@ -384,6 +213,210 @@ interrupção das operações atuais da fábrica.`;
   }
 
   els.prLoad?.addEventListener('click', () => { buildPrintForm(); els.prPreviewContainer.innerHTML = `<span class=\"hint\">Campos carregados. Preencha e clique em Preview.</span>`; });
+
+  // ===== Seleção de Grupos (filtros de impressão) =====
+  function initGroupSelection() { if (!els.prSelectGroupsBtn || !els.groupModal) return; els.prSelectGroupsBtn.onclick = () => openGroupModal(); }
+  function openGroupModal() {
+    const groupNames = Object.keys(state.machineGroups || {});
+    els.groupList.innerHTML = groupNames.map(g => `<label style=\"display:flex;align-items:center;gap:8px;padding:6px 8px;\"><input type=\"checkbox\" class=\"machine-checkbox\" data-group=\"${g}\"> ${g} <span class=\"meta\">(${(state.machineGroups[g]||[]).length} máquinas)</span></label>`).join("");
+    updateGroupCount();
+    els.groupModal.style.display = 'flex';
+    bindGroupModalHandlers();
+  }
+  function bindGroupModalHandlers() {
+    els.groupSelectAll.onclick = () => { els.groupList.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true); updateGroupCount(); };
+    els.groupDeselectAll.onclick = () => { els.groupList.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false); updateGroupCount(); };
+    els.groupList.onchange = updateGroupCount;
+    const close = () => { els.groupModal.style.display = 'none'; };
+    els.groupCancel.onclick = close; els.groupClose.onclick = close;
+    els.groupConfirm.onclick = () => {
+      const selected = Array.from(els.groupList.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.getAttribute('data-group'));
+      const has = selected.length > 0;
+      if (els.selectedGroupsDisplay) { els.selectedGroupsDisplay.style.display = has ? 'block' : 'none'; els.selectedGroupsText.textContent = has ? selected.join(', ') : ''; }
+      close();
+    };
+  }
+  function updateGroupCount() { if (!els.groupList) return; const count = els.groupList.querySelectorAll('input[type="checkbox"]:checked').length; if (els.groupCount) els.groupCount.textContent = `${count} grupo(s) selecionado(s)`; }
+
+  // ===== Seleção de Máquinas (reuso do modal existente) =====
+  function initMachineSelection() { if (!els.prSelectMachinesBtn || !els.machineModal) return; els.prSelectMachinesBtn.onclick = () => openMachineModal(); }
+  function openMachineModal() {
+    const names = state.machines || [];
+    els.machineListModal.innerHTML = names.map(n => `<label style=\"display:flex;align-items:center;gap:8px;padding:6px 8px;\"><input type=\"checkbox\" class=\"machine-checkbox\" data-machine=\"${n}\"> ${n}</label>`).join("");
+    updateMachineCount();
+    els.machineModal.style.display = 'flex';
+    bindMachineModalHandlers();
+  }
+  function bindMachineModalHandlers() {
+    els.machineSelectAllBtn.onclick = () => { els.machineListModal.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true); updateMachineCount(); };
+    els.machineDeselectAllBtn.onclick = () => { els.machineListModal.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false); updateMachineCount(); };
+    els.machineListModal.onchange = updateMachineCount;
+    const close = () => { els.machineModal.style.display = 'none'; };
+    els.machineCancelBtn.onclick = close; els.machineCloseBtn.onclick = close;
+    els.machineConfirmBtn.onclick = () => {
+      const selected = Array.from(els.machineListModal.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.getAttribute('data-machine'));
+      state.selectedMachinesForPrint = selected;
+      if (els.selectedMachinesDisplay) { els.selectedMachinesDisplay.textContent = selected.length ? `${selected.length} máquina(s)` : ''; }
+      close();
+    };
+  }
+  function updateMachineCount() { const count = els.machineListModal.querySelectorAll('input[type="checkbox"]:checked').length; if (els.machineCountLabel) els.machineCountLabel.textContent = `${count} máquinas selecionadas`; }
+
+  // ===== Busca de OPs (demo) =====
+  if (els.prSearchOps) els.prSearchOps.addEventListener('click', () => {
+    const filterType = document.querySelector('input[name="filter-type"]:checked')?.value || 'group';
+    const periodStart = els.prDateStart?.value || '';
+    const periodEnd = els.prDateEnd?.value || '';
+    const selectedGroups = (els.selectedGroupsText?.textContent || '').split(',').map(s => s.trim()).filter(Boolean);
+    const cncCode = (els.prCncGrouping?.value || '').trim();
+    const machineNames = state.machines || [];
+
+    // Gera OPs demo por máquina dentro do período
+    const base = new Date(periodStart || new Date());
+    const end = new Date(periodEnd || new Date());
+    const days = Math.max(1, Math.ceil((end - base) / (1000*60*60*24)) || 1);
+    let chosenMachines = [];
+    if (filterType === 'machines') {
+      chosenMachines = (state.selectedMachinesForPrint && state.selectedMachinesForPrint.length) ? state.selectedMachinesForPrint : [...machineNames];
+    } else {
+      // group
+      chosenMachines = machineNames.filter(m => {
+        if (!selectedGroups.length) return true;
+        const g = Object.entries(state.machineGroups).find(([gn, arr]) => arr.includes(m));
+        return g ? selectedGroups.includes(g[0]) : false;
+      });
+    }
+    const ops = [];
+    let idx = 1;
+    chosenMachines.slice(0, 8).forEach((m, mi) => {
+      const group = Object.entries(state.machineGroups).find(([, arr]) => arr.includes(m))?.[0] || '-';
+      for (let d = 0; d < Math.min(days, 3); d++) {
+        const dt = new Date(base); dt.setDate(dt.getDate() + d);
+        // mock de operações por OP (10,20,30) com nomes variados
+        const routings = [
+          { codigo: 10, nome: 'Corte' },
+          { codigo: 20, nome: (mi % 2 === 0) ? 'Dobra' : 'Pintura' },
+          { codigo: 30, nome: (mi % 3 === 0) ? 'Usinagem' : 'Montagem' },
+        ];
+        ops.push({ numero: `OP${String(idx).padStart(3,'0')}`, produto: `PRD-${(100+idx)}`, descricao: `Item ${idx}`, maquina: m, grupo: group, data: dt.toISOString().slice(0,10), qtd: 10 + ((mi+d)%5)*5, cnc: cncCode ? `CNC-${cncCode}` : null, operacoes: routings });
+        idx++;
+      }
+    });
+
+    // Mostrar badge do CNC se informado
+    const cncDisplay = document.getElementById('selected-cnc-display');
+    const cncSpan = document.getElementById('cnc-code-display');
+    if (cncCode && cncDisplay && cncSpan) { cncDisplay.style.display = 'inline-flex'; cncSpan.textContent = `CNC-${cncCode}`; } else if (cncDisplay) { cncDisplay.style.display = 'none'; }
+
+    if (filterType === 'grouping') {
+      // Mock CNC conforme documento: tabela única com OP, Qtd/Chapa, Chapas Reservadas e Total Previsto
+      const cnc = cncCode || '2222';
+      const demoRows = [
+        { op: '1001', codigoCnc: cnc, qtdPorChapa: 5, chapas: 3 },
+        { op: '1002', codigoCnc: cnc, qtdPorChapa: 10, chapas: 3 },
+        { op: '1003', codigoCnc: cnc, qtdPorChapa: 20, chapas: 3 },
+      ];
+      renderCncPlan(demoRows);
+    } else {
+      renderOpsResults(ops, cncCode);
+    }
+  });
+
+  function renderOpsResults(ops, cncCode) {
+    if (!els.prOpsResults) return;
+    if (!ops.length) { els.prOpsResults.style.display = 'block'; els.prOpsResults.innerHTML = `<div class="hint">Nenhuma OP encontrada para os filtros.</div>`; return; }
+    els.prOpsResults.style.display = 'block';
+
+    // Agrupar por máquina
+    const byMachine = ops.reduce((acc, op) => { (acc[op.maquina] = acc[op.maquina] || []).push(op); return acc; }, {});
+    const cncHeader = cncCode ? `<div class="hint" style="margin:8px 0 12px 0;">Plano CNC aplicado: <strong>CNC-${cncCode}</strong></div>` : '';
+    let html = cncHeader;
+    // Definição fixa de operação por máquina (mock):
+    // índice 0 -> 10 Corte, 1 -> 20 Dobra, 2 -> 30 Usinagem (repete)
+    const allMachinesOrdered = Object.keys(byMachine).sort();
+    function operationForMachine(machine) {
+      const idx = Math.max(0, allMachinesOrdered.indexOf(machine));
+      const map = [ { codigo: 10, nome: 'Corte' }, { codigo: 20, nome: 'Dobra' }, { codigo: 30, nome: 'Usinagem' } ];
+      return map[idx % map.length];
+    }
+
+    for (const [machine, items] of Object.entries(byMachine)) {
+      html += `<div class="machine-block"><div style="font-weight:700;margin-bottom:6px;">${machine}</div>`;
+      // Cabeçalho das colunas
+      html += `<div class="op-row" style="gap:12px; font-weight:600; margin-bottom:4px; border-bottom:1px solid #e5e7eb; padding-bottom:4px;">
+        <div style="width:90px;">OP</div>
+        <div style="width:120px;">Produto</div>
+        <div style="width:140px;">Operação</div>
+        <div style="flex:1;min-width:120px;">Descrição</div>
+        <div style="width:100px;">Data</div>
+        <div style="width:70px;">Qtd</div>
+        <div style="width:80px;">Ação</div>
+      </div>`;
+      const operacaoFixa = operationForMachine(machine);
+      html += items.map(op => {
+        // Cada máquina roda sempre a mesma operação nesta demo
+        const operacaoNaMaquina = operacaoFixa;
+        return `
+        <div class="op-row" style="gap:12px;">
+          <input type="checkbox" class="op-checkbox" />
+          <div class="op-code" style="width:90px;font-weight:600;">${op.numero}</div>
+          <div class="op-produto" style="width:120px;">${op.produto}</div>
+          <div class="op-operacao" style="width:140px;font-weight:500;">${operacaoNaMaquina.codigo} - ${operacaoNaMaquina.nome}</div>
+          <div class="op-descricao" style="flex:1;min-width:120px;">${op.descricao}</div>
+          <div class="op-data" style="width:100px;">${op.data}</div>
+          <input type="number" class="op-qty" value="${els.prQtyEtq?.value || 1}" min="1" style="width:70px;" />
+          <button class="op-print-btn" data-op="${op.numero}" data-operacao="${operacaoNaMaquina.codigo}">Imprimir</button>
+        </div>`;
+      }).join('');
+      html += `</div>`;
+    }
+    els.prOpsResults.innerHTML = html;
+    els.prOpsResults.querySelectorAll('.op-print-btn').forEach(btn => btn.addEventListener('click', () => {
+      const layoutId = els.prSelectLayout?.value; const ly = state.layouts.find(l => l.id === layoutId) || getActiveLayout(); if (!ly) { alert('Selecione um layout.'); return; }
+      const qtyInput = btn.closest('.op-row')?.querySelector('.op-qty');
+      const copies = Math.max(1, parseInt(qtyInput?.value || '1', 10));
+      const operacao = btn.dataset.operacao || '10';
+      const logLines = Array.from({ length: copies }).map((_, i) => `[${new Date().toLocaleTimeString()}] Impressão em lote ${i+1}/${copies} da ${btn.dataset.op} (Op.${operacao}) com layout ${ly.name}.`);
+      els.prLog.textContent = logLines.join('\n') + '\n' + (els.prLog.textContent || '');
+    }));
+  }
+
+  function renderCncPlan(rows) {
+    if (!els.prOpsResults) return;
+    els.prOpsResults.style.display = 'block';
+    const header = `
+      <div class="machine-block">
+        <div style="font-weight:700;margin-bottom:6px;">Plano CNC</div>
+        <div class="op-row" style="gap:12px;font-weight:600;">
+          <div style="width:120px;">OP</div>
+          <div style="width:160px;">Qtd por Chapa</div>
+          <div style="width:160px;">Chapas Reservadas</div>
+          <div style="width:160px;">Total Previsto</div>
+          <div style="flex:1;"></div>
+        </div>
+    `;
+    const body = rows.map(r => {
+      const total = r.qtdPorChapa * r.chapas;
+      return `
+        <div class="op-row" style="gap:12px;">
+          <div style="width:120px;font-weight:600;">${r.op}</div>
+          <div style="width:160px;">${r.qtdPorChapa}</div>
+          <div style="width:160px;">${r.chapas}</div>
+          <div style="width:160px;">${total}</div>
+          <input type="number" class="op-qty" value="${els.prQtyEtq?.value || 1}" min="1" style="width:70px;" />
+          <button class="op-print-btn" data-op="${r.op}">Imprimir</button>
+        </div>`;
+    }).join('');
+    const footer = `</div>`;
+    els.prOpsResults.innerHTML = header + body + footer;
+    els.prOpsResults.querySelectorAll('.op-print-btn').forEach(btn => btn.addEventListener('click', () => {
+      const layoutId = els.prSelectLayout?.value; const ly = state.layouts.find(l => l.id === layoutId) || getActiveLayout(); if (!ly) { alert('Selecione um layout.'); return; }
+      const qtyInput = btn.closest('.op-row')?.querySelector('.op-qty');
+      const copies = Math.max(1, parseInt(qtyInput?.value || '1', 10));
+      const logLines = Array.from({ length: copies }).map((_, i) => `[${new Date().toLocaleTimeString()}] Impressão em lote ${i+1}/${copies} da ${btn.dataset.op} (CNC) com layout ${ly.name}.`);
+      els.prLog.textContent = logLines.join('\n') + '\n' + (els.prLog.textContent || '');
+    }));
+  }
 
   els.prPreview?.addEventListener('click', async () => {
     const id = els.prSelectLayout.value; const ly = state.layouts.find(l => l.id === id); if (!ly) return;
@@ -401,758 +434,16 @@ interrupção das operações atuais da fábrica.`;
     els.prLog.textContent = logLines.join('\n') + '\n' + els.prLog.textContent;
   });
 
-  // Event listeners para funcionalidade de impressão em lote
-  els.prSearchOps?.addEventListener("click", searchOps);
-  els.prSelectMachines?.addEventListener("click", openMachineSelectorModal);
-  
-  // Event listeners do modal de seleção de máquinas
-  els.machineSelectorClose?.addEventListener("click", closeMachineSelectorModal);
-  els.machineSelectorCancel?.addEventListener("click", closeMachineSelectorModal);
-  els.machineSelectorConfirm?.addEventListener("click", confirmMachineSelection);
-  els.machineSelectAll?.addEventListener("click", selectAllMachines);
-  els.machineDeselectAll?.addEventListener("click", deselectAllMachines);
-
-  // Event delegation para checkboxes de máquinas
-  els.machineSelectorList?.addEventListener("change", (e) => {
-    if (e.target.classList.contains('machine-checkbox')) {
-      updateMachineCount();
-    }
-  });
-
-  // Event delegation para resultados de OPs
-  els.prOpsResults?.addEventListener("click", (e) => {
-    if (e.target.classList.contains('op-print-btn')) {
-      const opId = e.target.dataset.opId;
-      handlePrintSingle(opId);
-    } else if (e.target.id === 'btn-print-all') {
-      handlePrintAll();
-    }
-  });
-
-  // Filtro de grupo de máquinas
-  els.prMachineGroup?.addEventListener("change", (e) => {
-    const grupo = e.target.value;
-    const filterType = document.querySelector('input[name="filter-type"]:checked')?.value;
-    
-    if (filterType === 'group' && grupo) {
-      // Mapear grupo para máquinas (simulação)
-      const grupoMapping = {
-        'Grupo 1 - Injeção': ['Injetora 01', 'Injetora 02'],
-        'Grupo 2 - Usinagem': ['Torno 01', 'Torno 02', 'Fresa 01'],
-        'Grupo 3 - Montagem': ['Estação 01', 'Estação 02'],
-        'Grupo 4 - Processo Sequencial': ['Máquina de Corte', 'Máquina de Dobra', 'Máquina de Usinagem', 'Máquina de Pintura', 'Máquina de Solda']
-      };
-      
-      const maquinasDoGrupo = grupoMapping[grupo] || [];
-      state.selectedMachines = maquinasDoGrupo;
-      
-      addLogEntry(`Grupo "${grupo}" selecionado. Máquinas: ${maquinasDoGrupo.join(', ')}`);
-    } else if (filterType === 'group') {
-      state.selectedMachines = [];
-      addLogEntry('Filtro de grupo removido');
-    }
-  });
-
-  // Controle dos radio buttons
-  document.querySelectorAll('input[name="filter-type"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      const filterType = e.target.value;
-      
-      if (filterType === 'group') {
-        // Ativar filtro por grupo
-        els.prMachineGroup.disabled = false;
-        document.getElementById('pr-cnc-grouping').disabled = true;
-        addLogEntry('Modo: Filtro por Grupo de Máquinas');
-        
-        // Se há um grupo selecionado, aplicar
-        if (els.prMachineGroup.value) {
-          els.prMachineGroup.dispatchEvent(new Event('change'));
-        }
-      } else if (filterType === 'machines') {
-        // Ativar filtro por máquinas específicas
-        els.prMachineGroup.disabled = true;
-        els.prMachineGroup.value = '';
-        document.getElementById('pr-cnc-grouping').disabled = true;
-        addLogEntry('Modo: Filtro por Máquinas Específicas');
-        addLogEntry('Use "Selecionar Máquinas Individuais" para escolher');
-      } else if (filterType === 'grouping') {
-        // Ativar filtro por agrupamento CNC
-        els.prMachineGroup.disabled = true;
-        els.prMachineGroup.value = '';
-        document.getElementById('pr-cnc-grouping').disabled = false;
-        addLogEntry('Modo: Filtro por Agrupamento CNC');
-        addLogEntry('Digite o código CNC para buscar OPs do mesmo plano de corte');
-      }
-    });
-  });
-
-  // Filtro por código CNC
-  document.getElementById('pr-cnc-grouping')?.addEventListener('input', (e) => {
-    const codigoCNC = e.target.value.trim();
-    const selectedDisplay = document.getElementById('selected-cnc-display');
-    const codeDisplay = document.getElementById('cnc-code-display');
-    
-    if (codigoCNC) {
-      // Buscar OPs com o mesmo código CNC
-      const opsComCNC = EXAMPLE_OPS.filter(op => op.codigoCNC === codigoCNC);
-      const maquinasCNC = [...new Set(opsComCNC.map(op => op.maquina))];
-      
-      state.selectedMachines = maquinasCNC;
-      
-      // Mostrar badge do plano selecionado
-      if (selectedDisplay && codeDisplay) {
-        codeDisplay.textContent = codigoCNC;
-        selectedDisplay.style.display = 'inline-block';
-      }
-      
-      addLogEntry(`🔍 Agrupamento CNC "${codigoCNC}" selecionado.`);
-      addLogEntry(`📊 OPs encontradas: ${opsComCNC.length}`);
-      addLogEntry(`🏭 Máquinas envolvidas: ${maquinasCNC.join(', ')}`);
-      
-      // Mostrar detalhes do agrupamento
-      if (opsComCNC.length > 0) {
-        addLogEntry(`📋 Plano de Corte CNC "${codigoCNC}" - Detalhes:`);
-        addLogEntry(`🏭 Máquina: ${maquinasCNC.join(', ')}`);
-        addLogEntry(`📊 OPs que serão cortadas neste plano:`);
-        opsComCNC.forEach(op => {
-          addLogEntry(`  - ${op.numero} (${op.produto}): ${op.qtdPorChapa} peças/chapa, ${op.chapasReservadas} chapas reservadas`);
-        });
-        const totalChapas = Math.max(...opsComCNC.map(op => op.chapasReservadas));
-        addLogEntry(`📦 Total de chapas no plano: ${totalChapas}`);
-      } else {
-        addLogEntry(`⚠️ Nenhuma OP encontrada para o código CNC "${codigoCNC}"`);
-        addLogEntry(`💡 Códigos disponíveis: 2222, 3333, 4444`);
-      }
-    } else {
-      state.selectedMachines = [];
-      
-      // Esconder badge do plano selecionado
-      if (selectedDisplay) {
-        selectedDisplay.style.display = 'none';
-      }
-      
-      addLogEntry('🗑️ Filtro de agrupamento CNC removido');
-    }
-  });
-
-  // Definir datas padrão para facilitar teste
-  function initializePrintPage() {
-    if (els.prDateStart && els.prDateEnd) {
-      // Definir datas que correspondam às OPs mockadas (06/10/2025 a 13/10/2025)
-      els.prDateStart.value = '06/10/2025';
-      els.prDateEnd.value = '13/10/2025';
-      
-      // Datas padrão definidas silenciosamente
-    }
-  }
-
-  // Limpar dados antigos do localStorage se necessário
-  function clearOldData() {
-    const oldMachines = ["Prensa 01", "Solda 02", "Pintura 03"];
-    const currentMachines = state.machines;
-    
-    // Se as máquinas atuais são as antigas, limpar e recarregar
-    if (JSON.stringify(currentMachines.sort()) === JSON.stringify(oldMachines.sort())) {
-      localStorage.removeItem(STORAGE_KEYS.machines);
-      localStorage.removeItem(STORAGE_KEYS.machineGroups);
-      state.machines = ["Injetora 01", "Injetora 02", "Torno 01", "Torno 02", "Fresa 01", "Estação 01", "Estação 02"];
-      state.machineGroups = { "Grupo 1": ["Injetora 01", "Injetora 02"], "Grupo 2": ["Torno 01", "Torno 02", "Fresa 01"], "Grupo 3": ["Estação 01", "Estação 02"] };
-      // Dados antigos limpos silenciosamente
-    }
-  }
-
-  // Inicializar página de impressão quando carregada
-  clearOldData();
-  initializePrintPage();
-
-  // Sistema de Aprovação Técnica
-  function initializeApprovalSystem() {
-    // Função removida - agora usa o sistema unificado
-  }
-
-  // Função para abrir modal de confirmação
-  function openConfirm(title, message, onOk, type = 'default') {
-    const dlg = document.getElementById('dialog-confirm');
-    const titleEl = document.getElementById('confirm-title');
-    const messageEl = document.getElementById('confirm-message');
-    const btnOk = document.getElementById('confirm-ok');
-    const btnCancel = document.getElementById('confirm-cancel');
-    const iconEl = titleEl.querySelector('.icon');
-    
-    // Definir ícone baseado no tipo
-    let icon = '?';
-    if (type === 'total') {
-      icon = '✓';
-    } else if (type === 'parcial') {
-      icon = '!';
-    } else {
-      icon = '?';
-    }
-    
-    // Atualizar conteúdo
-    iconEl.textContent = icon;
-    titleEl.innerHTML = `<span class="icon">${icon}</span> ${title}`;
-    messageEl.textContent = message;
-    
-    // Remover classes anteriores
-    dlg.classList.remove('dialog-confirm-total', 'dialog-confirm-parcial');
-    
-    // Aplicar classe baseada no tipo
-    if (type === 'total') {
-      dlg.classList.add('dialog-confirm-total');
-    } else if (type === 'parcial') {
-      dlg.classList.add('dialog-confirm-parcial');
-    }
-    
-    const cleanup = () => {
-      btnOk.removeEventListener('click', handleOk);
-      btnCancel.removeEventListener('click', handleCancel);
-      // Remover classes ao fechar
-      dlg.classList.remove('dialog-confirm-total', 'dialog-confirm-parcial');
-    };
-    
-    const handleOk = () => { dlg.close(); cleanup(); onOk?.(); };
-    const handleCancel = () => { dlg.close(); cleanup(); };
-    
-    btnOk.addEventListener('click', handleOk);
-    btnCancel.addEventListener('click', handleCancel);
-    dlg.showModal();
-  }
-
-  // Sistema de Reset
-  function initializeResetSystem() {
-    const resetBtn = document.getElementById('btn-reset');
-    if (!resetBtn) return;
-
-    resetBtn.addEventListener('click', () => {
-      openConfirm(
-        '🔄 Resetar Demonstração',
-        'Tem certeza que deseja resetar toda a demonstração? Todos os dados salvos serão perdidos.',
-        () => {
-          // Limpar localStorage
-          localStorage.clear();
-          
-          // Recarregar página
-          window.location.reload();
-          
-          console.log('🔄 Demonstração resetada');
-        }
-      );
-    });
-  }
-
-  // Inicializar sistemas
-  initializeApprovalSystem();
-  initializeResetSystem();
-
-  // Sistema de aprovação agora funciona diretamente na página (não modal)
-  // O botão .btn-approval já está configurado para mostrar a view-approval
-
-  // Envio do formulário de aprovação
-  const approvalForm = document.getElementById('ddp-approval-form');
-  if (approvalForm) {
-    approvalForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const form = e.target;
-    const errorDiv = document.getElementById('ddp-approval-error');
-    const successDiv = document.getElementById('ddp-approval-success');
-    const submitBtn = document.getElementById('ddp-approval-submit');
-    const submitText = document.getElementById('submit-text');
-    const submitLoading = document.getElementById('submit-loading');
-    
-    // Show loading state
-    submitBtn.disabled = true;
-    submitText.style.display = 'none';
-    submitLoading.style.display = 'inline';
-    errorDiv.style.display = 'none';
-    successDiv.style.display = 'none';
-    
-    try {
-      const formData = new FormData(form);
-      
-      // Organizar dados para melhor formatação no email
-      const nome = formData.get('nome');
-      const sobrenome = formData.get('sobrenome');
-      const setor = formData.get('setor');
-      const cargo = formData.get('cargo');
-      const telefone = formData.get('telefone');
-      const email = formData.get('email');
-      
-      // Criar uma mensagem simples combinando todos os dados
-      const mensagemCompleta = `
-DDP 353 - Sistema de Etiquetas
-APROVACAO TECNICA CONCEDIDA
-
-APROVADOR: ${nome} ${sobrenome}
-CARGO: ${cargo}
-SETOR: ${setor}
-TELEFONE: ${telefone}
-EMAIL: ${email}
-
-PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
-      `.trim();
-      
-      // IMPORTANTE: Não sobrescrever o campo email, usar 'message' para o conteúdo
-      formData.set('message', mensagemCompleta);
-      
-      // Configurar reply-to
-      formData.append('_replyto', email);
-      
-      // Debug: mostrar dados que serão enviados
-      console.log('Dados do formulário:', [...formData.entries()]);
-      console.log('URL do formulário:', form.action);
-      
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-      
-      console.log('Status da resposta:', response.status);
-      console.log('Headers da resposta:', [...response.headers.entries()]);
-      
-      if (response.ok) {
-        const responseText = await response.text();
-        console.log('Resposta do servidor:', responseText);
-        successDiv.style.display = 'block';
-        form.reset();
-        
-        // Formulário enviado com sucesso - não precisa fechar modal pois está na página
-      } else {
-        const errorText = await response.text();
-        console.error('Erro detalhado:', response.status, errorText);
-        throw new Error(`Erro no envio: ${response.status} - ${errorText}`);
-      }
-    } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
-      errorDiv.style.display = 'block';
-    } finally {
-      // Reset button state
-      submitBtn.disabled = false;
-      submitText.style.display = 'inline';
-      submitLoading.style.display = 'none';
-    }
-  });
-  }
-  
-  // Instruções removidas para limpar a demonstração
-
   function substituteZpl(zpl, values) {
     let out = zpl; for (const [k, v] of Object.entries(values)) { const re = new RegExp(`\\{${escapeRegExp(k)}\\}`, 'g'); out = out.replace(re, v || ''); } return out;
   }
   function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
 
-  // Função para converter DD/MM/YYYY para YYYY-MM-DD
-  function convertDateToISO(dateString) {
-    if (!dateString) return null;
-    // Se já está no formato YYYY-MM-DD, retorna como está
-    if (dateString.includes('-') && dateString.length === 10) {
-      return dateString;
-    }
-    // Converte DD/MM/YYYY para YYYY-MM-DD
-    const parts = dateString.split('/');
-    if (parts.length === 3) {
-      const day = parts[0].padStart(2, '0');
-      const month = parts[1].padStart(2, '0');
-      const year = parts[2];
-      return `${year}-${month}-${day}`;
-    }
-    return dateString;
-  }
-
-  // Funções para busca de OPs
-  function searchOps() {
-    const dataInicio = els.prDateStart?.value;
-    const dataFim = els.prDateEnd?.value;
-    const selectedMachines = state.selectedMachines;
-    const filterType = document.querySelector('input[name="filter-type"]:checked')?.value;
-
-    addLogEntry(`\n=== INICIANDO BUSCA DE OPs ===`);
-    addLogEntry(`Tipo de filtro: ${filterType === 'group' ? 'Grupo de Máquinas' : 'Máquinas Específicas'}`);
-    addLogEntry(`Máquinas selecionadas: ${selectedMachines.length > 0 ? selectedMachines.join(', ') : 'Nenhuma'}`);
-    addLogEntry(`Período: ${dataInicio || 'Sem início'} até ${dataFim || 'Sem fim'}`);
-
-    if (selectedMachines.length === 0) {
-      if (filterType === 'group') {
-        addLogEntry('❌ Erro: Selecione um grupo de máquinas antes de buscar OPs');
-      } else if (filterType === 'machines') {
-        addLogEntry('❌ Erro: Selecione pelo menos uma máquina específica antes de buscar OPs');
-        addLogEntry('Dica: Use "Selecionar Máquinas Individuais"');
-      } else if (filterType === 'grouping') {
-        addLogEntry('❌ Erro: Digite um código CNC antes de buscar OPs');
-        addLogEntry('Dica: Exemplos: 2222, 3333, 4444');
-      }
-      return;
-    }
-
-    // Debug: mostrar todas as OPs disponíveis
-    addLogEntry(`\nOPs disponiveis no sistema: ${EXAMPLE_OPS.length}`);
-    EXAMPLE_OPS.forEach(op => {
-      addLogEntry(`  - ${op.numero} | ${op.maquina} | ${op.dataInicio} | Grupo: ${op.grupo}`);
-    });
-
-    // Filtrar OPs por máquinas selecionadas e período
-    let opsFiltradas = EXAMPLE_OPS.filter(op => {
-      let match = true;
-      
-      // Filtrar por máquinas selecionadas
-      if (!selectedMachines.includes(op.maquina)) {
-        match = false;
-        addLogEntry(`  ❌ ${op.numero} descartada - máquina "${op.maquina}" não está selecionada`);
-      }
-      
-      // Filtrar por período (converter DD/MM/YYYY para YYYY-MM-DD para comparação)
-      if (dataInicio) {
-        const dataInicioISO = convertDateToISO(dataInicio);
-        if (op.dataInicio < dataInicioISO) {
-          match = false;
-          addLogEntry(`  ❌ ${op.numero} descartada - data ${op.dataInicio} anterior ao período (${dataInicio})`);
-        }
-      }
-      if (dataFim) {
-        const dataFimISO = convertDateToISO(dataFim);
-        if (op.dataInicio > dataFimISO) {
-          match = false;
-          addLogEntry(`  ❌ ${op.numero} descartada - data ${op.dataInicio} posterior ao período (${dataFim})`);
-        }
-      }
-      
-      if (match) {
-        addLogEntry(`  - ${op.numero} incluida - ${op.maquina} | ${op.dataInicio}`);
-      }
-      
-      return match;
-    });
-
-    addLogEntry(`\n📊 Resultado: ${opsFiltradas.length} OPs encontradas`);
-
-    // Agrupar por máquina
-    const opsAgrupadas = groupOpsByMachine(opsFiltradas);
-    
-    renderGroupedOps(opsAgrupadas);
-    addLogEntry(`Busca concluida: ${opsFiltradas.length} OPs em ${opsAgrupadas.length} maquinas`);
-  }
-
-  function groupOpsByMachine(ops) {
-    const grouped = {};
-    ops.forEach(op => {
-      if (!grouped[op.maquina]) {
-        grouped[op.maquina] = {
-          maquina: op.maquina,
-          codigoMaquina: op.codigoMaquina,
-          ops: []
-        };
-      }
-      grouped[op.maquina].ops.push(op);
-    });
-    return Object.values(grouped);
-  }
-
-  function renderGroupedOps(data) {
-    if (!els.prOpsResults) return;
-
-    if (data.length === 0) {
-      els.prOpsResults.innerHTML = `
-        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 4px; border: 1px solid #e5e7eb;">
-          <h3 style="color: #6b7280; margin: 0 0 4px 0; font-size: 16px;">🔍 Nenhuma OP encontrada</h3>
-          <p style="color: #9ca3af; margin: 0; font-size: 14px;">Verifique os filtros de máquinas e período selecionados.</p>
-        </div>
-      `;
-      els.prOpsResults.style.display = 'block';
-      return;
-    }
-
-    const totalOps = data.reduce((sum, group) => sum + group.ops.length, 0);
-
-    // Verificar se há agrupamento CNC ativo
-    const cncInput = document.getElementById('pr-cnc-grouping');
-    const activeCNC = cncInput ? cncInput.value.trim() : '';
-    const isCNCFilter = document.querySelector('input[name="filter-type"]:checked')?.value === 'grouping';
-
-    const html = `
-      <div style="background: #f0f8ff; border: 1px solid #3b82f6; border-radius: 4px; padding: 8px 12px; margin-bottom: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h3 style="margin: 0; color: #1e40af; font-size: 16px;">OPs Encontradas</h3>
-            ${isCNCFilter && activeCNC ? `
-              <div style="margin-top: 4px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: 600; display: inline-block; border: 1px solid #bbf7d0;">
-                📋 Plano de Corte CNC: ${activeCNC} - ${data.filter(group => group.ops.some(op => op.codigoCNC === activeCNC)).map(group => group.maquina).join(', ')}
-              </div>
-            ` : ''}
-          </div>
-          <span style="color: #1e40af; font-weight: 600; font-size: 14px;">
-            ${totalOps} OPs em ${data.length} máquina${data.length > 1 ? 's' : ''}
-          </span>
-        </div>
-      </div>
-      
-      ${data.map(machineGroup => {
-        // Verificar se há agrupamento CNC
-        const hasCNC = machineGroup.ops.some(op => op.codigoCNC);
-        const cncCodes = hasCNC ? [...new Set(machineGroup.ops.filter(op => op.codigoCNC).map(op => op.codigoCNC))] : [];
-        
-        return `
-        <div class="machine-block" style="${hasCNC && activeCNC && cncCodes.includes(activeCNC) ? 'border-left: 4px solid #16a34a; background: #f0fdf4;' : ''}">
-          <div style="display: flex; align-items: center; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #e5e7eb;">
-            <div style="flex: 1;">
-              <h4 style="margin: 0; color: #374151; font-size: 14px;">${machineGroup.maquina}</h4>
-              ${hasCNC && activeCNC && cncCodes.includes(activeCNC) ? `
-                <div style="margin-top: 2px;">
-                  <span style="font-size: 11px; color: #6b7280;">Plano de Corte CNC:</span>
-                  <span style="font-size: 11px; padding: 1px 4px; border-radius: 2px; margin-left: 4px; font-weight: 600; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;">
-                    ${activeCNC}
-                  </span>
-                </div>
-              ` : ''}
-            </div>
-            <span style="background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600;">
-              ${machineGroup.codigoMaquina}
-            </span>
-          </div>
-          
-          <div style="display: flex; align-items: center; padding: 6px 8px; background: #f8fafc; border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #6b7280; font-weight: 600; border: 1px solid #e5e7eb;">
-            <div style="width: 30px; text-align: center;">✓</div>
-            <div style="width: 60px; text-align: center;">OP</div>
-            <div style="width: 80px; text-align: center;">Produto</div>
-            <div style="width: 100px; text-align: left; padding-left: 4px;">Descrição</div>
-            <div style="width: 100px; text-align: center;">Operação</div>
-            <div style="width: 70px; text-align: center;">Qtd. Prev.</div>
-            <div style="width: 70px; text-align: center;">qtd.etq</div>
-            <div style="width: 80px; text-align: center;">Ação</div>
-          </div>
-          
-          ${machineGroup.ops.map(op => `
-            <div class="op-row" style="display: flex; align-items: center; padding: 6px 8px; border-bottom: 1px solid #f3f4f6;">
-              <input type="checkbox" class="op-checkbox" data-op-id="${op.id}" style="width: 30px; margin-right: 0;" />
-              <span class="op-code" style="width: 60px; text-align: center; font-weight: 600; color: #1f2937; font-size: 13px;">${op.numero}</span>
-              <span class="op-produto" style="width: 80px; text-align: center; color: #374151; font-size: 13px;">${op.produto}</span>
-              <span class="op-descricao" style="width: 100px; text-align: left; color: #6b7280; font-size: 13px; padding-left: 4px;">${op.descricaoProduto}</span>
-              <span class="op-operacao" style="width: 100px; text-align: center; color: #059669; font-size: 13px; font-weight: 500;">${op.operacao}</span>
-              <span class="op-qtd-prevista" style="width: 70px; text-align: center; color: #374151; font-size: 13px; font-weight: 500;">${op.qtdPlanejada || '-'}</span>
-              <input type="number" class="op-qty" data-op-id="${op.id}" placeholder="qtd.etq" min="1" value="1" style="width: 70px; text-align: center; font-size: 13px;" />
-              <button class="op-print-btn" data-op-id="${op.id}" style="width: 80px; font-size: 12px; padding: 4px 8px;">Imprimir</button>
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }).join('')}
-      
-      <div style="background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 8px 12px; margin-top: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h4 style="margin: 0 0 2px 0; color: #374151; font-size: 14px;">Impressao em Lote</h4>
-            <p style="margin: 0; color: #6b7280; font-size: 12px;">Imprima todas as OPs selecionadas de uma vez</p>
-          </div>
-          <div class="btn-with-caption">
-            <button id="btn-print-all" class="primary" style="padding: 8px 16px; font-size: 14px; font-weight: 600;">
-              Imprimir Todas
-            </button>
-            <span class="btn-caption">Selecionadas</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    els.prOpsResults.innerHTML = html;
-    els.prOpsResults.style.display = 'block';
-  }
-
-
-  function addLogEntry(message) {
-    // Log removido para limpar a demonstração
-    // Apenas mensagens críticas de erro são mantidas
-    if (message.includes('Erro:') || message.includes('❌')) {
-      console.log(message);
-    }
-  }
-
-  // Funções do modal de seleção de máquinas
-  function openMachineSelectorModal() {
-    if (!els.machineSelectorModal) return;
-    
-    // Renderizar lista de máquinas
-    const machinesHtml = state.machines.map(machine => `
-      <div style="display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #eee;">
-        <input type="checkbox" class="machine-checkbox" data-machine="${machine}" ${state.selectedMachines.includes(machine) ? 'checked' : ''} style="margin-right: 12px;" />
-        <span>${machine}</span>
-      </div>
-    `).join('');
-    
-    els.machineSelectorList.innerHTML = machinesHtml;
-    els.machineSelectorModal.style.display = 'block';
-    updateMachineCount();
-  }
-
-  function closeMachineSelectorModal() {
-    if (els.machineSelectorModal) {
-      els.machineSelectorModal.style.display = 'none';
-    }
-  }
-
-  function updateMachineCount() {
-    if (!els.machineCount) return;
-    
-    const checkboxes = els.machineSelectorList?.querySelectorAll('.machine-checkbox:checked');
-    const count = checkboxes?.length || 0;
-    els.machineCount.textContent = `${count} máquinas selecionadas`;
-  }
-
-  function selectAllMachines() {
-    const checkboxes = els.machineSelectorList?.querySelectorAll('.machine-checkbox');
-    checkboxes?.forEach(cb => cb.checked = true);
-    updateMachineCount();
-  }
-
-  function deselectAllMachines() {
-    const checkboxes = els.machineSelectorList?.querySelectorAll('.machine-checkbox');
-    checkboxes?.forEach(cb => cb.checked = false);
-    updateMachineCount();
-  }
-
-  function confirmMachineSelection() {
-    const checkboxes = els.machineSelectorList?.querySelectorAll('.machine-checkbox:checked');
-    state.selectedMachines = Array.from(checkboxes || []).map(cb => cb.dataset.machine);
-    
-    // Atualizar display das máquinas selecionadas
-    const display = document.getElementById('selected-machines-display');
-    if (display) {
-      if (state.selectedMachines.length > 0) {
-        display.textContent = `${state.selectedMachines.length} máquina(s) selecionada(s): ${state.selectedMachines.join(', ')}`;
-      } else {
-        display.textContent = 'Nenhuma máquina selecionada';
-      }
-    }
-    
-    addLogEntry(`${state.selectedMachines.length} máquinas selecionadas: ${state.selectedMachines.join(', ')}`);
-    closeMachineSelectorModal();
-  }
-
-  function handlePrintSingle(opId) {
-    const op = EXAMPLE_OPS.find(o => o.id === opId);
-    if (!op) return;
-
-    const layoutId = els.prSelectLayout?.value;
-    if (!layoutId) {
-      addLogEntry('Erro: Selecione uma etiqueta primeiro');
-      return;
-    }
-
-    const layout = state.layouts.find(l => l.id === layoutId);
-    if (!layout) {
-      addLogEntry('Erro: Layout não encontrado');
-      return;
-    }
-
-    const qtyInput = els.prOpsResults?.querySelector(`.op-qty[data-op-id="${opId}"]`);
-    const quantidade = parseInt(qtyInput?.value || 1);
-    const qtdEtq = parseInt(els.prQtyEtq?.value || 1);
-
-    const values = {
-      OP: op.numero,
-      Produto: op.produto,
-      Descricao: op.descricaoProduto,
-      Quantidade: quantidade,
-      QuantidadeProduzida: quantidade,
-      QtdEtq: qtdEtq,
-      Maquina: op.maquina,
-      CodigoMaquina: op.codigoMaquina,
-      Operacao: op.operacao,
-      CodigoCNC: op.codigoCNC || '',
-      QtdPorChapa: op.qtdPorChapa || '',
-      ChapasReservadas: op.chapasReservadas || '',
-      Operador: 'Sistema',
-      Turno: '1º',
-      Data: new Date().toLocaleDateString('pt-BR')
-    };
-
-    const zpl = substituteZpl(layout.zpl, values);
-    
-    addLogEntry(`\n=== IMPRESSÃO INDIVIDUAL ===`);
-    addLogEntry(`OP: ${op.numero} (${op.produto})`);
-    addLogEntry(`Máquina: ${op.maquina} (${op.codigoMaquina})`);
-    addLogEntry(`Quantidade OP: ${quantidade} | qtd.etq: ${qtdEtq}`);
-    addLogEntry(`ZPL gerado: ${zpl.substring(0, 100)}...`);
-    addLogEntry(`✓ Enviado para impressora Zebra`);
-  }
-
-  function handlePrintAll() {
-    const checkboxes = els.prOpsResults?.querySelectorAll('.op-checkbox:checked');
-    if (!checkboxes || checkboxes.length === 0) {
-      addLogEntry('Erro: Nenhuma OP selecionada');
-      return;
-    }
-
-    const selectedOps = Array.from(checkboxes).map(cb => {
-      const opId = cb.dataset.opId;
-      const qtyInput = els.prOpsResults?.querySelector(`.op-qty[data-op-id="${opId}"]`);
-      const op = EXAMPLE_OPS.find(o => o.id === opId);
-      
-      return {
-        ...op,
-        quantidade: parseInt(qtyInput?.value || 1)
-      };
-    });
-
-    const layoutId = els.prSelectLayout?.value;
-    if (!layoutId) {
-      addLogEntry('Erro: Selecione uma etiqueta primeiro');
-      return;
-    }
-
-    const layout = state.layouts.find(l => l.id === layoutId);
-    if (!layout) {
-      addLogEntry('Erro: Layout não encontrado');
-      return;
-    }
-
-    const qtdEtq = parseInt(els.prQtyEtq?.value || 1);
-
-    addLogEntry(`\n=== IMPRESSÃO EM LOTE ===`);
-    addLogEntry(`Layout: ${layout.name}`);
-    addLogEntry(`qtd.etq global: ${qtdEtq}`);
-    addLogEntry(`Total de OPs: ${selectedOps.length}`);
-
-    selectedOps.forEach(op => {
-      const values = {
-        OP: op.numero,
-        Produto: op.produto,
-        Descricao: op.descricaoProduto,
-        Quantidade: op.quantidade,
-        QuantidadeProduzida: op.quantidade,
-        QtdEtq: qtdEtq,
-        Maquina: op.maquina,
-        CodigoMaquina: op.codigoMaquina,
-        Operacao: op.operacao,
-        CodigoCNC: op.codigoCNC || '',
-        QtdPorChapa: op.qtdPorChapa || '',
-        ChapasReservadas: op.chapasReservadas || '',
-        Operador: 'Sistema',
-        Turno: '1º',
-        Data: new Date().toLocaleDateString('pt-BR')
-      };
-
-      const zpl = substituteZpl(layout.zpl, values);
-      
-      addLogEntry(`\nOP: ${op.numero} (${op.produto})`);
-      addLogEntry(`Quantidade OP: ${op.quantidade} | qtd.etq: ${qtdEtq}`);
-      addLogEntry(`Máquina: ${op.maquina} (${op.codigoMaquina})`);
-      addLogEntry(`ZPL gerado: ${zpl.substring(0, 100)}...`);
-      addLogEntry(`✓ Enviado para impressora Zebra`);
-    });
-
-    addLogEntry(`\n=== IMPRESSÃO CONCLUÍDA ===`);
-    addLogEntry(`Total de OPs processadas: ${selectedOps.length}`);
-    addLogEntry(`qtd.etq aplicada: ${qtdEtq} por OP`);
-  }
-
   async function renderLabelaryTo(layout, zpl, container) {
     const widthIn = layout?.preview?.widthIn ?? 6; const heightIn = layout?.preview?.heightIn ?? 4; const dpmm = layout?.preview?.dpmm ?? 8;
     const url = `https://api.labelary.com/v1/printers/${dpmm}dpmm/labels/${widthIn}x${heightIn}/0/`;
     container.innerHTML = `<span class=\"hint\">Renderizando preview...</span>`;
-    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: normalizeZplForPreview(zpl) }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); container.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; container.appendChild(img); } catch (_) { container.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
+    try { const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: zpl }); if (!resp.ok) throw new Error(`HTTP ${resp.status}`); const blob = await resp.blob(); const imgUrl = URL.createObjectURL(blob); container.innerHTML = ''; const img = new Image(); img.src = imgUrl; img.alt = 'Preview da etiqueta'; img.style.maxWidth = '100%'; img.onload = () => { URL.revokeObjectURL(imgUrl); }; container.appendChild(img); } catch (_) { container.innerHTML = `<span class=\"hint\">Não foi possível renderizar o preview (offline? CORS?).</span>`; }
   }
 
   // Library/Machines code omitted for brevity (kept from previous section)
@@ -1160,7 +451,7 @@ PROXIMO PASSO: GERAR ORCAMENTO - Departamento Comercial
     const query = (els.search?.value || "").toLowerCase();
     const items = state.layouts.filter(l => !query || l.name.toLowerCase().includes(query)).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
     els.layoutList.innerHTML = items.map(l => `<li><div><div><strong>${l.name}</strong> <span class=\"meta\">v${l.version}</span></div><div class=\"meta\">${new Date(l.createdAt).toLocaleString()}</div></div><div class=\"row\"><button data-act=\"select\" data-id=\"${l.id}\" class=\"secondary\">Selecionar</button><button data-act=\"preview\" data-id=\"${l.id}\">Preview</button><button data-act=\"delete\" data-id=\"${l.id}\" class=\"secondary\">Excluir</button></div></li>`).join("");
-    els.layoutList.querySelectorAll("button").forEach(btn => btn.addEventListener("click", (e) => { const id = e.target.getAttribute("data-id"); const act = e.target.getAttribute("data-act"); const idx = state.layouts.findIndex(x => x.id === id); if (idx === -1) return; if (act === "delete") { if (confirm("Excluir este layout?")) { state.layouts.splice(idx, 1); saveJson(STORAGE_KEYS.layouts, state.layouts); renderLibrary(); renderSelects(); } } else if (act === "select") { saveJson(STORAGE_KEYS.activeLayoutId, id); renderSelects(); updateAssociatedCount(); document.querySelector('[data-view="machines"]').click(); const ly = state.layouts.find(l => l.id === id); if (ly?.preview) { els.pvWidth.value = ly.preview.widthIn; els.pvHeight.value = ly.preview.heightIn; els.pvDpmm.value = String(ly.preview.dpmm); } } else if (act === "preview") { saveJson(STORAGE_KEYS.activeLayoutId, id); document.querySelector('[data-view="import"]').click(); const ly = state.layouts.find(l => l.id === id); if (ly) { els.zplInput.value = ly.zpl; state.draftZpl = ly.zpl; saveJson(STORAGE_KEYS.draftZpl, state.draftZpl); els.layoutName.value = ly.name; if (ly.preview) { els.pvWidth.value = ly.preview.widthIn; els.pvHeight.value = ly.preview.heightIn; els.pvDpmm.value = String(ly.preview.dpmm); } } renderImagePreviewDesign(); window.scrollTo({ top: document.getElementById('pv-container').offsetTop - 80, behavior: 'smooth' }); } }));
+    els.layoutList.querySelectorAll("button").forEach(btn => btn.addEventListener("click", (e) => { const id = e.target.getAttribute("data-id"); const act = e.target.getAttribute("data-act"); const idx = state.layouts.findIndex(x => x.id === id); if (idx === -1) return; if (act === "delete") { if (confirm("Excluir este layout?")) { state.layouts.splice(idx, 1); saveJson(STORAGE_KEYS.layouts, state.layouts); renderLibrary(); renderSelects(); } } else if (act === "select") { saveJson(STORAGE_KEYS.activeLayoutId, id); alert("Layout selecionado como ativo."); const ly = state.layouts.find(l => l.id === id); if (ly?.preview) { els.pvWidth.value = ly.preview.widthIn; els.pvHeight.value = ly.preview.heightIn; els.pvDpmm.value = String(ly.preview.dpmm); } } else if (act === "preview") { saveJson(STORAGE_KEYS.activeLayoutId, id); document.querySelector('[data-view="import"]').click(); const ly = state.layouts.find(l => l.id === id); if (ly) { els.zplInput.value = ly.zpl; state.draftZpl = ly.zpl; saveJson(STORAGE_KEYS.draftZpl, state.draftZpl); els.layoutName.value = ly.name; if (ly.preview) { els.pvWidth.value = ly.preview.widthIn; els.pvHeight.value = ly.preview.heightIn; els.pvDpmm.value = String(ly.preview.dpmm); } } renderImagePreviewDesign(); window.scrollTo({ top: document.getElementById('pv-container').offsetTop - 80, behavior: 'smooth' }); } }));
   }
 
   function renderMachines() {

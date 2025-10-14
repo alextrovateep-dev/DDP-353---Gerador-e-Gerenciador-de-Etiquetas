@@ -88,6 +88,29 @@
       </div>
     </div>
 
+    <!-- Modal de Seleção de Grupos -->
+    <div id="group-selector-modal" class="modal-backdrop" style="display: none;">
+      <div class="modal" style="width: 600px; max-width: 90vw;">
+        <header>
+          <h3>Selecionar Grupos de Máquinas</h3>
+          <button class="close-btn" id="group-selector-close">Fechar</button>
+        </header>
+        <p class="hint" style="margin: 8px 0;">Marque os grupos que deseja incluir na busca de OPs.</p>
+        <div class="row" style="margin-bottom: 12px;">
+          <button id="group-select-all" class="btn btn-small">Selecionar Todos</button>
+          <button id="group-deselect-all" class="btn btn-small">Desmarcar Todos</button>
+          <span id="group-count" style="margin-left: 16px; font-weight: bold; color: #0066cc;">0 grupo(s) selecionado(s)</span>
+        </div>
+        <div id="group-selector-list" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; padding: 8px;">
+          <!-- Lista de grupos será preenchida dinamicamente -->
+        </div>
+        <div class="modal-actions" style="margin-top: 16px;">
+          <button id="group-selector-cancel" class="btn">Cancelar</button>
+          <button id="group-selector-confirm" class="btn btn-primary">Confirmar Seleção</button>
+        </div>
+      </div>
+    </div>
+
     <section id="view-import" class="view is-active">
       <h2>Gerar/Gerenciar Etiquetas</h2>
       <p class="hint" style="margin:8px 0 12px 0;">
@@ -171,13 +194,10 @@
                   </div>
                 </div>
                 <div style="margin-left: 52px;">
-                  <select id="pr-machine-group" style="width: 100%; max-width: 320px; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #ffffff; transition: all 0.2s ease;">
-                    <option value="">Selecione um grupo...</option>
-                    <option value="Grupo 1 - Injeção">Grupo 1 - Injeção</option>
-                    <option value="Grupo 2 - Usinagem">Grupo 2 - Usinagem</option>
-                    <option value="Grupo 3 - Montagem">Grupo 3 - Montagem</option>
-                    <option value="Grupo 4 - Processo Sequencial">Grupo 4 - Processo Sequencial</option>
-                  </select>
+                  <button id="pr-select-groups" class="secondary" style="padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; background: #ffffff; border: 2px solid #d1d5db; color: #374151; transition: all 0.2s ease;">Selecionar Grupos</button>
+                  <div id="selected-groups-display" style="margin-top: 12px; color: #059669; font-size: 14px; font-weight: 600; background: #f0fdf4; padding: 8px 12px; border-radius: 6px; border: 1px solid #bbf7d0; display: none;">
+                    Grupos selecionados: <span id="selected-groups-text"></span>
+                  </div>
                 </div>
               </div>
 

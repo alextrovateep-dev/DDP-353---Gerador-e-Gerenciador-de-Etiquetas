@@ -139,6 +139,7 @@
 
       <h3 style="margin-top:16px">Campos disponíveis (Teep)</h3>
       <pre id="detect-output" class="output"></pre>
+      
 
       <h3 style="margin-top:16px">Preview Visual (renderizado)</h3>
       <details class="advanced" style="margin:8px 0;">
@@ -289,8 +290,43 @@
         </div>
       </div>
 
+      <!-- Controle de Impressão Dinâmica -->
+      <div id="impressao-dinamica-control" style="display: none; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-radius: 12px; padding: 16px; margin: 16px 0; box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.1);">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="background: #0ea5e9; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">⚡</div>
+            <div>
+              <h3 style="margin: 0; font-size: 16px; color: #0c4a6e; font-weight: 700;">Controle de Impressão</h3>
+              <p style="margin: 4px 0 0 0; font-size: 13px; color: #0369a1;">Escolha como deseja imprimir as etiquetas</p>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; color: #0c4a6e;">
+              <input type="checkbox" id="modo-dinamico" style="width: 18px; height: 18px; accent-color: #0ea5e9;">
+              Impressão Dinâmica
+            </label>
+            <div id="layout-padrao-section" style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 13px; color: #64748b; font-weight: 500;">Layout Padrão:</label>
+              <select id="layout-padrao-dinamico" style="padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 13px; min-width: 200px;">
+                <option value="">Selecione um layout...</option>
+              </select>
+              <button id="aplicar-layout-padrao" style="padding: 6px 12px; background: #0ea5e9; color: white; border: none; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;" title="Aplicar a todas as OPs sem etiqueta selecionada">
+                Aplicar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="modo-dinamico-info" style="display: none; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 12px; margin-top: 12px; font-size: 13px; color: #92400e;">
+          <strong>💡 Modo Dinâmico Ativo:</strong> Cada OP pode ter sua própria etiqueta. Selecione a etiqueta desejada diretamente na lista de OPs abaixo.
+        </div>
+        <div id="modo-tradicional-info" style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 6px; padding: 12px; margin-top: 12px; font-size: 13px; color: #0369a1;">
+          <strong>📋 Modo Tradicional:</strong> Todas as OPs usarão o mesmo layout selecionado acima. Para usar etiquetas diferentes, ative o modo dinâmico.
+        </div>
+      </div>
+
       <!-- Resultados das OPs agrupadas por máquina -->
       <div id="ops-results" style="display: none; margin:16px 0;"></div>
+      
 
       <!-- Formulário manual (modo individual) -->
       <div id="manual-form-section" class="manual-form-section">

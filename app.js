@@ -11,11 +11,21 @@
     { key: "Data", desc: "Data Atual" },
     { key: "Operador", desc: "Nome do Operador" },
     { key: "Turno", desc: "Turno" },
+    // Novos placeholders para operações dinâmicas
+    { key: "Operacoes", desc: "Lista de Operações (gerada automaticamente)" },
+    { key: "Operacao1", desc: "Primeira Operação" },
+    { key: "Operacao2", desc: "Segunda Operação" },
+    { key: "Operacao3", desc: "Terceira Operação" },
+    { key: "Operacao4", desc: "Quarta Operação" },
+    { key: "Operacao5", desc: "Quinta Operação" },
   ];
 
   const EXAMPLE_ZPL = `^XA\n^CF0,40\n^FO50,50^FDOP: {OP}^FS\n^FO50,100^FDProduto: {Produto}^FS\n^FO50,150^FDQuantidade: {QtdProduzida}^FS\n^XZ`;
   const EXAMPLE_ZPL_2 = `^XA\n^CF0,40\n^FO30,30^FDMaquina: {Maquina}^FS\n^FO30,80^FDOperador: {Operador}^FS\n^FO30,130^FDTurno: {Turno}^FS\n^XZ`;
   const EXAMPLE_ZPL_FACCHINI = `^XA\n^CF0,50\n^FO30,30^FDEtiqueta Padrão Facchini^FS\n^CF0,40\n^FO30,90^FDOP: {OP}^FS\n^FO30,140^FDQuantidade: {Quantidade}^FS\n^FO30,190^FDMáquina: {Maquina}^FS\n^FO30,240^FDOperador: {Operador}^FS\n^FO30,290^FDTurno: {Turno}^FS\n^XZ`;
+  const EXAMPLE_ZPL_OPERACOES = `^XA\n^CF0,50\n^FO30,30^FDEtiqueta com Operações Dinâmicas^FS\n^CF0,40\n^FO30,90^FDOP: {OP}^FS\n^FO30,140^FDProduto: {Produto}^FS\n^FO30,190^FDQuantidade: {QtdProduzida}^FS\n^CF0,30\n^FO30,240^FD{Operacoes}^FS\n^XZ`;
+  
+  const EXAMPLE_ZPL_OPERACOES_INDIVIDUAIS = `^XA\n^CF0,50\n^FO30,30^FDEtiqueta com Operações Individuais^FS\n^CF0,40\n^FO30,90^FDOP: {OP}^FS\n^FO30,140^FDProduto: {Produto}^FS\n^CF0,30\n^FO30,190^FD1ª: {Operacao1}^FS\n^FO30,220^FD2ª: {Operacao2}^FS\n^FO30,250^FD3ª: {Operacao3}^FS\n^XZ`;
 
   const DEFAULT_EXAMPLE_VALUES = {
     OP: 'OP123456',
@@ -49,6 +59,10 @@
     // modais - grupos e máquinas
     groupModal: document.getElementById("group-selector-modal"), groupList: document.getElementById("group-selector-list"), groupSelectAll: document.getElementById("group-select-all"), groupDeselectAll: document.getElementById("group-deselect-all"), groupCount: document.getElementById("group-count"), groupConfirm: document.getElementById("group-selector-confirm"), groupCancel: document.getElementById("group-selector-cancel"), groupClose: document.getElementById("group-selector-close"),
     machineModal: document.getElementById("machine-selector-modal"), machineListModal: document.getElementById("machine-selector-list"), machineSelectAllBtn: document.getElementById("machine-select-all"), machineDeselectAllBtn: document.getElementById("machine-deselect-all"), machineCountLabel: document.getElementById("machine-count"), machineConfirmBtn: document.getElementById("machine-selector-confirm"), machineCancelBtn: document.getElementById("machine-selector-cancel"), machineCloseBtn: document.getElementById("machine-selector-close"),
+    
+    
+    // controle de impressão dinâmica
+    impressaoDinamicaControl: document.getElementById("impressao-dinamica-control"), modoDinamico: document.getElementById("modo-dinamico"), layoutPadraoDinamico: document.getElementById("layout-padrao-dinamico"), aplicarLayoutPadrao: document.getElementById("aplicar-layout-padrao"), modoDinamicoInfo: document.getElementById("modo-dinamico-info"), modoTradicionalInfo: document.getElementById("modo-tradicional-info"),
   };
 
   const STORAGE_KEYS = { draftZpl: "teep.demo.draftZpl", layouts: "teep.demo.layouts", machines: "teep.demo.machines", machineGroups: "teep.demo.machineGroups", associations: "teep.demo.assoc", activeLayoutId: "teep.demo.activeLayoutId" };
@@ -59,10 +73,26 @@
   let state = {
     draftZpl: localStorage.getItem(STORAGE_KEYS.draftZpl) || "",
     layouts: loadJson(STORAGE_KEYS.layouts, []),
-    machines: loadJson(STORAGE_KEYS.machines, ["Prensa 01", "Solda 02", "Pintura 03"]),
-    machineGroups: loadJson(STORAGE_KEYS.machineGroups, { "Linha A": ["Prensa 01"], "Linha B": ["Solda 02"], "Pintura": ["Pintura 03"] }),
+    machines: loadJson(STORAGE_KEYS.machines, [
+      "Injetora 01", "Injetora 02", "Injetora 03",
+      "Torno CNC 01", "Torno CNC 02", "Fresadora 01", "Fresadora 02",
+      "Prensa 01", "Prensa 02", "Prensa 03",
+      "Solda MIG 01", "Solda TIG 01", "Solda Robótica 01",
+      "Pintura Automática 01", "Pintura Manual 01",
+      "Montagem 01", "Montagem 02", "Montagem 03"
+    ]),
+    machineGroups: loadJson(STORAGE_KEYS.machineGroups, { 
+      "Injeção": ["Injetora 01", "Injetora 02", "Injetora 03"],
+      "Usinagem": ["Torno CNC 01", "Torno CNC 02", "Fresadora 01", "Fresadora 02"],
+      "Conformação": ["Prensa 01", "Prensa 02", "Prensa 03"],
+      "Solda": ["Solda MIG 01", "Solda TIG 01", "Solda Robótica 01"],
+      "Acabamento": ["Pintura Automática 01", "Pintura Manual 01"],
+      "Montagem": ["Montagem 01", "Montagem 02", "Montagem 03"]
+    }),
     associations: loadJson(STORAGE_KEYS.associations, {}),
     selectedMachinesForPrint: [],
+    // Nova estrutura para associações OP-Etiqueta
+    opEtiquetaAssociations: loadJson("teep.demo.opEtiquetaAssociations", {}),
   };
 
   // Seleção temporária de máquinas para a busca de OPs (via modal)
@@ -73,7 +103,15 @@
     const l1 = { id: `lay-${Date.now()}-a`, name: "Etiqueta Padrão (Facchini)", zpl: EXAMPLE_ZPL_FACCHINI, fields: ["OP","Quantidade","Maquina","Operador","Turno"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
     const l2 = { id: `lay-${Date.now()}-b`, name: "Exemplo OP/Produto", zpl: EXAMPLE_ZPL, fields: ["OP","Produto","QtdProduzida"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
     const l3 = { id: `lay-${Date.now()}-c`, name: "Etiqueta 3", zpl: EXAMPLE_ZPL_2, fields: ["Maquina","Operador","Turno"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
-    state.layouts = [l1, l2, l3];
+    const l4 = { id: `lay-${Date.now()}-d`, name: "Etiqueta com Operações Dinâmicas", zpl: EXAMPLE_ZPL_OPERACOES, fields: ["OP","Produto","QtdProduzida","Operacoes"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
+    const l5 = { id: `lay-${Date.now()}-e`, name: "Etiqueta com Operações Individuais", zpl: EXAMPLE_ZPL_OPERACOES_INDIVIDUAIS, fields: ["OP","Produto","Operacao1","Operacao2","Operacao3"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
+    
+    // Layouts específicos por tipo de operação
+    const l6 = { id: `lay-${Date.now()}-f`, name: "Etiqueta Injeção", zpl: `^XA\n^CF0,50\n^FO30,30^FDEtiqueta Injeção^FS\n^CF0,40\n^FO30,90^FDOP: {OP}^FS\n^FO30,140^FDProduto: {Produto}^FS\n^CF0,30\n^FO30,190^FDInjeção: {Operacao1}^FS\n^FO30,220^FDDesbarb: {Operacao2}^FS\n^XZ`, fields: ["OP","Produto","Operacao1","Operacao2"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
+    const l7 = { id: `lay-${Date.now()}-g`, name: "Etiqueta Usinagem", zpl: `^XA\n^CF0,50\n^FO30,30^FDEtiqueta Usinagem^FS\n^CF0,40\n^FO30,90^FDOP: {OP}^FS\n^FO30,140^FDProduto: {Produto}^FS\n^CF0,30\n^FO30,190^FDTorno: {Operacao1}^FS\n^FO30,220^FDFresa: {Operacao2}^FS\n^FO30,250^FDFuração: {Operacao3}^FS\n^XZ`, fields: ["OP","Produto","Operacao1","Operacao2","Operacao3"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
+    const l8 = { id: `lay-${Date.now()}-h`, name: "Etiqueta Solda", zpl: `^XA\n^CF0,50\n^FO30,30^FDEtiqueta Solda^FS\n^CF0,40\n^FO30,90^FDOP: {OP}^FS\n^FO30,140^FDProduto: {Produto}^FS\n^CF0,30\n^FO30,190^FDMIG: {Operacao1}^FS\n^FO30,220^FDTIG: {Operacao2}^FS\n^FO30,250^FDRobótica: {Operacao3}^FS\n^XZ`, fields: ["OP","Produto","Operacao1","Operacao2","Operacao3"], version: 1, createdAt: new Date().toISOString(), history: [], preview: { widthIn: 6, heightIn: 4, dpmm: 8 } };
+    
+    state.layouts = [l1, l2, l3, l4, l5, l6, l7, l8];
     saveJson(STORAGE_KEYS.layouts, state.layouts);
     saveJson(STORAGE_KEYS.activeLayoutId, l1.id);
   }
@@ -184,7 +222,19 @@
   ;[els.pvWidth, els.pvHeight, els.pvDpmm].forEach(el => el?.addEventListener('change', () => { const layout = getActiveLayout(); if (!layout) { renderImagePreviewDesign(); return; } layout.preview = layout.preview || {}; layout.preview.widthIn = parseFloat(els.pvWidth.value || "6"); layout.preview.heightIn = parseFloat(els.pvHeight.value || "4"); layout.preview.dpmm = parseInt(els.pvDpmm.value || "8", 10); const idx = state.layouts.findIndex(l => l.id === layout.id); if (idx !== -1) { state.layouts[idx] = layout; saveJson(STORAGE_KEYS.layouts, state.layouts); } renderImagePreviewDesign(); }));
 
   async function renderImagePreviewDesign() {
-    const layout = getActiveLayout(); const zpl = (els.zplInput?.value || state.draftZpl || '').trim(); if (!zpl) { els.pvContainer.innerHTML = `<span class=\"hint\">Cole o ZPL para visualizar.</span>`; return; }
+    const layout = getActiveLayout(); let zpl = (els.zplInput?.value || state.draftZpl || '').trim(); if (!zpl) { els.pvContainer.innerHTML = `<span class=\"hint\">Cole o ZPL para visualizar.</span>`; return; }
+    
+    // Se o ZPL contém operações dinâmicas, usar dados de exemplo para preview
+    if (hasDynamicOperations(zpl)) {
+      const exemploOperacoes = [
+        { codigo: 10, nome: 'Corte' },
+        { codigo: 20, nome: 'Dobra' },
+        { codigo: 30, nome: 'Solda' }
+      ];
+      const opDataExemplo = { operacoes: exemploOperacoes };
+      zpl = generateDynamicZpl(zpl, opDataExemplo);
+    }
+    
     const widthIn = layout?.preview?.widthIn ?? parseFloat(els.pvWidth.value || "6"); const heightIn = layout?.preview?.heightIn ?? parseFloat(els.pvHeight.value || "4"); const dpmm = layout?.preview?.dpmm ?? parseInt(els.pvDpmm.value || "8", 10);
     els.pvWidth.value = widthIn; els.pvHeight.value = heightIn; els.pvDpmm.value = String(dpmm);
     const url = `https://api.labelary.com/v1/printers/${dpmm}dpmm/labels/${widthIn}x${heightIn}/0/`;
@@ -292,13 +342,65 @@
       const group = Object.entries(state.machineGroups).find(([, arr]) => arr.includes(m))?.[0] || '-';
       for (let d = 0; d < Math.min(days, 3); d++) {
         const dt = new Date(base); dt.setDate(dt.getDate() + d);
-        // mock de operações por OP (10,20,30) com nomes variados
-        const routings = [
+        
+        // Operações realistas baseadas no tipo de máquina
+        let routings = [];
+        if (group === 'Injeção') {
+          routings = [
+            { codigo: 10, nome: 'Injeção' },
+            { codigo: 20, nome: 'Desbarbamento' },
+            { codigo: 30, nome: 'Inspeção' }
+          ];
+        } else if (group === 'Usinagem') {
+          routings = [
+            { codigo: 10, nome: 'Torneamento' },
+            { codigo: 20, nome: 'Fresamento' },
+            { codigo: 30, nome: 'Furação' }
+          ];
+        } else if (group === 'Conformação') {
+          routings = [
           { codigo: 10, nome: 'Corte' },
-          { codigo: 20, nome: (mi % 2 === 0) ? 'Dobra' : 'Pintura' },
-          { codigo: 30, nome: (mi % 3 === 0) ? 'Usinagem' : 'Montagem' },
-        ];
-        ops.push({ numero: `OP${String(idx).padStart(3,'0')}`, produto: `PRD-${(100+idx)}`, descricao: `Item ${idx}`, maquina: m, grupo: group, data: dt.toISOString().slice(0,10), qtd: 10 + ((mi+d)%5)*5, cnc: cncCode ? `CNC-${cncCode}` : null, operacoes: routings });
+            { codigo: 20, nome: 'Dobra' },
+            { codigo: 30, nome: 'Estampo' }
+          ];
+        } else if (group === 'Solda') {
+          routings = [
+            { codigo: 10, nome: 'Solda MIG' },
+            { codigo: 20, nome: 'Solda TIG' },
+            { codigo: 30, nome: 'Solda Robótica' }
+          ];
+        } else if (group === 'Acabamento') {
+          routings = [
+            { codigo: 10, nome: 'Pintura' },
+            { codigo: 20, nome: 'Secagem' },
+            { codigo: 30, nome: 'Inspeção Final' }
+          ];
+        } else if (group === 'Montagem') {
+          routings = [
+            { codigo: 10, nome: 'Montagem' },
+            { codigo: 20, nome: 'Teste' },
+            { codigo: 30, nome: 'Embalagem' }
+          ];
+        } else {
+          // Fallback genérico
+          routings = [
+            { codigo: 10, nome: 'Operação 1' },
+            { codigo: 20, nome: 'Operação 2' },
+            { codigo: 30, nome: 'Operação 3' }
+          ];
+        }
+        
+        ops.push({ 
+          numero: `OP${String(idx).padStart(3,'0')}`, 
+          produto: `PRD-${(100+idx)}`, 
+          descricao: `Peça ${idx} - ${group}`, 
+          maquina: m, 
+          grupo: group, 
+          data: dt.toISOString().slice(0,10), 
+          qtd: 10 + ((mi+d)%5)*5, 
+          cnc: cncCode ? `CNC-${cncCode}` : null, 
+          operacoes: routings 
+        });
         idx++;
       }
     });
@@ -326,18 +428,42 @@
     if (!els.prOpsResults) return;
     if (!ops.length) { els.prOpsResults.style.display = 'block'; els.prOpsResults.innerHTML = `<div class="hint">Nenhuma OP encontrada para os filtros.</div>`; return; }
     els.prOpsResults.style.display = 'block';
+    
+    // Armazenar OPs encontradas para uso posterior
+    state.opsEncontradas = ops;
+    
+    
+    // Mostrar seção de controle de impressão dinâmica
+    if (els.impressaoDinamicaControl) {
+      els.impressaoDinamicaControl.style.display = 'block';
+    }
+    
+    // Atualizar layout padrão dinâmico
+    updateLayoutPadraoDinamico();
 
     // Agrupar por máquina
     const byMachine = ops.reduce((acc, op) => { (acc[op.maquina] = acc[op.maquina] || []).push(op); return acc; }, {});
     const cncHeader = cncCode ? `<div class="hint" style="margin:8px 0 12px 0;">Plano CNC aplicado: <strong>CNC-${cncCode}</strong></div>` : '';
     let html = cncHeader;
-    // Definição fixa de operação por máquina (mock):
-    // índice 0 -> 10 Corte, 1 -> 20 Dobra, 2 -> 30 Usinagem (repete)
-    const allMachinesOrdered = Object.keys(byMachine).sort();
+    // Definição realista de operação por máquina baseada no grupo
     function operationForMachine(machine) {
-      const idx = Math.max(0, allMachinesOrdered.indexOf(machine));
-      const map = [ { codigo: 10, nome: 'Corte' }, { codigo: 20, nome: 'Dobra' }, { codigo: 30, nome: 'Usinagem' } ];
-      return map[idx % map.length];
+      const group = Object.entries(state.machineGroups).find(([, arr]) => arr.includes(machine))?.[0];
+      
+      if (group === 'Injeção') {
+        return { codigo: 10, nome: 'Injeção' };
+      } else if (group === 'Usinagem') {
+        return { codigo: 20, nome: 'Usinagem' };
+      } else if (group === 'Conformação') {
+        return { codigo: 30, nome: 'Conformação' };
+      } else if (group === 'Solda') {
+        return { codigo: 40, nome: 'Solda' };
+      } else if (group === 'Acabamento') {
+        return { codigo: 50, nome: 'Acabamento' };
+      } else if (group === 'Montagem') {
+        return { codigo: 60, nome: 'Montagem' };
+      } else {
+        return { codigo: 10, nome: 'Operação' };
+      }
     }
 
     for (const [machine, items] of Object.entries(byMachine)) {
@@ -356,27 +482,99 @@
       html += items.map(op => {
         // Cada máquina roda sempre a mesma operação nesta demo
         const operacaoNaMaquina = operacaoFixa;
+        
+        // Verificar se há etiqueta específica associada
+        const etiquetaAssociada = getEtiquetaAssociadaOp(op.numero);
+        const temEtiquetaEspecifica = !!etiquetaAssociada;
+        const indicadorEtiqueta = temEtiquetaEspecifica ? 
+          `<span style="color: #16a34a; font-weight: bold; margin-left: 4px;" title="Etiqueta específica: ${etiquetaAssociada.name}">🏷️</span>` : '';
+        
+        // Verificar se modo dinâmico está ativo
+        const modoDinamicoAtivo = els.modoDinamico?.checked || false;
+        
+        // Gerar seletor de etiqueta se modo dinâmico estiver ativo
+        let seletorEtiqueta = '';
+        if (modoDinamicoAtivo) {
+          const etiquetaId = etiquetaAssociada?.id || '';
+          seletorEtiqueta = `
+            <select class="op-etiqueta-selector" data-op="${op.numero}" style="width: 180px; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 12px; background: white;">
+              <option value="">Escolher etiqueta...</option>
+              ${state.layouts.map(layout => 
+                `<option value="${layout.id}" ${layout.id === etiquetaId ? 'selected' : ''} ${isLayoutRelevanteParaGrupo(layout, op.grupo) ? 'style="background-color: #f0fdf4; font-weight: bold;"' : ''}>${layout.name}${isLayoutRelevanteParaGrupo(layout, op.grupo) ? ' ⭐' : ''}</option>`
+              ).join('')}
+            </select>
+          `;
+        }
+        
         return `
-        <div class="op-row" style="gap:12px;">
+        <div class="op-row" style="gap:12px; ${temEtiquetaEspecifica ? 'background-color: #f0fdf4; border-left: 3px solid #16a34a;' : ''}">
           <input type="checkbox" class="op-checkbox" />
-          <div class="op-code" style="width:90px;font-weight:600;">${op.numero}</div>
+          <div class="op-code" style="width:90px;font-weight:600;">${op.numero}${indicadorEtiqueta}</div>
           <div class="op-produto" style="width:120px;">${op.produto}</div>
           <div class="op-operacao" style="width:140px;font-weight:500;">${operacaoNaMaquina.codigo} - ${operacaoNaMaquina.nome}</div>
           <div class="op-descricao" style="flex:1;min-width:120px;">${op.descricao}</div>
           <div class="op-data" style="width:100px;">${op.data}</div>
           <input type="number" class="op-qty" value="${els.prQtyEtq?.value || 1}" min="1" style="width:70px;" />
-          <button class="op-print-btn" data-op="${op.numero}" data-operacao="${operacaoNaMaquina.codigo}">Imprimir</button>
+          ${seletorEtiqueta}
+          <button class="op-print-btn" data-op="${op.numero}" data-operacao="${operacaoNaMaquina.codigo}" style="${temEtiquetaEspecifica ? 'background: linear-gradient(135deg, #16a34a, #15803d);' : ''}">Imprimir</button>
         </div>`;
       }).join('');
       html += `</div>`;
     }
     els.prOpsResults.innerHTML = html;
     els.prOpsResults.querySelectorAll('.op-print-btn').forEach(btn => btn.addEventListener('click', () => {
-      const layoutId = els.prSelectLayout?.value; const ly = state.layouts.find(l => l.id === layoutId) || getActiveLayout(); if (!ly) { alert('Selecione um layout.'); return; }
-      const qtyInput = btn.closest('.op-row')?.querySelector('.op-qty');
+      const opNumero = btn.dataset.op;
+      const opRow = btn.closest('.op-row');
+      
+      // Verificar se modo dinâmico está ativo
+      const modoDinamicoAtivo = els.modoDinamico?.checked || false;
+      let ly = null;
+      
+      if (modoDinamicoAtivo) {
+        // Modo dinâmico: usar etiqueta selecionada na linha da OP
+        const etiquetaSelector = opRow?.querySelector('.op-etiqueta-selector');
+        const etiquetaId = etiquetaSelector?.value;
+        
+        if (!etiquetaId) {
+          alert('Selecione uma etiqueta para esta OP no modo dinâmico.');
+          return;
+        }
+        
+        ly = state.layouts.find(l => l.id === etiquetaId);
+        if (!ly) {
+          alert('Etiqueta selecionada não encontrada.');
+          return;
+        }
+      } else {
+        // Modo tradicional: usar etiqueta específica associada ou layout padrão
+        ly = getEtiquetaAssociadaOp(opNumero);
+        
+        if (!ly) {
+          const layoutId = els.prSelectLayout?.value;
+          ly = state.layouts.find(l => l.id === layoutId) || getActiveLayout();
+          if (!ly) { 
+            alert('Selecione um layout ou associe uma etiqueta específica à OP.'); 
+            return; 
+          }
+        }
+      }
+      
+      const qtyInput = opRow?.querySelector('.op-qty');
       const copies = Math.max(1, parseInt(qtyInput?.value || '1', 10));
       const operacao = btn.dataset.operacao || '10';
-      const logLines = Array.from({ length: copies }).map((_, i) => `[${new Date().toLocaleTimeString()}] Impressão em lote ${i+1}/${copies} da ${btn.dataset.op} (Op.${operacao}) com layout ${ly.name}.`);
+      
+      // Buscar dados completos da OP para operações dinâmicas
+      const opData = ops.find(op => op.numero === opNumero);
+      
+      // Gerar ZPL dinâmico se necessário
+      let finalZpl = ly.zpl;
+      if (opData && hasDynamicOperations(ly.zpl)) {
+        finalZpl = generateDynamicZpl(ly.zpl, opData);
+        console.log('ZPL Dinâmico gerado:', finalZpl);
+      }
+      
+      const modoTipo = modoDinamicoAtivo ? ' (modo dinâmico)' : (getEtiquetaAssociadaOp(opNumero) ? ' (etiqueta específica)' : ' (layout padrão)');
+      const logLines = Array.from({ length: copies }).map((_, i) => `[${new Date().toLocaleTimeString()}] Impressão em lote ${i+1}/${copies} da ${btn.dataset.op} (Op.${operacao}) com ${ly.name}${modoTipo}${opData && hasDynamicOperations(ly.zpl) ? ' (ZPL dinâmico)' : ''}.`);
       els.prLog.textContent = logLines.join('\n') + '\n' + (els.prLog.textContent || '');
     }));
   }
@@ -421,7 +619,22 @@
   els.prPreview?.addEventListener('click', async () => {
     const id = els.prSelectLayout.value; const ly = state.layouts.find(l => l.id === id); if (!ly) return;
     const values = {}; els.prForm.querySelectorAll('input').forEach(i => values[i.name] = i.value);
-    const zpl = substituteZpl(ly.zpl, values);
+    
+    // Verificar se precisa de operações dinâmicas para preview
+    let zpl = ly.zpl;
+    if (hasDynamicOperations(ly.zpl)) {
+      // Para preview, usar operações de exemplo
+      const exemploOperacoes = [
+        { codigo: 10, nome: 'Corte' },
+        { codigo: 20, nome: 'Dobra' },
+        { codigo: 30, nome: 'Solda' }
+      ];
+      const opDataExemplo = { operacoes: exemploOperacoes };
+      zpl = generateDynamicZpl(ly.zpl, opDataExemplo);
+    } else {
+      zpl = substituteZpl(ly.zpl, values);
+    }
+    
     await renderLabelaryTo(ly, zpl, els.prPreviewContainer);
   });
 
@@ -429,8 +642,22 @@
     const id = els.prSelectLayout.value; const ly = state.layouts.find(l => l.id === id); if (!ly) { alert('Selecione um layout.'); return; }
     const values = {}; els.prForm.querySelectorAll('input').forEach(i => values[i.name] = i.value);
     const copies = Math.max(1, parseInt(els.prCopies.value || '1', 10));
-    const zpl = substituteZpl(ly.zpl, values);
-    const logLines = Array.from({ length: copies }).map((_, idx) => `[${new Date().toLocaleTimeString()}] Impressão manual ${idx+1}/${copies} com layout ${ly.name}.`);
+    
+    let zpl = ly.zpl;
+    if (hasDynamicOperations(ly.zpl)) {
+      // Para impressão manual, usar operações de exemplo ou valores do formulário
+      const exemploOperacoes = [
+        { codigo: 10, nome: 'Corte' },
+        { codigo: 20, nome: 'Dobra' },
+        { codigo: 30, nome: 'Solda' }
+      ];
+      const opDataExemplo = { operacoes: exemploOperacoes };
+      zpl = generateDynamicZpl(ly.zpl, opDataExemplo);
+    } else {
+      zpl = substituteZpl(ly.zpl, values);
+    }
+    
+    const logLines = Array.from({ length: copies }).map((_, idx) => `[${new Date().toLocaleTimeString()}] Impressão manual ${idx+1}/${copies} com layout ${ly.name}${hasDynamicOperations(ly.zpl) ? ' (ZPL dinâmico)' : ''}.`);
     els.prLog.textContent = logLines.join('\n') + '\n' + els.prLog.textContent;
   });
 
@@ -438,6 +665,111 @@
     let out = zpl; for (const [k, v] of Object.entries(values)) { const re = new RegExp(`\\{${escapeRegExp(k)}\\}`, 'g'); out = out.replace(re, v || ''); } return out;
   }
   function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+  // Função para gerar ZPL dinâmico baseado nas operações
+  function generateDynamicZpl(baseZpl, opData) {
+    let dynamicZpl = baseZpl;
+    
+    // Se o ZPL contém {Operacoes}, substitui pela lista de operações
+    if (baseZpl.includes('{Operacoes}')) {
+      const operacoesList = opData.operacoes ? opData.operacoes.map(op => `${op.codigo} - ${op.nome}`).join(' | ') : 'N/A';
+      dynamicZpl = dynamicZpl.replace(/{Operacoes}/g, operacoesList);
+    }
+    
+    // Se o ZPL contém {Operacao1}, {Operacao2}, etc., substitui individualmente
+    for (let i = 1; i <= 5; i++) {
+      const placeholder = `{Operacao${i}}`;
+      if (baseZpl.includes(placeholder)) {
+        const operacao = opData.operacoes && opData.operacoes[i-1] 
+          ? `${opData.operacoes[i-1].codigo} - ${opData.operacoes[i-1].nome}`
+          : '';
+        dynamicZpl = dynamicZpl.replace(new RegExp(placeholder, 'g'), operacao);
+      }
+    }
+    
+    return dynamicZpl;
+  }
+
+  // Função para detectar se um ZPL usa operações dinâmicas
+  function hasDynamicOperations(zpl) {
+    return zpl.includes('{Operacoes}') || 
+           zpl.includes('{Operacao1}') || 
+           zpl.includes('{Operacao2}') || 
+           zpl.includes('{Operacao3}') || 
+           zpl.includes('{Operacao4}') || 
+           zpl.includes('{Operacao5}');
+  }
+
+
+  // Função para obter etiqueta associada a uma OP
+  function getEtiquetaAssociadaOp(opNumero) {
+    const etiquetaId = state.opEtiquetaAssociations[opNumero];
+    return state.layouts.find(l => l.id === etiquetaId);
+  }
+
+  // Função para verificar se layout é relevante para um grupo
+  function isLayoutRelevanteParaGrupo(layout, grupo) {
+    if (!grupo) return false;
+    
+    const nomeLayout = layout.name.toLowerCase();
+    const grupoLower = grupo.toLowerCase();
+    
+    // Mapear grupos para palavras-chave de layouts
+    const mapeamento = {
+      'injeção': ['injeção', 'injetora'],
+      'usinagem': ['usinagem', 'torno', 'fresa', 'cnc'],
+      'conformação': ['conformação', 'corte', 'dobra', 'prensa'],
+      'solda': ['solda', 'mig', 'tig'],
+      'acabamento': ['acabamento', 'pintura'],
+      'montagem': ['montagem', 'monta']
+    };
+    
+    const palavrasChave = mapeamento[grupoLower] || [];
+    return palavrasChave.some(palavra => nomeLayout.includes(palavra));
+  }
+
+  // Funções para controle de impressão dinâmica
+  function updateLayoutPadraoDinamico() {
+    if (!els.layoutPadraoDinamico) return;
+    
+    els.layoutPadraoDinamico.innerHTML = '<option value="">Selecione um layout...</option>' + 
+      state.layouts.map(layout => `<option value="${layout.id}">${layout.name} (v${layout.version})</option>`).join('');
+  }
+
+  function toggleModoDinamico() {
+    const modoDinamicoAtivo = els.modoDinamico?.checked || false;
+    
+    // Atualizar visibilidade das informações
+    if (els.modoDinamicoInfo) {
+      els.modoDinamicoInfo.style.display = modoDinamicoAtivo ? 'block' : 'none';
+    }
+    if (els.modoTradicionalInfo) {
+      els.modoTradicionalInfo.style.display = modoDinamicoAtivo ? 'none' : 'block';
+    }
+    
+    // Re-renderizar lista de OPs para mostrar/ocultar seletores
+    if (state.opsEncontradas) {
+      renderOpsResults(state.opsEncontradas);
+    }
+  }
+
+  function aplicarLayoutPadraoDinamico() {
+    const layoutId = els.layoutPadraoDinamico?.value;
+    if (!layoutId) return;
+    
+    const modoDinamicoAtivo = els.modoDinamico?.checked || false;
+    if (!modoDinamicoAtivo) return;
+    
+    // Aplicar layout padrão a todas as OPs que não têm etiqueta selecionada
+    const seletores = document.querySelectorAll('.op-etiqueta-selector');
+    seletores.forEach(selector => {
+      if (!selector.value) {
+        selector.value = layoutId;
+      }
+    });
+    
+    alert('Layout padrão aplicado a todas as OPs sem etiqueta selecionada!');
+  }
 
   async function renderLabelaryTo(layout, zpl, container) {
     const widthIn = layout?.preview?.widthIn ?? 6; const heightIn = layout?.preview?.heightIn ?? 4; const dpmm = layout?.preview?.dpmm ?? 8;
@@ -660,6 +992,21 @@
   if (libClose) { libClose.addEventListener('click', closeLibModal); }
   // Safely bind main import button
   (function(){ var btn = document.getElementById('btn-import-from-lib'); if (btn) btn.addEventListener('click', openLibModal); })();
+
+
+  // Event listeners para controle de impressão dinâmica
+  if (els.modoDinamico) {
+    els.modoDinamico.addEventListener('change', toggleModoDinamico);
+  }
+
+  if (els.layoutPadraoDinamico) {
+    els.layoutPadraoDinamico.addEventListener('change', aplicarLayoutPadraoDinamico);
+  }
+
+  if (els.aplicarLayoutPadrao) {
+    els.aplicarLayoutPadrao.addEventListener('click', aplicarLayoutPadraoDinamico);
+  }
+
 
   // Initial renders (safe)
   renderLibrary(); renderMachineFilters();

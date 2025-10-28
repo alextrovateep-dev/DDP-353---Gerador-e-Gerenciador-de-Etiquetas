@@ -758,18 +758,20 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 /* Responsividade para filtros em grid */
-@media (max-width: 1200px) {
-  .filters-section > div > div {
-    grid-template-columns: 1fr 1fr !important;
+@media (max-width: 1600px) {
+  #view-print .filters-section > div > div[style*="grid"] {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
-  
-  .filters-section > div > div > div:last-child {
-    grid-column: 1 / -1;
+}
+
+@media (max-width: 1200px) {
+  #view-print .filters-section > div > div[style*="grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
 @media (max-width: 900px) {
-  .filters-section > div > div {
+  #view-print .filters-section > div > div[style*="grid"] {
     grid-template-columns: 1fr !important;
   }
 }
@@ -953,6 +955,28 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 #ddp-approval-form .form::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Responsividade para filtros do histórico */
+@media (max-width: 1200px) {
+  #view-history .filters-section > div > div[style*="grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #view-history .filters-section > div > div[style*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+  
+  #view-history .filters-section > div > div[style*="flex"] {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  #view-history .filters-section > div > div[style*="flex"] > div:last-child {
+    margin-left: 0 !important;
+  }
 }
 
 /* Modal órfão removido */
